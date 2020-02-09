@@ -8,7 +8,6 @@ const HomePage = () => {
     // Example how to create page without ssr
     getPDF().then((resp) => {
       setPayload(resp);
-      console.log(resp);
     });
   }, []);
 
