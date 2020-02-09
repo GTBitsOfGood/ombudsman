@@ -1,7 +1,7 @@
 import fetch from "isomorphic-unfetch";
 import urls from "../../utils/urls";
 
-export const helloWorld = () =>
+export const getPDF = () =>
   fetch(urls.baseUrl + urls.api.example, {
     method: "get",
     mode: "no-cors",

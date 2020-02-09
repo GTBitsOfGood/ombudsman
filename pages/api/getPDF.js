@@ -1,10 +1,10 @@
-import { exampleAction } from "../../server/example/actions/example";
+import { getPDF } from "../../server/actions/storage";
 
 // @route   POST api/example
 // @desc    Example API
 // @access  Public
 const handler = (req, res) =>
-  exampleAction()
+  getPDF()
     .then(text =>
       res.status(201).json({
         success: true,
