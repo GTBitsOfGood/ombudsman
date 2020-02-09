@@ -1,13 +1,14 @@
 import React from 'react';
-import { helloWorld } from '../client/actions/api';
+import { getPDF } from '../client/actions/api';
 
 const HomePage = () => {
   const [payload, setPayload] = React.useState('');
 
   React.useEffect(() => {
     // Example how to create page without ssr
-    helloWorld().then((resp) => {
+    getPDF().then((resp) => {
       setPayload(resp);
+      console.log(resp);
     });
   }, []);
 

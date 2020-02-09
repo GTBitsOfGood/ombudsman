@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { helloWorld } from '../client/actions/api';
+import { getPDF } from '../client/actions/api';
 
 const SSRPage = ({ message, errorMessage }) => (
   <>
@@ -21,7 +21,7 @@ const SSRPage = ({ message, errorMessage }) => (
   </>
 );
 
-SSRPage.getInitialProps = async () => helloWorld()
+SSRPage.getInitialProps = async () => getPDF()
   .then((payload) => ({
     message: payload,
   }))
