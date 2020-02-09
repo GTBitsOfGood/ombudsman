@@ -14,7 +14,7 @@ const storage = firebase.storage();
 export const getPDF = async () => {
   const storageRef = await storage.ref().list({ maxResults: 1 });
   let file = "";
-  await storageRef.items.forEach(function(fileRef) {
+  await storageRef.items.forEach((fileRef) => {
     file = fileRef.name;
   });
   return file;
