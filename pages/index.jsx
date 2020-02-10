@@ -1,27 +1,43 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import Link from 'next/link';
 import { getPDF } from '../client/actions/api';
 
-const HomePage = () => {
-  const [payload, setPayload] = React.useState('');
+const SSRPage = ({ message, errorMessage }) => (
+  <>
+    <h2>Ombudsman Toolbox</h2>
+    {errorMessage == null ? (
+      <h4>
+        Files:
+        {message.map((item) =>
+            <li key={item.fileName}><Link href={item.imgURL}><a>{item.fileName}</a></Link></li>)
+        }
+      </h4>
+    ) : (
+      <h4>
+        SSR Error:
+        {errorMessage}
+      </h4>
+    )}
+  </>
+);
 
-  React.useEffect(() => {
-    // Example how to create page without ssr
-    getPDF().then((resp) => {
-      setPayload(resp);
-    });
-  }, []);
+SSRPage.getInitialProps = async () => getPDF()
+  .then((payload) => ({
+    message: payload,
+  }))
+  .catch((error) => ({
+    errorMessage: error.message,
+  }));
 
-  return (
-    <>
-      <h2>Welcome to Next.js!</h2>
-      <h3>
-        This page is static rendered, because all API calls are made in
-        useEffect
-      </h3>
-      <h4>{payload}</h4>
-      <p>You can tell because the text above flashes on page refresh</p>
-    </>
-  );
+SSRPage.propTypes = {
+  message: PropTypes.array,
+  errorMessage: PropTypes.string,
 };
 
-export default HomePage;
+SSRPage.defaultProps = {
+  message: null,
+  errorMessage: null,
+};
+
+export default SSRPage;
