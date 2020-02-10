@@ -9,9 +9,11 @@ const SSRPage = ({ message, errorMessage }) => (
     {errorMessage == null ? (
       <h4>
         Files:
-        {message.map((item) =>
-            <li key={item.fileName}><Link href={item.imgURL}><a>{item.fileName}</a></Link></li>)
-        }
+        {message.map((item) => (
+          <li key={item.fileName}>
+            <Link href={item.imgURL}><a>{item.fileName}</a></Link>
+          </li>
+        ))}
       </h4>
     ) : (
       <h4>
@@ -31,7 +33,7 @@ SSRPage.getInitialProps = async () => getPDF()
   }));
 
 SSRPage.propTypes = {
-  message: PropTypes.array,
+  message: PropTypes.arrayOf(Object),
   errorMessage: PropTypes.string,
 };
 

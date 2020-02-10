@@ -13,11 +13,12 @@ const storage = firebase.storage();
 
 export const getPDF = async () => {
   const storageRef = await storage.ref().list({ maxResults: 100 });
-  let files = [];
-  for (let fileRef of storageRef.items) {
-    await fileRef.getDownloadURL().then((imgURL) => {
-      files = [...files, {imgURL: imgURL, fileName: fileRef.name}];
-    })
-  }
+  const files = [];
+  const filePromises = storageRef.items.map(async fileRef => {
+    return fileRef.getDownloadURL().then(imgURL => {
+      files.push({ imgURL, fileName: fileRef.name });
+    });
+  });
+  await Promise.all(filePromises);
   return files;
 };
