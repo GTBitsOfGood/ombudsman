@@ -2,7 +2,7 @@ const prod = process.env.NODE_ENV === 'production';
 
 export default {
   baseUrl: prod
-    ? 'https://nextjs-starter-flax-sigma.now.sh'
+    ? 'https://https://ombudsman.now.sh'
     : 'http://localhost:3000',
   dbName: 'nextjs',
   pages: {

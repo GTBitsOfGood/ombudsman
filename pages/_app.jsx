@@ -11,7 +11,7 @@ class MyApp extends App {
     return (
       <>
         <Head>
-          <title>Nextjs-Starter</title>
+          <title>Ombudsman</title>
         </Head>
         <div className="App">
           <Header />
