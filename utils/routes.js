@@ -3,7 +3,7 @@ import urls from './urls';
 const routes = [
   {
     name: 'Home',
-    link: urls.pages.ssr,
+    link: urls.pages.index,
   },
 ];
 
