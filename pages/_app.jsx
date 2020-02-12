@@ -3,6 +3,7 @@ import React from 'react';
 import Head from 'next/head';
 import Header from '../client/components/Header';
 import '../public/static/App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class MyApp extends App {
   render() {
@@ -14,7 +15,6 @@ class MyApp extends App {
           <title>Ombudsman</title>
         </Head>
         <div className="App">
-          <Header />
           <div className="Content">
             <Component {...pageProps} />
           </div>
