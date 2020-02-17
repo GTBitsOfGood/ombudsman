@@ -1,7 +1,7 @@
 import App from 'next/app';
 import React from 'react';
 import Head from 'next/head';
-import Header from '../client/components/Header';
+// import Header from '../client/components/Header';
 import '../public/static/App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 

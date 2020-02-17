@@ -1,4 +1,16 @@
-# nextjs-starter
+# Ombudsman
+
+The master branch is hosted on Zeit Now at [https://ombudsman.now.sh/](https://ombudsman.now.sh/). 
+
+We're using Firebase as the database (contact us for the URL).
+
+There's a known error with Firebase in Node, so you’ll need to modify this file: node_modules/@firebase/storage/dist/index.cjs.js, and add this line to the top of the file -
+
+```
+global.XMLHttpRequest = require('xhr2');
+```
+
+# Zeit Now boilerplate README
 
 ## Stack
 * React.js: Front-end
