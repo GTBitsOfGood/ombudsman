@@ -13,23 +13,28 @@ const SSRPage = ({ message, errorMessage }) => (
     <h2 align="center">Ombudsman Toolbox</h2>
     {errorMessage == null ? (
       <h4>
-        <Form inline>
-          <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-          <Button variant="outline-success">Search</Button>
-        </Form>
-        <br></br>
-        <DropdownButton id="dropdown-basic-button" title="Select Category">
-          <Dropdown.Item href="#/category-1">category 1</Dropdown.Item>
-          <Dropdown.Item href="#/category-2">category 2</Dropdown.Item>
-          <Dropdown.Item href="#/category-3">category 3</Dropdown.Item>
-        </DropdownButton>
-        <br></br>
-        Files:
-        {message.map((item) => (
-          <li key={item.fileName}>
-            <Link href={item.imgURL}><a>{item.fileName}</a></Link>
-          </li>
-        ))}
+        <div className="col-lg-7 ml-auto">
+            <Form inline>
+              <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+              <Button variant="outline-success">Search</Button>
+            </Form>
+            <br />
+            <div className="dropdown">
+                Select Category&#8195;
+                <DropdownButton id="dropdown-basic-button" title="Category">
+                  <Dropdown.Item href="#/category-1">category 1</Dropdown.Item>
+                  <Dropdown.Item href="#/category-2">category 2</Dropdown.Item>
+                  <Dropdown.Item href="#/category-3">category 3</Dropdown.Item>
+                </DropdownButton>
+            </div>
+            <br />
+            Files:
+            {message.map((item) => (
+              <li key={item.fileName}>
+                <Link href={item.imgURL}><a>{item.fileName}</a></Link>
+              </li>
+            ))}
+        </div>
       </h4>
     ) : (
       <h4>

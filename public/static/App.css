@@ -25,7 +25,6 @@ html, body, #__next {
     overflow-y: auto;
 }
 
-.searchBar {
-    text-align:center;
-    width:100%;
+.dropdown {
+    display:inline-block;
 }
