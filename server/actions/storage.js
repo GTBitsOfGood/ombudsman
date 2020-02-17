@@ -25,10 +25,9 @@ const getCategories = async () => {
 
 export const getPDF = async () => {
   const categories = await getCategories();
-  console.log(categories);
   const files = [];
   const promises = [];
-  for (let i = 0; i < categories.length; i = i + 1) {
+  for (let i = 0; i < categories.length; i += 1) {
     const storageRef = await storage // eslint-disable-line
       .ref(categories[i])
       .list({ maxResults: 100 });
@@ -46,6 +45,5 @@ export const getPDF = async () => {
     );
   }
   await Promise.all(promises);
-  console.log(files);
   return files;
 };
