@@ -1,16 +1,26 @@
 # Ombudsman
 
+The [Office of the State Long-Term Care Ombudsman (Georgia)](https://www.georgiaombudsman.org/) works to advocate for the concerns of residents in long-term care facilties. This website provides a means to host and search through legal documents that may be relevant for this purpose.
+
 The master branch is hosted on Zeit Now at [https://ombudsman.now.sh/](https://ombudsman.now.sh/). 
 
-We're using Firebase as the database (contact us for the URL).
+We're using Firebase as the database (contact us for the URL). There's no authentication being used at the moment.
 
-There's a known error with Firebase in Node, so you’ll need to modify this file: node_modules/@firebase/storage/dist/index.cjs.js, and add this line to the top of the file -
+To install dependencies, run `npm install` in the directory where you've cloned this repo. There's a known error with Firebase in Node, so you’ll need to modify this file: node_modules/@firebase/storage/dist/index.cjs.js, and add this line to the top of the file -
 
 ```
 global.XMLHttpRequest = require('xhr2');
 ```
 
-# Zeit Now boilerplate README
+To deploy this locally, run
+
+```
+npm run dev
+```
+
+# nextjs-starter template
+
+From https://github.com/GTBitsOfGood/nextjs-starter/ 
 
 ## Stack
 * React.js: Front-end
