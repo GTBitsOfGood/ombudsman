@@ -18,22 +18,24 @@ const getCategories = async () => {
   const firestoreRef = firestore.collection("categories").doc("categories");
   let categories = [];
   await firestoreRef.get().then(function(doc) {
-    categories = doc.data().categoryArr;
+    categories = doc.data().catArray;
   });
   return categories;
 };
 
 export const getPDF = async () => {
   const categories = await getCategories();
+  console.log(categories);
   const files = [];
   const promises = [];
-  for (let i = 0; i < categories.length; i + 1) {
+  for (let i = 0; i < categories.length; i = i + 1) {
     const storageRef = await storage // eslint-disable-line
       .ref(categories[i])
       .list({ maxResults: 100 });
     promises.push(
       storageRef.items.map(async fileRef => {
         fileRef.getDownloadURL().then(async imgURL => {
+          console.log(imgURL);
           return files.push({
             imgURL,
             fileName: fileRef.name,
@@ -44,7 +46,6 @@ export const getPDF = async () => {
     );
   }
   await Promise.all(promises);
+  console.log(files);
   return files;
 };
-
-getCategories();
