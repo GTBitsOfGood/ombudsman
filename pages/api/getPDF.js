@@ -1,4 +1,4 @@
-import { getPDF } from "../../server/actions/storage";
+import { getPDF } from "../../server/actions/database";
 
 // @route   POST api/example
 // @desc    Example API
