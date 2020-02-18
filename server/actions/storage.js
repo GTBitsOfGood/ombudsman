@@ -1,3 +1,5 @@
+global.XMLHttpRequest = require('xhr2');
+
 import firebase from "firebase";
 import "firebase/storage";
 import "firebase/firestore";
