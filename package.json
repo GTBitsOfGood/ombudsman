@@ -1,5 +1,5 @@
 {
-  "name": "liv2bgirl",
+  "name": "ombudsman",
   "version": "1.0.0",
   "description": "",
   "author": "Bits of Good <hello@bitsofgood.org>",
@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "bootstrap": "^4.4.1",
     "dotenv": "^8.2.0",
     "firebase": "^7.8.1",
     "isomorphic-unfetch": "^3.0.0",
@@ -36,6 +37,7 @@
     "next-images": "^1.3.0",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
+    "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "^16.12.0",
     "xhr2": "^0.2.0"
   },
