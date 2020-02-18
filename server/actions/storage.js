@@ -1,8 +1,8 @@
-global.XMLHttpRequest = require('xhr2');
-
 import firebase from "firebase";
 import "firebase/storage";
 import "firebase/firestore";
+
+global.XMLHttpRequest = require("xhr2");
 
 if (!firebase.apps.length) {
   const firebaseConfig = {
@@ -16,7 +16,7 @@ if (!firebase.apps.length) {
 const storage = firebase.storage();
 const firestore = firebase.firestore();
 
-const getCategories = async () => {
+export const getCategories = async () => {
   const firestoreRef = firestore.collection("categories").doc("categories");
   let categories = [];
   await firestoreRef.get().then(function(doc) {
