@@ -13,7 +13,7 @@ if (!firebase.apps.length) {
   };
   firebase.initializeApp(firebaseConfig);
 }
-const firebase = firebase.storage();
+const storage = firebase.storage();
 const firestore = firebase.firestore();
 
 export const getCategories = async () => {
@@ -30,7 +30,7 @@ export const getPDF = async () => {
   const files = [];
   const promises = [];
   for (let i = 0; i < categories.length; i += 1) {
-    const storageRef = await firebase // eslint-disable-line
+    const storageRef = await storage // eslint-disable-line
       .ref(categories[i])
       .list({ maxResults: 100 });
     promises.push(
