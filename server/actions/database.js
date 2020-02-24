@@ -25,26 +25,39 @@ export const getCategories = async () => {
   return categories;
 };
 
+export const updateClicks = async (category, filename) => {
+  const firestoreRef = firestore.collection("categories").doc("categories");
+  const updateKey = `catArray.${[category]}.${[filename]}.views`;
+  firestoreRef.update(updateKey, firebase.firestore.FieldValue.increment(1));
+};
+
 export const getPDF = async () => {
-  const categories = await getCategories();
+  const categoryMap = await getCategories();
+  const categories = Object.keys(categoryMap);
   const files = [];
-  const promises = [];
+  const storageRef = await storage // eslint-disable-line
+    .ref();
   for (let i = 0; i < categories.length; i += 1) {
-    const storageRef = await storage // eslint-disable-line
-      .ref(categories[i])
-      .list({ maxResults: 100 });
-    promises.push(
-      storageRef.items.map(async fileRef => {
-        fileRef.getDownloadURL().then(async imgURL => {
-          return files.push({
-            imgURL,
-            fileName: fileRef.name,
-            categories: categories[i]
-          });
+    const folder = await storageRef.child(categories[i]).list();
+    const foldItems = folder.items;
+    for (let j = 0; j < foldItems.length; j += 1) {
+      let views = 0;
+      if (
+        foldItems[j].name.slice(0, -4) in categoryMap[categories[i]] &&
+        "views" in categoryMap[categories[i]][foldItems[j].name.slice(0, -4)]
+      ) {
+        views =
+          categoryMap[categories[i]][foldItems[j].name.slice(0, -4)].views;
+      }
+      await foldItems[j].getDownloadURL().then(imgURL => {
+        files.push({
+          imgURL,
+          fileName: foldItems[j].name,
+          categories: categories[i],
+          views
         });
-      })
-    );
+      });
+    }
   }
-  await Promise.all(promises);
   return files;
 };

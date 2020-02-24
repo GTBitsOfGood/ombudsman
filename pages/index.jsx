@@ -6,34 +6,44 @@ import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { getPDF } from '../client/actions/api';
+import { getPDF, updateClicks } from '../client/actions/api';
 
-const SSRPage = ({ message, errorMessage }) => (
+
+const clickUpdate = (item) => {
+  updateClicks(item.categories, item.fileName);
+};
+const SSRPage = ({
+  pdfs, categories, errorMessage, clickUpdate,
+}) => (
   <>
     <h2 align="center">Ombudsman Toolbox</h2>
     {errorMessage == null ? (
       <h4>
         <div className="col-lg-7 ml-auto">
-            <Form inline>
-              <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-              <Button variant="outline-success">Search</Button>
-            </Form>
-            <br />
-            <div className="dropdown">
-                Select Category&#8195;
-                <DropdownButton id="dropdown-basic-button" title="Category">
-                  <Dropdown.Item href="#/category-1">category 1</Dropdown.Item>
-                  <Dropdown.Item href="#/category-2">category 2</Dropdown.Item>
-                  <Dropdown.Item href="#/category-3">category 3</Dropdown.Item>
-                </DropdownButton>
-            </div>
-            <br />
-            Files:
-            {message.map((item) => (
-              <li key={item.fileName}>
-                <Link href={item.imgURL}><a>{item.fileName}</a></Link>
-              </li>
-            ))}
+          <Form inline>
+            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+            <Button variant="outline-success">Search</Button>
+          </Form>
+          <br />
+          <div className="dropdown">
+            Select Category&#8195;
+            <DropdownButton id="dropdown-basic-button" title="Category">
+              <Dropdown.Item href="#/category-1">category 1</Dropdown.Item>
+              <Dropdown.Item href="#/category-2">category 2</Dropdown.Item>
+              <Dropdown.Item href="#/category-3">category 3</Dropdown.Item>
+            </DropdownButton>
+          </div>
+          <br />
+          Files:
+          {pdfs.map((item, i) => (
+            <li key={item.fileName}>
+              <a>
+                Views:
+                {item.views}
+              </a>
+              <Link href={item.imgURL}><a id={item.filename} onClick={() => clickUpdate(item)}>{item.fileName}</a></Link>
+            </li>
+          ))}
         </div>
       </h4>
     ) : (
@@ -45,22 +55,22 @@ const SSRPage = ({ message, errorMessage }) => (
   </>
 );
 
-SSRPage.getInitialProps = async () => getPDF()
-  .then((payload) => ({
-    message: payload,
-  }))
-  .catch((error) => ({
-    errorMessage: error.message,
-  }));
+SSRPage.getInitialProps = async () => {
+  const pdfJ = await getPDF();
+  const categoriesJ = null;
+  return { pdfs: pdfJ, categories: categoriesJ, errorMessage: null };
+};
 
 SSRPage.propTypes = {
-  message: PropTypes.arrayOf(Object),
+  pdfs: PropTypes.arrayOf(Object),
+  categories: PropTypes.arrayOf(Object),
   errorMessage: PropTypes.string,
+  clickUpdate: PropTypes.func,
 };
-
 SSRPage.defaultProps = {
-  message: null,
+  pdfs: null,
+  categories: null,
   errorMessage: null,
+  clickUpdate: (data) => clickUpdate(data),
 };
-
 export default SSRPage;
