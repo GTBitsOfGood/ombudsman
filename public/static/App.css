@@ -24,3 +24,7 @@ html, body, #__next {
     overflow-x: hidden;
     overflow-y: auto;
 }
+
+.dropdown {
+    display:inline-block;
+}
