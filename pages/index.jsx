@@ -6,7 +6,8 @@ import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { getPDF, updateClicks } from '../client/actions/api';
+import { getPDF, updateClicks, getCategories } from '../client/actions/api';
+
 
 
 const clickUpdate = (item) => {
@@ -28,9 +29,9 @@ const SSRPage = ({
           <div className="dropdown">
             Select Category&#8195;
             <DropdownButton id="dropdown-basic-button" title="Category">
-              <Dropdown.Item href="#/category-1">category 1</Dropdown.Item>
-              <Dropdown.Item href="#/category-2">category 2</Dropdown.Item>
-              <Dropdown.Item href="#/category-3">category 3</Dropdown.Item>
+              {Object.keys(categories).map((item) => (
+                <Dropdown.Item href={`#/${item}`}>{item}</Dropdown.Item>
+              ))}
             </DropdownButton>
           </div>
           <br />
@@ -57,7 +58,8 @@ const SSRPage = ({
 
 SSRPage.getInitialProps = async () => {
   const pdfJ = await getPDF();
-  const categoriesJ = null;
+  const categoriesJ = await getCategories();
+  console.log(categoriesJ)
   return { pdfs: pdfJ, categories: categoriesJ, errorMessage: null };
 };
 
