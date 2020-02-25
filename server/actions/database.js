@@ -31,6 +31,7 @@ export const updateClicks = async (category, filename) => {
   firestoreRef.update(updateKey, firebase.firestore.FieldValue.increment(1));
 };
 
+/* OLD VERSION - delete when finished
 export const getPDF = async () => {
   const categoryMap = await getCategories();
   const categories = Object.keys(categoryMap);
@@ -61,5 +62,37 @@ export const getPDF = async () => {
   }
   return files;
 };
+*/
 
 
+export const getPDF = async () => {
+  const categoryMap = await getCategories();
+  const categories = Object.keys(categoryMap);
+  const files = [];
+  const storageRef = await storage // eslint-disable-line
+    .ref();
+  var out = {};
+  for (let i = 0; i < categories.length; i += 1) {
+    const folder = await storageRef.child(categories[i]).list();
+    const foldItems = folder.items;
+    out[categories[i]] = [];
+    for (let j = 0; j < foldItems.length; j += 1) {
+      let views = 0;
+      if (
+        foldItems[j].name.slice(0, -4) in categoryMap[categories[i]] &&
+        "views" in categoryMap[categories[i]][foldItems[j].name.slice(0, -4)]
+      ) {
+        views =
+          categoryMap[categories[i]][foldItems[j].name.slice(0, -4)].views;
+      }
+      await foldItems[j].getDownloadURL().then(imgURL => {
+        out[categories[i]].push({
+          url:      imgURL,
+          fileName: foldItems[j].name,
+          views:    views,
+        });
+      });
+    }
+  }
+  return out;
+};
