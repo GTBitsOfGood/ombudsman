@@ -15,12 +15,13 @@ if (!firebase.apps.length) {
 }
 const storage = firebase.storage();
 const firestore = firebase.firestore();
+const dbCategory = "catArray";
 
 export const getCategories = async () => {
   const firestoreRef = firestore.collection("categories").doc("categories");
   let categories = [];
   await firestoreRef.get().then(function(doc) {
-    categories = doc.data().catArray;
+    categories = doc.data()[dbCategory];
   });
   return categories;
 };
@@ -31,68 +32,35 @@ export const updateClicks = async (category, filename) => {
   firestoreRef.update(updateKey, firebase.firestore.FieldValue.increment(1));
 };
 
-/* OLD VERSION - delete when finished
 export const getPDF = async () => {
   const categoryMap = await getCategories();
   const categories = Object.keys(categoryMap);
-  const files = [];
-  const storageRef = await storage // eslint-disable-line
-    .ref();
-  for (let i = 0; i < categories.length; i += 1) {
-    const folder = await storageRef.child(categories[i]).list();
+  const storageRef = await storage.ref();
+  const out = {};
+  let outerPromises = [];
+  outerPromises = categories.map(async category => {
+    const folder = await storageRef.child(category).list();
     const foldItems = folder.items;
-    for (let j = 0; j < foldItems.length; j += 1) {
+    out[category] = [];
+    let promises = [];
+    promises = foldItems.map(async file => {
       let views = 0;
       if (
-        foldItems[j].name.slice(0, -4) in categoryMap[categories[i]] &&
-        "views" in categoryMap[categories[i]][foldItems[j].name.slice(0, -4)]
+        file.name.slice(0, -4) in categoryMap[category] &&
+        "views" in categoryMap[category][file.name.slice(0, -4)]
       ) {
-        views =
-          categoryMap[categories[i]][foldItems[j].name.slice(0, -4)].views;
+        views = categoryMap[category][file.name.slice(0, -4)].views;
       }
-      await foldItems[j].getDownloadURL().then(imgURL => {
-        files.push({
-          imgURL,
-          fileName: foldItems[j].name,
-          categories: categories[i],
+      return file.getDownloadURL().then(imgURL => {
+        out[category].push({
+          url: imgURL,
+          fileName: file.name,
           views
         });
       });
-    }
-  }
-  return files;
-};
-*/
-
-
-export const getPDF = async () => {
-  const categoryMap = await getCategories();
-  const categories = Object.keys(categoryMap);
-  const files = [];
-  const storageRef = await storage // eslint-disable-line
-    .ref();
-  var out = {};
-  for (let i = 0; i < categories.length; i += 1) {
-    const folder = await storageRef.child(categories[i]).list();
-    const foldItems = folder.items;
-    out[categories[i]] = [];
-    for (let j = 0; j < foldItems.length; j += 1) {
-      let views = 0;
-      if (
-        foldItems[j].name.slice(0, -4) in categoryMap[categories[i]] &&
-        "views" in categoryMap[categories[i]][foldItems[j].name.slice(0, -4)]
-      ) {
-        views =
-          categoryMap[categories[i]][foldItems[j].name.slice(0, -4)].views;
-      }
-      await foldItems[j].getDownloadURL().then(imgURL => {
-        out[categories[i]].push({
-          url:      imgURL,
-          fileName: foldItems[j].name,
-          views:    views,
-        });
-      });
-    }
-  }
+    });
+    return Promise.all(promises);
+  });
+  await Promise.all(outerPromises);
   return out;
 };
