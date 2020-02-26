@@ -36,15 +36,17 @@ const SSRPage = ({
           </div>
           <br />
           Files:
-          {pdfs.map((item, i) => (
-            <li key={item.fileName}>
+          {Object.keys(pdfs).map((file, i) => (
+            pdfs[file].map((msg, j) => (
+            <li key={msg}>
               <a>
                 Views:
-                {item.views}
+                {msg['views']}
               </a>
-              <Link href={item.imgURL}><a id={item.filename} onClick={() => clickUpdate(item)}>{item.fileName}</a></Link>
+              <Link href={msg['url']}><a id={msg['fileName']} onClick={() => clickUpdate(msg['item'])}>{msg['fileName']}</a></Link>
             </li>
-          ))}
+            )
+          )))}
         </div>
       </h4>
     ) : (
@@ -59,7 +61,7 @@ const SSRPage = ({
 SSRPage.getInitialProps = async () => {
   const pdfJ = await getPDF();
   const categoriesJ = await getCategories();
-  console.log(categoriesJ)
+  console.log(Object.keys(pdfJ));
   return { pdfs: pdfJ, categories: categoriesJ, errorMessage: null };
 };
 
