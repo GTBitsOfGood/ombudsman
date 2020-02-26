@@ -6,8 +6,7 @@ import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { getPDF, updateClicks } from '../client/actions/api';
-
+import { getPDF, updateClicks, getCategories } from '../client/actions/api';
 
 const clickUpdate = (item) => {
   updateClicks(item.categories, item.fileName);
@@ -29,30 +28,31 @@ const SSRPage = ({
             <h4>
               <div className="col-lg-7 ml-auto">
                 <Form inline>
-                  <FormControl type="text" placeholder="Search" className="mr-sm-2"/>
+                  <FormControl type="text" placeholder="Search" className="mr-sm-2" />
                   <Button variant="outline-success">Search</Button>
                 </Form>
-                <br/>
+                <br />
                 <div className="dropdown">
                   Select Category&#8195;
                   <DropdownButton id="dropdown-basic-button" title="Category">
-                    <Dropdown.Item onClick={() => setPdfs()}>category 1</Dropdown.Item>
-                    <Dropdown.Item href="#/category-2">category 2</Dropdown.Item>
-                    <Dropdown.Item href="#/category-3">category 3</Dropdown.Item>
+                    {Object.keys(categories).map((item) => (
+                        <Dropdown.Item href={`#/${item}`} onClick={() => setPdfs({item: pdfProps[item]})}>{item}</Dropdown.Item>
+                    ))}
                   </DropdownButton>
                 </div>
-                <br/>
+                <br />
                 Files:
-                {pdfs.map((item, i) => (
-                    <li key={item.fileName}>
-                      <a>
-                        Views:
-                        {item.views}
-                      </a>
-                      <Link href={item.imgURL}><a id={item.filename}
-                                                  onClick={() => clickUpdate(item)}>{item.fileName}</a></Link>
-                    </li>
-                ))}
+                {Object.keys(pdfs).map((file, i) => (
+                    pdfs[file].map((msg, j) => (
+                            <li key={msg}>
+                              <a>
+                                Views:
+                                {msg['views']}
+                              </a>
+                              <Link href={msg['url']}><a id={msg['fileName']} onClick={() => clickUpdate(msg['item'])}>{msg['fileName']}</a></Link>
+                            </li>
+                        )
+                    )))}
               </div>
             </h4>
         ) : (
@@ -67,8 +67,9 @@ const SSRPage = ({
 
 SSRPage.getInitialProps = async () => {
   const pdfJ = await getPDF();
-  const categoriesJ = null;
-  return { pdfProps: pdfJ, categories: categoriesJ, errorMessage: null };
+  const categoriesJ = await getCategories();
+  console.log(pdfJ);
+  return { pdfProps: pdfJ, categories: categoriesJ, errorMessage: null};
 };
 
 SSRPage.propTypes = {
