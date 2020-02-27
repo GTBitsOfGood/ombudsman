@@ -10,5 +10,7 @@ export default {
   },
   api: {
     example: '/api/getPDF',
+    updateClicks: '/api/updateClicks',
+    categories: '/api/getCategories',
   },
 };

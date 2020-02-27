@@ -15,36 +15,52 @@ if (!firebase.apps.length) {
 }
 const storage = firebase.storage();
 const firestore = firebase.firestore();
+const dbCategory = "catArray";
 
 export const getCategories = async () => {
   const firestoreRef = firestore.collection("categories").doc("categories");
   let categories = [];
   await firestoreRef.get().then(function(doc) {
-    categories = doc.data().catArray;
+    categories = doc.data()[dbCategory];
   });
   return categories;
 };
 
+export const updateClicks = async (category, filename) => {
+  const firestoreRef = firestore.collection("categories").doc("categories");
+  const updateKey = `catArray.${[category]}.${[filename]}.views`;
+  firestoreRef.update(updateKey, firebase.firestore.FieldValue.increment(1));
+};
+
 export const getPDF = async () => {
-  const categories = await getCategories();
-  const files = [];
-  const promises = [];
-  for (let i = 0; i < categories.length; i += 1) {
-    const storageRef = await storage // eslint-disable-line
-      .ref(categories[i])
-      .list({ maxResults: 100 });
-    promises.push(
-      storageRef.items.map(async fileRef => {
-        fileRef.getDownloadURL().then(async imgURL => {
-          return files.push({
-            imgURL,
-            fileName: fileRef.name,
-            categories: categories[i]
-          });
+  const categoryMap = await getCategories();
+  const categories = Object.keys(categoryMap);
+  const storageRef = await storage.ref();
+  const out = {};
+  let outerPromises = [];
+  outerPromises = categories.map(async category => {
+    const folder = await storageRef.child(category).list();
+    const foldItems = folder.items;
+    out[category] = [];
+    let promises = [];
+    promises = foldItems.map(async file => {
+      let views = 0;
+      if (
+        file.name.slice(0, -4) in categoryMap[category] &&
+        "views" in categoryMap[category][file.name.slice(0, -4)]
+      ) {
+        views = categoryMap[category][file.name.slice(0, -4)].views;
+      }
+      return file.getDownloadURL().then(imgURL => {
+        out[category].push({
+          url: imgURL,
+          fileName: file.name,
+          views
         });
-      })
-    );
-  }
-  await Promise.all(promises);
-  return files;
+      });
+    });
+    return Promise.all(promises);
+  });
+  await Promise.all(outerPromises);
+  return out;
 };
