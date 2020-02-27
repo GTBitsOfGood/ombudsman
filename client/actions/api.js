@@ -18,7 +18,7 @@ export const getPDF = () =>
       return json.payload;
     });
 
-export const updateClicks = (category, filename) =>
+export const updateClicks = (category, filename) => {
   fetch(urls.baseUrl + urls.api.updateClicks, {
     method: "post",
     mode: "no-cors",
@@ -41,6 +41,7 @@ export const updateClicks = (category, filename) =>
 
       return json.payload;
     });
+};
 
 export const getCategories = () =>
   fetch(urls.baseUrl + urls.api.categories, {

@@ -5,12 +5,12 @@ import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { getPDF, updateClicks, getCategories } from '../client/actions/api';
 
-const clickUpdate = (item) => {
-  updateClicks(item.categories, item.fileName);
-};
+import { getPDF, updateClicks, getCategories } from '../client/actions/api';
 
 const SSRPage = ({
   pdfProps, categories, errorMessage, clickUpdate,
@@ -42,16 +42,72 @@ const SSRPage = ({
             </div>
             <br />
             Files:
-            {Object.keys(pdfs).map((file) => (
-              pdfs[file].map((msg) => (
+            {Object.keys(pdfs).map((category) => (
+              pdfs[category].map((msg) => (
                 <li key={msg}>
                   <a>
                     Views:
                     {msg.views}
                   </a>
-                  <Link href={msg.url}><a id={msg.fileName} onClick={() => clickUpdate(msg.item)}>{msg.fileName}</a></Link>
+                  <Link href={msg.url}>
+                    <a
+                      id={msg.fileName}
+                      onClick={() => clickUpdate({ fileName: msg.fileName, category })}
+                    >
+                      {msg.fileName}
+                    </a>
+                  </Link>
                 </li>
               ))))}
+          </div>
+          <br />
+          <br />
+          <br />
+          <hr />
+          <br />
+          <div align="center">
+            Frequently Viewed Documents
+            <br />
+            <br />
+          </div>
+          <Container fluid="true" align="center">
+            <Row>
+              <Col>Title 1</Col>
+              <Col>Title 2</Col>
+              <Col>Title 3</Col>
+            </Row>
+            <br />
+            <Row>
+              <Col>Title 4</Col>
+              <Col>Title 5</Col>
+              <Col>Title 6</Col>
+            </Row>
+          </Container>
+          <br />
+          <hr />
+          <br />
+          <div align="center">
+            Find By Category
+            <br />
+            <br />
+            <Container fluid="true" align="center">
+              <Row>
+                <Col md={{ span: 0, offset: 2 }} xs lg="3">
+                  <DropdownButton id="dropdown-basic-button" title="Category">
+                    <Dropdown.Item href="#/category-1">document 1</Dropdown.Item>
+                    <Dropdown.Item href="#/category-2">document 2</Dropdown.Item>
+                    <Dropdown.Item href="#/category-3">document 3</Dropdown.Item>
+                  </DropdownButton>
+                </Col>
+                <Col md={{ span: 0, offset: 2 }} xs lg="3">
+                  <DropdownButton id="dropdown-basic-button" title="Category">
+                    <Dropdown.Item href="#/category-1">document 1</Dropdown.Item>
+                    <Dropdown.Item href="#/category-2">document 2</Dropdown.Item>
+                    <Dropdown.Item href="#/category-3">document 3</Dropdown.Item>
+                  </DropdownButton>
+                </Col>
+              </Row>
+            </Container>
           </div>
         </h4>
       ) : (
@@ -71,8 +127,8 @@ SSRPage.getInitialProps = async () => {
 };
 
 SSRPage.propTypes = {
-  pdfProps: PropTypes.arrayOf(Object),
-  categories: PropTypes.arrayOf(Object),
+  pdfProps: PropTypes.objectOf(Object),
+  categories: PropTypes.objectOf(Object),
   errorMessage: PropTypes.string,
   clickUpdate: PropTypes.func,
 };
@@ -80,6 +136,6 @@ SSRPage.defaultProps = {
   pdfProps: null,
   categories: null,
   errorMessage: null,
-  clickUpdate: (data) => clickUpdate(data),
+  clickUpdate: (data) => updateClicks(data.category, data.fileName),
 };
 export default SSRPage;
