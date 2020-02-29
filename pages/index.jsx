@@ -22,23 +22,23 @@ const SSRPage = ({
 
   return (
     <>
-      <h2 align="center">Ombudsman Toolbox</h2>
+	  <br /><br /><br />
+      <h2 align="center">Ombudsman Toolbox Search</h2>
       {errorMessage == null ? (
         <h4>
           <div className="col-lg-7 ml-auto">
             <Form inline>
               <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+				<div className="dropdown">
+				  <DropdownButton id="dropdown-basic-button" title="Select a Category">
+					{categories.map((item) => (
+					  <Dropdown.Item href={`#/${item}`} onClick={() => setPdfs({ item: pdfProps[item] })}>{item}</Dropdown.Item>
+					))}
+				  </DropdownButton>
+				</div>
+				&nbsp;
               <Button variant="outline-success">Search</Button>
             </Form>
-            <br />
-            <div className="dropdown">
-              Select Category&#8195;
-              <DropdownButton id="dropdown-basic-button" title="Category">
-                {categories.map((item) => (
-                  <Dropdown.Item href={`#/${item}`} onClick={() => setPdfs({ item: pdfProps[item] })}>{item}</Dropdown.Item>
-                ))}
-              </DropdownButton>
-            </div>
             <br />
             {/* Keep for demo purposes */}
             {/* Files: */}
@@ -73,6 +73,7 @@ const SSRPage = ({
           <Container fluid="true" align="center">
             <Row>
               <Col>
+			  <div class="card card-block">
                 {sortedPdfs[0].fileName}
                 <p>
                   <a
@@ -81,11 +82,14 @@ const SSRPage = ({
                       { fileName: sortedPdfs[0].fileName, category: sortedPdfs[0].category },
                     )}
                   >
+				  <br />
                     <button type="button" className="btn btn-primary">View</button>
                   </a>
                 </p>
+			  </div>
               </Col>
               <Col>
+			  <div class="card card-block">
                 {sortedPdfs[1].fileName}
                 <p>
                   <a
@@ -94,11 +98,14 @@ const SSRPage = ({
                       { fileName: sortedPdfs[1].fileName, category: sortedPdfs[1].category },
                     )}
                   >
+					<br />
                     <button type="button" className="btn btn-primary">View</button>
                   </a>
                 </p>
+			  </div>
               </Col>
               <Col>
+			  <div class="card card-block">
                 {sortedPdfs[2].fileName}
                 <p>
                   <a
@@ -107,14 +114,17 @@ const SSRPage = ({
                       { fileName: sortedPdfs[2].fileName, category: sortedPdfs[2].category },
                     )}
                   >
+					<br /><br />
                     <button type="button" className="btn btn-primary">View</button>
                   </a>
                 </p>
+			  </div>
               </Col>
             </Row>
             <br />
             <Row>
               <Col>
+			  <div class="card card-block">
                 {sortedPdfs[3].fileName}
                 <p>
                   <a
@@ -123,11 +133,14 @@ const SSRPage = ({
                       { fileName: sortedPdfs[3].fileName, category: sortedPdfs[3].category },
                     )}
                   >
+					<br />
                     <button type="button" className="btn btn-primary">View</button>
                   </a>
                 </p>
+			  </div>
               </Col>
               <Col>
+			  <div class="card card-block">
                 {sortedPdfs[4].fileName}
                 <p>
                   <a
@@ -136,11 +149,14 @@ const SSRPage = ({
                       { fileName: sortedPdfs[4].fileName, category: sortedPdfs[4].category },
                     )}
                   >
+					<br />
                     <button type="button" className="btn btn-primary">View</button>
                   </a>
                 </p>
+			  </div>
               </Col>
               <Col>
+			  <div class="card card-block">
                 {sortedPdfs[5].fileName}
                 <p>
                   <a
@@ -149,9 +165,11 @@ const SSRPage = ({
                       { fileName: sortedPdfs[5].fileName, category: sortedPdfs[5].category },
                     )}
                   >
+					<br />
                     <button type="button" className="btn btn-primary">View</button>
                   </a>
                 </p>
+			  </div>
               </Col>
             </Row>
           </Container>
@@ -167,13 +185,13 @@ const SSRPage = ({
                 if (i * 2 + 1 < categories.length) {
                   return (
                     <Row>
-                      <Col xs lg="5">
+                      <Col md={{ span: 0, offset: 2 }} xs lg="3">
                         <DropdownButton id="dropdown-basic-button" title={categories[i * 2]}>
                           {pdfProps['Assisted Living Communities'].map((pdf) => (
                             <Dropdown.Item href={pdf.url}>{pdf.fileName}</Dropdown.Item>))}
                         </DropdownButton>
                       </Col>
-                      <Col xs lg="5">
+                      <Col md={{ span: 0, offset: 2 }} xs lg="3">
                         <DropdownButton id="dropdown-basic-button" title={categories[i * 2 + 1]}>
                           {pdfProps[categories[i * 2 + 1]].map((pdf) => (
                             <Dropdown.Item href={pdf.url}>{pdf.fileName}</Dropdown.Item>))}
@@ -197,6 +215,7 @@ const SSRPage = ({
               })}
             </Container>
           </div>
+		  <br /><br /><br /><br /><br /><br />
         </h4>
       ) : (
         <h4>
