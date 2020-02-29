@@ -8,6 +8,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Dropdown from 'react-bootstrap/Dropdown';
+import Link from "next/link";
 
 import { getPDF, updateClicks, getCategories } from '../client/actions/api';
 
@@ -25,51 +26,72 @@ const SSRPage = ({
 	  <br /><br /><br />
       <h2 align="center">Ombudsman Toolbox Search</h2>
       {errorMessage == null ? (
-        <h4>
-          <div className="col-lg-7 ml-auto">
-            <Form inline>
-              <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-				<div className="dropdown">
-				  <DropdownButton id="dropdown-basic-button" title="Select a Category">
-					{categories.map((item) => (
-					  <Dropdown.Item href={`#/${item}`} onClick={() => setPdfs({ item: pdfProps[item] })}>{item}</Dropdown.Item>
-					))}
-				  </DropdownButton>
-				</div>
-				&nbsp;
-              <Button variant="outline-success">Search</Button>
-            </Form>
-            <br />
-            {/* Keep for demo purposes */}
-            {/* Files: */}
-            {/* {Object.keys(pdfs).map((category) => ( */}
-            {/*  pdfs[category].map((msg) => ( */}
-            {/*    <li key={msg}> */}
-            {/*      <a> */}
-            {/*        Views: */}
-            {/*        {msg.views} */}
-            {/*      </a> */}
-            {/*      <Link href={msg.url}> */}
-            {/*        <a */}
-            {/*          id={msg.fileName} */}
-            {/*          onClick={() => clickUpdate({ fileName: msg.fileName, category })} */}
-            {/*        > */}
-            {/*          {msg.fileName} */}
-            {/*        </a> */}
-            {/*      </Link> */}
-            {/*    </li> */}
-            {/*  ))))} */}
-          </div>
+        <div>
+          <Row>
+            <Col md={{span: 6, offset: 3 }}>
+              <div className="input-group">
+                <Form.Control type="text"  placeholder="Search"/>
+                <Dropdown>
+                  <Dropdown.Toggle
+                  alignLeft>
+                    Select a Category
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    {
+                      categories.map((item, index) =>
+                          <div
+                              onClick={() => setPdfs({ item: pdfProps[item] })}>
+                            <Form.Check
+                                className="dropdown-item"
+
+                                value = { item }
+                                label = { item }
+                                filtertype = "normalfilter" />
+                          </div>
+                      )
+                    }
+                  </Dropdown.Menu>
+                  {/*<DropdownButton id="dropdown-basic-button" title="Select a Category">*/}
+                    {/*{categories.map((item) => (*/}
+                    {/*  <Dropdown.Item href={`#/${item}`} onClick={() => setPdfs({ item: pdfProps[item] })}>*/}
+                  {/*      <input type="checkbox" id="valuePot" value="Value Pot" name="Value Pot" />*/}
+                  {/*    </Dropdown.Item>*/}
+                    {/*))}*/}
+                  {/*</DropdownButton>*/}
+                </Dropdown>
+                  &nbsp;
+                <Button variant="outline-success">Search</Button>
+              </div>
+            </Col>
+          </Row>
+          <br />
+
+             {/*Keep for demo purposes*/}
+             {/*Files:*/}
+             {/*{Object.keys(pdfs).map((category) => (*/}
+             {/* pdfs[category].map((msg) => (*/}
+             {/*   <li key={msg}>*/}
+             {/*     <a>*/}
+             {/*       Views:*/}
+             {/*       {msg.views}*/}
+             {/*     </a>*/}
+             {/*     <Link href={msg.url}>*/}
+             {/*       <a*/}
+             {/*         id={msg.fileName}*/}
+             {/*         onClick={() => clickUpdate({ fileName: msg.fileName, category })}*/}
+             {/*       >*/}
+             {/*         {msg.fileName}*/}
+             {/*       </a>*/}
+             {/*     </Link>*/}
+             {/*   </li>*/}
+             {/* ))))}*/}
           <br />
           <br />
           <br />
           <hr />
           <br />
-          <div align="center">
-            Frequently Viewed Documents
-            <br />
-            <br />
-          </div>
+          <h4 align="center">Frequently Viewed Documents</h4>
+          <br/>
           <Container fluid="true" align="center">
             <Row>
               <Col>
@@ -114,7 +136,7 @@ const SSRPage = ({
                       { fileName: sortedPdfs[2].fileName, category: sortedPdfs[2].category },
                     )}
                   >
-					<br /><br />
+					<br />
                     <button type="button" className="btn btn-primary">View</button>
                   </a>
                 </p>
@@ -176,23 +198,23 @@ const SSRPage = ({
           <br />
           <hr />
           <br />
-          <div align="center">
-            Find By Category
-            <br />
+          <h4 align="center">Find by Category</h4>
             <br />
             <Container>
               {categories.map((category, i) => {
                 if (i * 2 + 1 < categories.length) {
                   return (
                     <Row>
-                      <Col md={{ span: 0, offset: 2 }} xs lg="3">
-                        <DropdownButton id="dropdown-basic-button" title={categories[i * 2]}>
-                          {pdfProps['Assisted Living Communities'].map((pdf) => (
+                      <Col>
+                        <div align="right">
+                        <DropdownButton id="dropdown-basic-button" size="lg" variant="w" title={categories[i * 2]}>
+                          {pdfProps[categories[i * 2]].map((pdf) => (
                             <Dropdown.Item href={pdf.url}>{pdf.fileName}</Dropdown.Item>))}
                         </DropdownButton>
+                        </div>
                       </Col>
-                      <Col md={{ span: 0, offset: 2 }} xs lg="3">
-                        <DropdownButton id="dropdown-basic-button" title={categories[i * 2 + 1]}>
+                      <Col>
+                        <DropdownButton id="dropdown-basic-button" size="lg" variant="w"title={categories[i * 2 + 1]}>
                           {pdfProps[categories[i * 2 + 1]].map((pdf) => (
                             <Dropdown.Item href={pdf.url}>{pdf.fileName}</Dropdown.Item>))}
                         </DropdownButton>
@@ -202,7 +224,7 @@ const SSRPage = ({
                 } if (i * 2 < categories.length) {
                   return (
                     <Row>
-                      <Col md={{ span: 0, offset: 2 }} xs lg="3">
+                      <Col>
                         <DropdownButton id="dropdown-basic-button" title={categories[i * 2]}>
                           {pdfProps[categories[i * 2]].map((pdf) => (
                             <Dropdown.Item href={pdf.url}>{pdf.fileName}</Dropdown.Item>))}
@@ -214,9 +236,8 @@ const SSRPage = ({
                 return null;
               })}
             </Container>
-          </div>
 		  <br /><br /><br /><br /><br /><br />
-        </h4>
+        </div>
       ) : (
         <h4>
           SSR Error:

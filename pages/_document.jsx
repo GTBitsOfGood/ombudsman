@@ -21,26 +21,24 @@ class MyDocument extends Document {
             <Navbar.Brand href="#home">Ombudsman</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="ml-auto">
-				<Nav.Link href="">Home</Nav.Link>
+              <Nav className="ml-auto" activeKey="#">
+				<Nav.Link href="#">Home</Nav.Link>
                 <Nav.Link href="#browse">Browse</Nav.Link>
                 <Nav.Link href="#help">Help</Nav.Link>
               </Nav>
-              {/* <Form inline>
-          <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-          <Button variant="outline-success">Search</Button>
-        </Form> */}
             </Navbar.Collapse>
           </Navbar>
         </Head>
         <body>
           <Main />
           <NextScript />
-		  <Navbar sticky="bottom" bg="light">
+		  <Navbar sticky="bottom" bg="light" >
 			  <Navbar.Text>
+                  <Nav activeKey="#">
 				<Navbar.Brand href="#home">Ombudsman Toolbox</Navbar.Brand>
-				<Nav.Link href="">Home</Nav.Link>
+				<Nav.Link href="#" eventKey="#">Home</Nav.Link>
 				<Nav.Link href="#browse">Browse</Nav.Link>
+                      </Nav>
 			  </Navbar.Text>
 			  <Navbar.Toggle />
 			  <Navbar.Collapse className="justify-content-end">
