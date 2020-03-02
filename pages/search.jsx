@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { getPDF, getCategories, updateClicks } from '../client/actions/api';
 
 const searchPage = ({
-  pdfProps, name, pdfs, errorMessage, clickUpdate,
+  pdfProps, name, pdfs, errorMessage, clickUpdate, categories
 }) => (
   <>
     {errorMessage == null
@@ -28,7 +28,7 @@ const searchPage = ({
                 <Link href={msg.url}>
                   <a
                     id={msg.fileName}
-                    onClick={() => clickUpdate({ fileName: msg.fileName, category })}
+                    //onClick={() => clickUpdate({ fileName: msg.fileName, category: categories[category] })}
                   >
                     {msg.fileName}
                   </a>
@@ -57,7 +57,7 @@ searchPage.getInitialProps = async ({ query }) => {
   query.pdfs.map((item, index) => {
     if (item === '1') pdfMap.push(pdfJ.pdfMap[catArray[index]]);
   });
-  return { pdfProps: pdfMap, pdfs: query.pdfs };
+  return { pdfProps: pdfMap, pdfs: query.pdfs, categories: catArray };
 };
 
 searchPage.propTypes = {
@@ -66,6 +66,7 @@ searchPage.propTypes = {
   pdfs: PropTypes.arrayOf(Object),
   clickUpdate: PropTypes.func,
   errorMessage: PropTypes.string,
+  categories: PropTypes.arrayOf(Object)
 };
 searchPage.defaultProps = {
   pdfProps: {},
@@ -73,5 +74,6 @@ searchPage.defaultProps = {
   pdfs: [],
   clickUpdate: (data) => updateClicks(data.category, data.fileName),
   errorMessage: null,
+  categories: []
 };
 export default searchPage;
