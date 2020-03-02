@@ -7,6 +7,7 @@ export default {
   dbName: 'nextjs',
   pages: {
     index: '/',
+    search: '/search',
   },
   api: {
     example: '/api/getPDF',
