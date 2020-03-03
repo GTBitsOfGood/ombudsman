@@ -31,9 +31,9 @@ export const getPDF = () =>
  * Increment clicks for a file.
  * 
  * @param {string} category 
- * @param {string} filename 
+ * @param {string} fileName 
  */
-export const updateClicks = (category, filename) => {
+export const updateClicks = (category, fileName) => {
   fetch(urls.baseUrl + urls.api.updateClicks, {
     method: "post",
     mode: "no-cors",
@@ -43,7 +43,7 @@ export const updateClicks = (category, filename) => {
     },
     body: JSON.stringify({
       category,
-      filename
+      fileName
     })
   })
     .then(response => response.json())
