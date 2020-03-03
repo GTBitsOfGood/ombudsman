@@ -10,7 +10,7 @@ export default {
     search: '/search',
   },
   api: {
-    example: '/api/getPDF',
+    getPDF: '/api/getPDF',
     updateClicks: '/api/updateClicks',
     categories: '/api/getCategories',
   },

@@ -11,7 +11,7 @@ import urls from "../../utils/urls";
  * @returns {Promise<{pdfMap: Object.<string, pdf[]>, sortedPdfs: pdf[]}>} object of PDF metadata
  */
 export const getPDF = () =>
-  fetch(urls.baseUrl + urls.api.example, {
+  fetch(urls.baseUrl + urls.api.getPDF, {
     method: "get",
     mode: "no-cors",
     credentials: "include"
