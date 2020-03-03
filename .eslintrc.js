@@ -19,7 +19,8 @@ module.exports = {
         "react"
     ],
     "rules": {
-	      "react/jsx-props-no-spreading": ["error", {"custom": "ignore"}],
+	    "react/jsx-props-no-spreading": ["error", {"custom": "ignore"}],
         "jsx-a11y/anchor-is-valid": 0,
+        "react/jsx-one-expression-per-line": "off",
     }
 };

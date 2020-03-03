@@ -25,7 +25,7 @@ const searchPage = ({
             pdfProps[category].map((msg) => (
 
               <li key={msg}>
-                <Link href={msg.url}>
+                <Link href={{ pathname: '/pdf', query: { url: msg.url, category, fileName: msg.fileName } /* TODO: category is currently a number, not a string, from how it's passed in by search */}}>
                   <a
                     id={msg.fileName}
                     //onClick={() => clickUpdate({ fileName: msg.fileName, category: categories[category] })}
@@ -66,7 +66,7 @@ searchPage.propTypes = {
   pdfs: PropTypes.arrayOf(Object),
   clickUpdate: PropTypes.func,
   errorMessage: PropTypes.string,
-  categories: PropTypes.arrayOf(Object)
+  categories: PropTypes.arrayOf(Object),
 };
 searchPage.defaultProps = {
   pdfProps: {},
@@ -74,6 +74,6 @@ searchPage.defaultProps = {
   pdfs: [],
   clickUpdate: (data) => updateClicks(data.category, data.fileName),
   errorMessage: null,
-  categories: []
+  categories: [],
 };
 export default searchPage;
