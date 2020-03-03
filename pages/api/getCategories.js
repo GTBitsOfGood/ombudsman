@@ -1,8 +1,14 @@
 import { getCategories } from "../../server/actions/database";
 
-// @route   POST api/getCategories
-// @desc    Example API
-// @access  Public
+/**
+ * Get a list of all categories.
+ * 
+ * @route GET api/getCategories
+ * @access Public
+ * @param {object} req 
+ * @param {object} res 
+ * Sends JSON in the format of {success: boolean, payload: string[]}
+ */
 const handler = (req, res) =>
   getCategories()
     .then(text =>
