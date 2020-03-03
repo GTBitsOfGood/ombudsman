@@ -2,9 +2,12 @@ import fetch from "isomorphic-unfetch";
 import urls from "../../utils/urls";
 
 /**
+ * @typedef {{ url: string, fileName: string, views: number, category: string }} pdf
+ */
+
+/**
  * Get a list of all PDFs.
  *
- * @typedef {{ url: string, fileName: string, views: number, category: string }} pdf
  * @returns {Promise<{pdfMap: Object.<string, pdf[]>, sortedPdfs: pdf[]}>} object of PDF metadata
  */
 export const getPDF = () =>
@@ -58,7 +61,7 @@ export const updateClicks = (category, filename) => {
 /**
  * Get a list of all categories.
  * 
- * @returns {Promise<string[]>} a list of categories
+ * @returns {Promise<{[category: string]: pdf[]}>} a list of categories
  */
 export const getCategories = () =>
   fetch(urls.baseUrl + urls.api.categories, {

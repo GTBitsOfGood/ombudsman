@@ -18,9 +18,13 @@ const firestore = firebase.firestore();
 const dbCategory = "catArray";
 
 /**
- * Get a list of all categories.
+ * @typedef {{ url: string, fileName: string, views: number, category: string }} pdf Note that url refers to the image URL.
+ */
+
+/**
+ * Get a list of all categories and their PDFs.
  * 
- * @returns {Promise<string[]>} a list of categories
+ * @returns {Promise<{[category: string]: pdf[]}>} a list of categories and PDFs in those categories.
  */
 export const getCategories = async () => {
   const firestoreRef = firestore.collection("categories").doc("categories");
@@ -45,17 +49,7 @@ export const updateClicks = async (category, filename) => {
 /**
  * Get a list of all PDFs in the database.
  * 
- * @typedef {{ url: string, fileName: string, views: number, category: string }} pdf
- * @returns {Promise<{pdfMap: Object.<string, pdf[]>, sortedPdfs: pdf[]}>}
- * 
- * Returns JSON in the format of {
- *     pdfMap: {
- *         category1: [pdf1, pdf2, …],
- *         category2: [pdf3, pdf4, …],
- *         …
- *     },
- *     sortedPdfs: [pdf5, pdf6, pdf7, pdf2…]
- * }
+ * @returns {Promise<{pdfMap: {[category: string]: pdf[]}, sortedPdfs: pdf[]}>}
  * where sortedPdfs is a list of all PDFs, sorted by most views to least views,
  * and in the case of a tie, then alphabetically.
  *

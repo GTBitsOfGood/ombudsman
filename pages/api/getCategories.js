@@ -1,13 +1,17 @@
 import { getCategories } from "../../server/actions/database";
 
 /**
+ * @typedef {{ url: string, fileName: string, views: number, category: string }} pdf Note that url refers to the image URL.
+ */
+
+/**
  * Get a list of all categories.
  * 
  * @route GET api/getCategories
  * @access Public
  * @param {object} req 
  * @param {object} res 
- * Sends JSON in the format of {success: boolean, payload: string[]}
+ * Sends JSON in the format of {Promise<{[category: string]: pdf[]}>}
  */
 const handler = (req, res) =>
   getCategories()
