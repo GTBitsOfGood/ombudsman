@@ -8,7 +8,7 @@ import urls from "../../utils/urls";
 /**
  * Get a list of all PDFs.
  *
- * @returns {Promise<{pdfMap: {[category: string]: pdf[]}, sortedPdfs: pdf[]}>} object of PDF metadata
+ * @returns {Promise<{pdfMap: {[category: string]: pdf[]}, sortedPdfs: pdf[]}>} object of PDF properties
  */
 export const getPDF = () =>
   fetch(urls.baseUrl + urls.api.getPDF, {
