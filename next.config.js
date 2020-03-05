@@ -13,3 +13,16 @@ module.exports = withImages({
     JWT_SECRET: process.env.JWT_SECRET,
   },
 });
+
+module.exports = {
+  webpack: (config, { isServer }) => {
+    // Fixes npm packages that depend on `fs` module
+    if (!isServer) {
+      config.node = {
+        fs: 'empty'
+      }
+    }
+
+    return config
+  }
+}
