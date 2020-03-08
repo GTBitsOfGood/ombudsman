@@ -28,5 +28,7 @@
             "ignore-comments": true
         }],
         "react/jsx-one-expression-per-line": "off",
+        "jsx-a11y/interactive-supports-focus": "warn",
+        "object-curly-newline": "off",
     }
 }

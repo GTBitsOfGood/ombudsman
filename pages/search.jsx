@@ -25,10 +25,12 @@ const searchPage = ({
             pdfProps[category].map((msg) => (
 
               <li key={msg}>
-                <Link href={{ pathname: '/pdf', query: { url: msg.url, category, fileName: msg.fileName } /* TODO: category is currently a number, not a string, from how it's passed in by search */}}>
+                <Link href={{ pathname: '/pdf', query: { url: msg.url, category, fileName: msg.fileName } /* TODO: category is currently a number, not a string, from how it's passed in by search */ }}>
                   <a
                     id={msg.fileName}
-                    //onClick={() => clickUpdate({ fileName: msg.fileName, category: categories[category] })}
+                    role="link"
+                    onClick={() => clickUpdate({ fileName: msg.fileName, category: categories[category] })}
+                    onKeyDown={(event) => { if (event.keycode === 13) clickUpdate({ fileName: msg.fileName, category: categories[category] }); }}
                   >
                     {msg.fileName}
                   </a>
