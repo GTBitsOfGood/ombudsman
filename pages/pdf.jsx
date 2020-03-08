@@ -6,12 +6,14 @@ import Col from 'react-bootstrap/Col';
 import Link from 'next/link';
 import { getPDF, getCategories, updateClicks } from '../client/actions/api';
 
-// We can also use an iframe with src="http://docs.google.com/gview?url=yourPdfUrl&embedded=true"
+// We can also use an iframe with src="http://docs.google.com/gview?url=yourPdfUrl&embedded=true", but this always says "No Preview Available" and doesn't work for files larger than 25 MB
 const pdfPage = ({ category, fileName, url, errorMessage }) => {
   return (
     <div height="100%" style={{ overflow: 'auto', height: '100%' }}>
       {errorMessage == null ? (
-        <iframe src={url} title="my pdf" width="100%" height="99%" frameBorder="0" />
+        <object data={url} type="application/pdf" height="99%" width="100%">
+          <embed src={url} type="application/pdf" />
+        </object>
       ) : (
         <h4>
           SSR Error: {errorMessage}
