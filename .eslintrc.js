@@ -25,5 +25,10 @@ module.exports = {
         "jsx-a11y/interactive-supports-focus": "warn",
         "no-unused-vars": "warn",
         "object-curly-newline": "off",
+        "react/jsx-indent": "warn",
+        "react/jsx-closing-tag-location": "warn",
+        "react/jsx-max-props-per-line": "warn",
+        "react/jsx-wrap-multilines": "warn",
+        "indent": "warn",
     }
 };

@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { getPDF, getCategories, updateClicks } from '../client/actions/api';
 
 const searchPage = ({
-  pdfProps, name, pdfs, errorMessage, clickUpdate, categories
+  pdfProps, name, pdfs, errorMessage, clickUpdate, categories,
 }) => (
   <>
     {errorMessage == null

@@ -42,19 +42,18 @@ const homePage = ({
                   <Dropdown.Menu>
                     {
                       categories.map((item, index) => (
-                        <div>
-                          <Form.Check
-                            className="dropdown-item"
-                            onClick={() => {
-                              const currCheck = checked;
-                              currCheck[index] = (checked[index]) ? 0 : 1;
-                              setCheck([...currCheck]);
-                            }}
-                            value={item}
-                            label={item}
-                            filtertype="normalfilter"
-                          />
-                        </div>
+                        <Form.Check
+                          className="dropdown-item"
+                          onClick={() => {
+                            const currCheck = checked;
+                            currCheck[index] = (checked[index]) ? 0 : 1;
+                            setCheck([...currCheck]);
+                          }}
+                          value={item}
+                          label={item}
+                          filtertype="normalfilter"
+                          key={item}
+                        />
                       ))
                     }
                   </Dropdown.Menu>
@@ -206,36 +205,54 @@ const homePage = ({
             {categories.map((category, i) => {
               if (i * 2 + 1 < categories.length) {
                 return (
-                  <Row>
+                  <Row key={categories[i * 2 + 1]}>
                     <Col>
                       <div align="right">
                         <DropdownButton id="dropdown-basic-button" size="lg" variant="w" title={categories[i * 2]}>
                           {pdfProps[categories[i * 2]].map((pdf) => (
-                            <Dropdown.Item href={pdf.url} onClick={() => clickUpdate(
+                            <Dropdown.Item
+                              href={pdf.url}
+                              onClick={() => clickUpdate(
                                 { fileName: pdf.fileName, category: categories[i * 2] },
-                            )}>{pdf.fileName}</Dropdown.Item>))}
+                              )}
+                              key={pdf.url}
+                            >{pdf.fileName}
+                            </Dropdown.Item>
+                          ))}
                         </DropdownButton>
                       </div>
                     </Col>
                     <Col>
                       <DropdownButton id="dropdown-basic-button" size="lg" variant="w" title={categories[i * 2 + 1]}>
                         {pdfProps[categories[i * 2 + 1]].map((pdf) => (
-                          <Dropdown.Item href={pdf.url} onClick={() => clickUpdate(
+                          <Dropdown.Item
+                            href={pdf.url}
+                            onClick={() => clickUpdate(
                               { fileName: pdf.fileName, category: categories[i * 2 + 1] },
-                          )}>{pdf.fileName}</Dropdown.Item>))}
+                            )}
+                            key={pdf.url}
+                          >{pdf.fileName}
+                          </Dropdown.Item>
+                        ))}
                       </DropdownButton>
                     </Col>
                   </Row>
                 );
               } if (i * 2 < categories.length) {
                 return (
-                  <Row>
+                  <Row key={categories[i * 2]}>
                     <Col>
                       <DropdownButton id="dropdown-basic-button" title={categories[i * 2]}>
                         {pdfProps[categories[i * 2]].map((pdf) => (
-                          <Dropdown.Item href={pdf.url} onClick={() => clickUpdate(
+                          <Dropdown.Item
+                            href={pdf.url}
+                            onClick={() => clickUpdate(
                               { fileName: pdf.fileName, category: categories[i * 2] },
-                          )}>{pdf.fileName}</Dropdown.Item>))}
+                            )}
+                            key={pdf.url}
+                          >{pdf.fileName}
+                          </Dropdown.Item>
+                        ))}
                       </DropdownButton>
                     </Col>
                   </Row>
