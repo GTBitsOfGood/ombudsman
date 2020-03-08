@@ -9,6 +9,10 @@ const routes = [
     name: 'Search',
     link: urls.pages.search,
   },
+  {
+    name: 'Render PDF',
+    link: urls.pages.pdf,
+  }
 ];
 
 export default routes;
