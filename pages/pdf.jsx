@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import { usePdf } from '@mikecousins/react-pdf';
 import PropTypes from 'prop-types';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -7,56 +6,17 @@ import Col from 'react-bootstrap/Col';
 import Link from 'next/link';
 import { getPDF, getCategories, updateClicks } from '../client/actions/api';
 
+// We can also use an iframe with src="http://docs.google.com/gview?url=yourPdfUrl&embedded=true"
 const pdfPage = ({ category, fileName, url, errorMessage }) => {
-  const [page, setPage] = useState(1);
-  const canvasRef = useRef(null);
-
-  const { pdfDocument, pdfPage } = usePdf({
-    file: 'test.pdf',
-    page,
-    canvasRef,
-  });
-
   return (
-    <div>
+    <div height="100%" style={{ overflow: 'auto', height: '100%' }}>
       {errorMessage == null ? (
-        <div>
-          <Row>
-            <Col>
-              <a href="/">Home</a>
-              <a> / {category}</a>
-              <a> / {fileName}</a>
-
-              {!pdfDocument && <span>Loading...</span>}
-              <canvas ref={canvasRef} />
-              {Boolean(pdfDocument && pdfDocument.numPages) && (
-                <nav>
-                  <ul className="pager">
-                    <li className="previous">
-                      <button disabled={page === 1} onClick={() => setPage(page - 1)}>
-                        Previous
-                      </button>
-                    </li>
-                    <li className="next">
-                      <button
-                        disabled={page === pdfDocument.numPages}
-                        onClick={() => setPage(page + 1)}
-                      >
-                        Next
-                      </button>
-                    </li>
-                  </ul>
-                </nav>
-              )}
-            </Col>
-          </Row>
-        </div>
+        <iframe src={url} title="my pdf" width="100%" height="99%" frameBorder="0" />
       ) : (
-          <h4>
-            SSR Error:
-          {errorMessage}
-          </h4>
-        )}
+        <h4>
+          SSR Error: {errorMessage}
+        </h4>
+      )}
     </div>
   );
 };
