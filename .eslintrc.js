@@ -30,5 +30,6 @@ module.exports = {
         "react/jsx-max-props-per-line": "warn",
         "react/jsx-wrap-multilines": "warn",
         "indent": "warn",
+        "max-len": "warn",
     }
 };

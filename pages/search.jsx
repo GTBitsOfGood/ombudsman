@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { getPDF, getCategories, updateClicks } from '../client/actions/api';
 
 const searchPage = ({
-  pdfProps, name, pdfs, errorMessage, clickUpdate, categories,
+  pdfMap, name, checkedCategories, errorMessage, clickUpdate, categories,
 }) => (
   <>
     {errorMessage == null
@@ -21,8 +21,8 @@ const searchPage = ({
           </Row>
           {/* Keep for demo purposes */}
           Files:
-          {Object.keys(pdfProps).map((category) => (
-            pdfProps[category].map((msg) => (
+          {Object.keys(pdfMap).map((category) => (
+            pdfMap[category].map((msg) => (
 
               <li key={msg}>
                 <Link href={{ pathname: '/pdf', query: { url: msg.url, category, fileName: msg.fileName } /* TODO: category is currently a number, not a string, from how it's passed in by search */ }}>
@@ -51,29 +51,23 @@ const searchPage = ({
   </>
 );
 
-searchPage.getInitialProps = async ({ query }) => {
-  const pdfJ = await getPDF();
-  const categoriesJ = await getCategories();
-  const catArray = Object.keys(categoriesJ);
-  const pdfMap = [];
-  query.pdfs.map((item, index) => {
-    if (item === '1') pdfMap.push(pdfJ.pdfMap[catArray[index]]);
-  });
-  return { pdfProps: pdfMap, pdfs: query.pdfs, categories: catArray };
+searchPage.getInitialProps = async ({ pdfMap, categories, checkedCategories }) => {
+  const ppdfMap = pdfMap.filter((val, index) => checkedCategories[index] === '1');
+  return { pdfMap: ppdfMap, checkedCategories, categories };
 };
 
 searchPage.propTypes = {
-  pdfProps: PropTypes.arrayOf(Object),
+  pdfMap: PropTypes.arrayOf(Object),
   name: PropTypes.string,
-  pdfs: PropTypes.arrayOf(Object),
+  checkedCategories: PropTypes.arrayOf(Number),
   clickUpdate: PropTypes.func,
   errorMessage: PropTypes.string,
   categories: PropTypes.arrayOf(Object),
 };
 searchPage.defaultProps = {
-  pdfProps: {},
+  pdfMap: {},
   name: null,
-  pdfs: [],
+  checkedCategories: [],
   clickUpdate: (data) => updateClicks(data.category, data.fileName),
   errorMessage: null,
   categories: [],

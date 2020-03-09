@@ -59,7 +59,7 @@ const homePage = ({
                   </Dropdown.Menu>
                 </Dropdown>
                   &nbsp;
-                <Link href={{ pathname: '/search', query: { pdfs: checked } }}>
+                <Link to={{ pathname: '/search', checkedCategories: checked, pdfMap: pdfProps, categories, sortedPdfs }}>
                   <Button variant="outline-success">Search</Button>
                 </Link>
               </div>
@@ -291,7 +291,7 @@ homePage.getInitialProps = async () => {
 
 homePage.propTypes = {
   pdfProps: PropTypes.objectOf(Object),
-  categories: PropTypes.arrayOf(Object),
+  categories: PropTypes.arrayOf(String),
   errorMessage: PropTypes.string,
   clickUpdate: PropTypes.func,
   sortedPdfs: PropTypes.arrayOf(Object),
