@@ -20,16 +20,16 @@ export const getKeyWords = async (documents) => {
     );
      
     // print top terms for document 3
-    console.log(corpus.getTopTermsForDocument("document3"));
+    //console.log(corpus.getTopTermsForDocument("document1"));
 
-    let dataBuffer = fs.readFileSync('/Users/jacksanniota/gt/clubs/bog/ombudsman/testPDFs/Nursing Home Regulations (State).pdf');
+    let dataBuffer = fs.readFileSync('/Users/colintam/Documents/Bits of Good/Nursing Home Regulations (State).pdf');
  
     pdf(dataBuffer).then(function(data) {
         // PDF text
-        console.log([data.text])
+        //console.log([data.text])
         const corpus2 = new Corpus(
-          'Nursing Home Regulations (State).pdf',
-          [data.text]
+          ['Nursing Home Regulations (State).pdf'],
+          [data.text,]
         );
         console.log(corpus2.getTopTermsForDocument('Nursing Home Regulations (State).pdf'));
         
