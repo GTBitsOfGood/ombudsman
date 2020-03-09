@@ -11,9 +11,10 @@ import Col from 'react-bootstrap/Col';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 import { getPDF, updateClicks, getCategories } from '../client/actions/api';
+import { getKeyWords } from '../client/actions/keywords';
 
 const SSRPage = ({
-  pdfProps, categories, errorMessage, clickUpdate,
+  pdfProps, categories, errorMessage, clickUpdate, keyWords
 }) => {
   const [pdfs, setPdfs] = useState([]);
 
@@ -123,6 +124,9 @@ const SSRPage = ({
 SSRPage.getInitialProps = async () => {
   const pdfJ = await getPDF();
   const categoriesJ = await getCategories();
+  // const documentData = ["doc1" , "doc2" , "doc3"] This will eventually be a dic of all the pdfs and their text. 
+  // const keyWordsJ = await getKeyWords(documentData);
+  // return { pdfProps: pdfJ, categories: categoriesJ, errorMessage: null, keyWords: keyWordsJ };
   return { pdfProps: pdfJ, categories: categoriesJ, errorMessage: null };
 };
 
@@ -131,11 +135,13 @@ SSRPage.propTypes = {
   categories: PropTypes.objectOf(Object),
   errorMessage: PropTypes.string,
   clickUpdate: PropTypes.func,
+  keyWords: PropTypes.objectOf(Object)
 };
 SSRPage.defaultProps = {
   pdfProps: null,
   categories: null,
   errorMessage: null,
   clickUpdate: (data) => updateClicks(data.category, data.fileName),
+  keyWords: null,
 };
 export default SSRPage;

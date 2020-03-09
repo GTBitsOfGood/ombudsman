@@ -58,3 +58,19 @@ export const getCategories = () =>
       }
       return json.payload;
     });
+
+  export const getKeywords = () =>
+  fetch(urls.baseUrl + urls.api.categories, {
+    method: "get",
+    mode: "no-cors",
+    credentials: "include"
+  })
+    .then(response => response.json())
+    .then(json => {
+      if (json == null) {
+        throw new Error("Could not connect to API!");
+      } else if (!json.success) {
+        throw new Error(json.message);
+      }
+      return json.payload;
+    });
