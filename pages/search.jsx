@@ -30,22 +30,22 @@ const searchPage = ({
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 {
-				  categories.map((item, index) => (
-  <div>
-    <Form.Check
-      className="dropdown-item"
-      onClick={() => {
-						  const currCheck = checked;
-						  currCheck[index] = (checked[index]) ? 0 : 1;
-						  setCheck([...currCheck]);
-      }}
-      value={item}
-      label={item}
-      filtertype="normalfilter"
-    />
-  </div>
-				  ))
-				}
+                  categories.map((item, index) => (
+                    <div>
+                      <Form.Check
+                        className="dropdown-item"
+                        onClick={() => {
+                          const currCheck = checked;
+                          currCheck[index] = (checked[index]) ? 0 : 1;
+                          setCheck([...currCheck]);
+                        }}
+                        value={item}
+                        label={item}
+                        filtertype="normalfilter"
+                      />
+                    </div>
+                  ))
+                }
               </Dropdown.Menu>
             </Dropdown>
           </Col>
