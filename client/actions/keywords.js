@@ -20,7 +20,7 @@ export const getKeyWords = async (documents) => {
     );
      
     // print top terms for document 3
-    console.log(corpus.getTopTermsForDocument("document3"));
+    //console.log(corpus.getTopTermsForDocument("document1"));
 
     let dataBuffer = fs.readFileSync('/Users/jacksanniota/gt/clubs/bog/ombudsman/testPDFs/Nursing Home Regulations (State).pdf');
     let stopList = fs.readFileSync('/Users/jacksanniota/gt/clubs/bog/ombudsman/testPDFs/stoplist.txt').toString('utf-8');
