@@ -23,15 +23,19 @@ export const getKeyWords = async (documents) => {
     console.log(corpus.getTopTermsForDocument("document3"));
 
     let dataBuffer = fs.readFileSync('/Users/jacksanniota/gt/clubs/bog/ombudsman/testPDFs/Nursing Home Regulations (State).pdf');
+    let stopList = fs.readFileSync('/Users/jacksanniota/gt/clubs/bog/ombudsman/testPDFs/stoplist.txt').toString('utf-8');
+    var stopArray = stopList.split("\n\n")
+    // console.log(stopArray);
  
     pdf(dataBuffer).then(function(data) {
         // PDF text
-        console.log([data.text])
+        // console.log([data.text])
         const corpus2 = new Corpus(
-          'Nursing Home Regulations (State).pdf',
-          [data.text]
+          ['Nursing Home Regulations (State).pdf'],
+          [data.text,], false, stopArray,
         );
         console.log(corpus2.getTopTermsForDocument('Nursing Home Regulations (State).pdf'));
+        console.log(corpus2.getStopwords())
         
     });
     
