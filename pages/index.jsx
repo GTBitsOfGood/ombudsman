@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -10,11 +10,12 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Link from 'next/link';
 
 import { getPDF, updateClicks, getCategories } from '../client/actions/api';
+import PdfContext from '../client/components/PdfContext';
 
 const homePage = ({
   pdfProps, categories, errorMessage, clickUpdate, sortedPdfs,
 }) => {
-  const [pdfs, setPdfs] = useState([]);
+  const [pdfs, setPdfs] = useState({});
   const [checked, setCheck] = useState([]);
 
   useEffect(() => {
@@ -59,7 +60,7 @@ const homePage = ({
                   </Dropdown.Menu>
                 </Dropdown>
                   &nbsp;
-                <Link to={{ pathname: '/search', checkedCategories: checked, pdfMap: pdfProps, categories, sortedPdfs }}>
+                <Link href="/search">
                   <Button variant="outline-success">Search</Button>
                 </Link>
               </div>
@@ -297,7 +298,7 @@ homePage.propTypes = {
   sortedPdfs: PropTypes.arrayOf(Object),
 };
 homePage.defaultProps = {
-  pdfProps: [],
+  pdfProps: {},
   categories: [],
   errorMessage: null,
   clickUpdate: (data) => updateClicks(data.category, data.fileName),

@@ -31,5 +31,9 @@ module.exports = {
         "react/jsx-wrap-multilines": "warn",
         "indent": "warn",
         "max-len": "warn",
+        "no-underscore-dangle": "off",
+        "no-trailing-spaces": "warn",
+        "react/prop-types": "warn",
+        "semi": "warn",
     }
 };
