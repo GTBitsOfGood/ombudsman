@@ -21,5 +21,5 @@ module.exports = {
     "rules": {
 	    "react/jsx-props-no-spreading": ["warn", {"custom": "ignore"}],
         "jsx-a11y/anchor-is-valid": 0,
-    }
+    },
 };

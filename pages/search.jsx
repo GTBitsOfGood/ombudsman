@@ -8,9 +8,11 @@ import Form from 'react-bootstrap/Form';
 import Link from 'next/link';
 import { getPDF, getCategories, updateClicks } from '../client/actions/api';
 
-const searchPage = ({ pdfProps, name, pdfs, errorMessage, clickUpdate, categories }) => {
+const searchPage = ({
+  pdfProps, name, pdfs, errorMessage, clickUpdate, categories,
+}) => {
   const [checked, setCheck] = useState([]);
-  
+
   return (
     <>
       {errorMessage == null
@@ -59,7 +61,9 @@ const searchPage = ({ pdfProps, name, pdfs, errorMessage, clickUpdate, categorie
                     </h2>
                     <h3>Effective Date: 3/12/13</h3>
                     <h5>
-                      Views: {msg.views}
+                      Views:
+                      {' '}
+                      {msg.views}
                     </h5>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam convallis est et ornare maximus. Morbi mattis, tellus maximus elementum mollis, magna sapien dictum ante, blandit aliquet neque sapien sit amet nulla. Vestibulum faucibus lorem non nulla lacinia, eu iaculis turpis sollicitudin. Nunc eget elit laoreet, malesuada risus quis, mollis leo. Nam sit amet sollicitudin elit. Integer est neque, scelerisque vel sem at, fringilla placerat ex. Nam cursus tortor sed diam tincidunt interdum.</p>
                   </Col>
