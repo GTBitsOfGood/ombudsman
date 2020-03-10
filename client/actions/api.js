@@ -1,8 +1,17 @@
 import fetch from "isomorphic-unfetch";
 import urls from "../../utils/urls";
 
+/**
+ * @typedef {{ url: string, fileName: string, views: number, category: string }} pdf
+ */
+
+/**
+ * Get a list of all PDFs.
+ *
+ * @returns {Promise<{pdfMap: {[category: string]: pdf[]}, sortedPdfs: pdf[]}>} object of PDF metadata
+ */
 export const getPDF = () =>
-  fetch(urls.baseUrl + urls.api.example, {
+  fetch(urls.baseUrl + urls.api.getPDF, {
     method: "get",
     mode: "no-cors",
     credentials: "include"
@@ -18,7 +27,13 @@ export const getPDF = () =>
       return json.payload;
     });
 
-export const updateClicks = (category, filename) => {
+/**
+ * Increment clicks for a file.
+ * 
+ * @param {string} category 
+ * @param {string} fileName 
+ */
+export const updateClicks = (category, fileName) => {
   fetch(urls.baseUrl + urls.api.updateClicks, {
     method: "post",
     mode: "no-cors",
@@ -28,7 +43,7 @@ export const updateClicks = (category, filename) => {
     },
     body: JSON.stringify({
       category,
-      filename
+      fileName
     })
   })
     .then(response => response.json())
@@ -43,6 +58,11 @@ export const updateClicks = (category, filename) => {
     });
 };
 
+/**
+ * Get a list of all categories.
+ * 
+ * @returns {Promise<{[category: string]: pdf[]}>} a list of categories
+ */
 export const getCategories = () =>
   fetch(urls.baseUrl + urls.api.categories, {
     method: "get",

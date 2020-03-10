@@ -11,7 +11,7 @@ export default {
     result: '/result'
   },
   api: {
-    example: '/api/getPDF',
+    getPDF: '/api/getPDF',
     updateClicks: '/api/updateClicks',
     categories: '/api/getCategories',
   },

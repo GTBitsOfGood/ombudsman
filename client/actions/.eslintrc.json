@@ -22,6 +22,9 @@
         "prettier/prettier": ["error"],
         "linebreak-style": 0,
         "no-underscore-dangle": "off",
-        "import/prefer-default-export": "off"
+        "import/prefer-default-export": "off",
+        "no-trailing-spaces": ["warn", {
+            "ignore-comments": true
+        }]
     }
 }
