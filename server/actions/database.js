@@ -19,12 +19,13 @@ const dbCategory = "catArray";
 
 /**
  * @typedef {{ url: string, fileName: string, views: number, category: string }} pdf Note that url refers to the image URL.
+ * @typedef {{ fileName: string, views: number }} pdfLite
  */
 
 /**
  * Get a list of all categories and their PDFs.
  *
- * @returns {Promise<{[category: string]: pdf[]}>} object mapping categories to a list of PDF property objects
+ * @returns {Promise<{[category: string]: pdfLite[]}>} object mapping categories to a list of PDF property objects
  */
 export const getCategories = async () => {
   const firestoreRef = firestore.collection("categories").doc("categories");

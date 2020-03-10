@@ -1,11 +1,7 @@
 import { getCategories } from "../../server/actions/database";
 
 /**
- * @typedef {{ url: string, fileName: string, views: number, category: string }} pdf Note that url refers to the image URL.
- */
-
-/**
- * Get a list of all categories. Sends JSON in the format of {[category: string]: pdf[]}, where pdf is { url: string, fileName: string, views: number, category: string } (and url refers to the image URL).
+ * Get a list of all categories and the PDFs in those categories. The response sends JSON in the format of {[category: string]: { fileName: string, views: number }[]}.
  *
  * @route GET api/getCategories
  * @access Public

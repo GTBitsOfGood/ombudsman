@@ -3,6 +3,7 @@ import urls from "../../utils/urls";
 
 /**
  * @typedef {{ url: string, fileName: string, views: number, category: string }} pdf
+ * @typedef {{ fileName: string, views: number }} pdfLite
  */
 
 /**
@@ -61,7 +62,7 @@ export const updateClicks = (category, fileName) => {
 /**
  * Get a list of all categories.
  *
- * @returns {Promise<{[category: string]: pdf[]}>} a list of categories
+ * @returns {Promise<{[category: string]: pdfLite[]}>} a list of categories
  */
 export const getCategories = () =>
   fetch(urls.baseUrl + urls.api.categories, {
