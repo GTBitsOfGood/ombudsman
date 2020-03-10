@@ -22,17 +22,17 @@ class MyDocument extends Document {
             <Navbar.Brand>Ombudsman</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
-			<Nav className="mr-auto" activeKey="/">
-			  <Nav.Link href="/" eventKey="/">Home</Nav.Link>
-              <Nav.Link href="/help">Help</Nav.Link>
-			 </Nav>
+              <Nav className="mr-auto" activeKey="/">
+                <Nav.Link href="/" eventKey="/">Home</Nav.Link>
+                <Nav.Link href="/help">Help</Nav.Link>
+              </Nav>
               <Nav className="ml-auto">
                 <div className="input-group">
-					<Form.Control type="text" placeholder="Search" />
-					<Link href="/search?pdfs=0&pdfs=0&pdfs=0&pdfs=0&pdfs=0&pdfs=0" passHref>
-					  <Button variant="outline-success">Search</Button>
-					</Link>
-				</div>
+                  <Form.Control type="text" placeholder="Search" />
+                  <Link href="/search?pdfs=0&pdfs=0&pdfs=0&pdfs=0&pdfs=0&pdfs=0" passHref>
+                    <Button variant="outline-success">Search</Button>
+                  </Link>
+                </div>
               </Nav>
             </Navbar.Collapse>
           </Navbar>
