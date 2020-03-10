@@ -5,6 +5,8 @@ import Document, {
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Link from 'next/link';
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -17,13 +19,20 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <Navbar bg="light" expand="lg">
-            <Navbar.Brand href="#home">Ombudsman</Navbar.Brand>
+            <Navbar.Brand>Ombudsman</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="ml-auto" activeKey="#">
-                <Nav.Link href="#">Home</Nav.Link>
-                <Nav.Link href="#browse">Browse</Nav.Link>
-                <Nav.Link href="#help">Help</Nav.Link>
+			<Nav className="mr-auto" activeKey="/">
+			  <Nav.Link href="/" eventKey="/">Home</Nav.Link>
+              <Nav.Link href="/help">Help</Nav.Link>
+			 </Nav>
+              <Nav className="ml-auto">
+                <div className="input-group">
+					<Form.Control type="text" placeholder="Search" />
+					<Link href="/search?pdfs=0&pdfs=0&pdfs=0&pdfs=0&pdfs=0&pdfs=0" passHref>
+					  <Button variant="outline-success">Search</Button>
+					</Link>
+				</div>
               </Nav>
             </Navbar.Collapse>
           </Navbar>
@@ -33,10 +42,10 @@ class MyDocument extends Document {
           <NextScript />
           <Navbar sticky="bottom" bg="light">
             <Navbar.Text>
-              <Nav activeKey="#">
-                <Navbar.Brand href="#home">Ombudsman Toolbox</Navbar.Brand>
-                <Nav.Link href="#" eventKey="#">Home</Nav.Link>
-                <Nav.Link href="#browse">Browse</Nav.Link>
+              <Nav activeKey="/">
+                <Navbar.Brand>Ombudsman Toolbox</Navbar.Brand>
+                <Nav.Link href="/" eventKey="/">Home</Nav.Link>
+                <Nav.Link href="/help">Help</Nav.Link>
               </Nav>
             </Navbar.Text>
             <Navbar.Toggle />

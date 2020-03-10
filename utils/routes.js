@@ -9,6 +9,10 @@ const routes = [
     name: 'Search',
     link: urls.pages.search,
   },
+  {
+    name: 'Result',
+    link: urls.pages.result,
+  },
 ];
 
 export default routes;
