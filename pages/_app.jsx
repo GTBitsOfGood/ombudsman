@@ -46,7 +46,7 @@ function MyApp({ Component, pageProps }) {
 }
 
 MyApp.propTypes = {
-  
-}
+
+};
 
 export default MyApp;

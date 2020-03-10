@@ -12,19 +12,17 @@ import { getPDF, getCategories, updateClicks } from '../client/actions/api';
 // https://github.com/mikecousins/react-pdf-js does not support selecting text
 // https://stackoverflow.com/a/32518877/5139284
 // https://github.com/mozilla/pdf.js/wiki/Frequently-Asked-Questions#can-i-load-a-pdf-from-another-server-cross-domain-request
-const pdfPage = ({ category, fileName, url, errorMessage }) => {
-  return (
-    <div height="100%" style={{ overflow: 'auto', height: '100%' }}>
-      {errorMessage == null ? (
-        <iframe src={/* `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURI(url)}` */ 'https://mozilla.github.io/pdf.js/web/viewer.html?file=https://www.who.int/docs/default-source/coronaviruse/who-china-joint-mission-on-covid-19-final-report.pdf'} title={fileName} height="100%" width="100%" frameBorder="0" />
-      ) : (
-        <h4>
-          SSR Error: {errorMessage}
-        </h4>
-      )}
-    </div>
-  );
-};
+const pdfPage = ({ category, fileName, url, errorMessage }) => (
+  <div height="100%" style={{ overflow: 'auto', height: '100%' }}>
+    {errorMessage == null ? (
+      <iframe src="https://mozilla.github.io/pdf.js/web/viewer.html?file=https://www.who.int/docs/default-source/coronaviruse/who-china-joint-mission-on-covid-19-final-report.pdf" title={fileName} height="100%" width="100%" frameBorder="0" />
+    ) : (
+      <h4>
+        SSR Error: {errorMessage}
+      </h4>
+    )}
+  </div>
+);
 
 pdfPage.getInitialProps = async ({ query }) => {
   const { url, category, fileName, errorMessage } = query;

@@ -6,11 +6,11 @@ import { getCategories } from "../../server/actions/database";
 
 /**
  * Get a list of all categories. Sends JSON in the format of {[category: string]: pdf[]}, where pdf is { url: string, fileName: string, views: number, category: string } (and url refers to the image URL).
- * 
+ *
  * @route GET api/getCategories
  * @access Public
- * @param {NextApiRequest} req 
- * @param {NextApiResponse} res 
+ * @param {NextApiRequest} req
+ * @param {NextApiResponse} res
  * @typedef {import("next").NextApiRequest} NextApiRequest
  * @typedef {import("next").NextApiResponse} NextApiResponse
  */

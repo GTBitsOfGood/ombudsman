@@ -12,7 +12,7 @@ const routes = [
   {
     name: 'Render PDF',
     link: urls.pages.pdf,
-  }
+  },
 ];
 
 export default routes;

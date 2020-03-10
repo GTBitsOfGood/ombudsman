@@ -29,9 +29,9 @@ export const getPDF = () =>
 
 /**
  * Increment clicks for a file.
- * 
- * @param {string} category 
- * @param {string} fileName 
+ *
+ * @param {string} category
+ * @param {string} fileName
  */
 export const updateClicks = (category, fileName) => {
   fetch(urls.baseUrl + urls.api.updateClicks, {
@@ -60,7 +60,7 @@ export const updateClicks = (category, fileName) => {
 
 /**
  * Get a list of all categories.
- * 
+ *
  * @returns {Promise<{[category: string]: pdf[]}>} a list of categories
  */
 export const getCategories = () =>

@@ -24,11 +24,8 @@
         "no-underscore-dangle": "off",
         "no-console": "off",
         "import/prefer-default-export": "off",
-        "no-trailing-spaces": ["warn", {
-            "ignoreComments": true
-        }],
         "react/jsx-one-expression-per-line": "off",
         "jsx-a11y/interactive-supports-focus": "warn",
-        "object-curly-newline": "off",
+        "object-curly-newline": "off"
     }
 }
