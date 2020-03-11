@@ -1,4 +1,4 @@
-import { updateClicks } from "../../server/actions/database";
+import { updateClicks } from '../../server/actions/database';
 
 /**
  * Increment clicks for a PDF given its category and file name.
@@ -25,7 +25,7 @@ const handler = (req, res) => {
     .catch(() =>
       res.status(201).json({
         success: false,
-        message: "Failed to run action!"
+        message: 'Failed to run action!'
       })
     );
 };

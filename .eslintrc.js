@@ -20,10 +20,35 @@ module.exports = {
         "prettier",
     ],
     "rules": {
-        "prettier/prettier": ["warn", {
-            "singleQuote": true,
-            "trailingComma": "es5",
-        }],
         "jsx-a11y/anchor-is-valid": 0,
+        "quotes": ["warn", "single", "avoid-escape"],
+        "semi": ["warn", "always"], 
+        "block-spacing": ["warn", "always"],
+        "object-curly-spacing": ["warn", "always"],
+        "array-bracket-spacing": ["warn", "never"],
+        "no-var": ["warn"],
+        "no-trailing-spaces": ["warn", {
+            "skipBlankLines": true,
+            "ignoreComments": true
+        }],
+        "no-whitespace-before-property": ["warn"],
+        "semi-spacing": "warn",
+        "semi-style": "warn",
+        "space-in-parens": ["warn", "never"],
+        "space-before-blocks": ["warn", "always"],
+        "space-before-function-paren": ["warn", {
+            "anonymous": "always",
+            "named": "never",
+            "asyncArrow": "always"
+        }],
+        "space-unary-ops": ["warn"],
+        "spaced-comment": ["warn", "always"],
+        "comma-spacing": ["warn"],
+        "comma-style": ["warn", "last"],
+        "brace-style": ["warn", "1tbs", {
+            "allowSingleLine": true
+        }],
+        "key-spacing": ["warn"],
+        "eqeqeq": ["warn", "smart"],
     },
 };

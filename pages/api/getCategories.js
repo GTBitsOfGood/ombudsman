@@ -1,4 +1,4 @@
-import { getCategories } from "../../server/actions/database";
+import { getCategories } from '../../server/actions/database';
 
 /**
  * Get a list of all categories and the PDFs in those categories. The response sends JSON in the format of {[category: string]: { fileName: string, views: number }[]}.
@@ -21,7 +21,7 @@ const handler = (req, res) =>
     .catch(() =>
       res.status(201).json({
         success: false,
-        message: "Failed to run action!"
+        message: 'Failed to run action!'
       })
     );
 
