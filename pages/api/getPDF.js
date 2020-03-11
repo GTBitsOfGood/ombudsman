@@ -1,4 +1,4 @@
-import { getPDF } from "../../server/actions/database";
+import { getPDF } from '../../server/actions/database';
 
 /**
  * Get all PDFs. Sends JSON in the format of {success: boolean, payload: {pdfMap: Object.<[category: string], pdf[]>, sortedPdfs: pdf[]}}, where pdf is in the format of { url: string, fileName: string, views: number, category: string }
@@ -22,7 +22,7 @@ const handler = (req, res) =>
     .catch(() =>
       res.status(201).json({
         success: false,
-        message: "Failed to run action!"
+        message: 'Failed to run action!'
       })
     );
 
