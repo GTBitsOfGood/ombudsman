@@ -1,15 +1,17 @@
 import { updateClicks } from "../../server/actions/database";
 
 /**
- * Increment clicks for a PDF.
- * 
+ * Increment clicks for a PDF given its category and file name.
+ * Sends JSON {success: boolean, payload: void}
+ *
  * @route POST api/updateClicks
  * @access Public
- * @param {object} req
- * @param {string} req.body.category
- * @param {string} req.body.fileName
- * @param {object} res 
- * Sends JSON {success: boolean, payload: void}
+ * @param {NextApiRequest} req
+ * @param {string} req.body.category category name
+ * @param {string} req.body.fileName file name
+ * @param {NextApiResponse} res
+ * @typedef {import("next").NextApiRequest} NextApiRequest
+ * @typedef {import("next").NextApiResponse} NextApiResponse
  */
 const handler = (req, res) => {
   const data = JSON.parse(req.body);

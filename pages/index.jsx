@@ -211,18 +211,30 @@ const homePage = ({
                       <div align="right">
                         <DropdownButton id="dropdown-basic-button" size="lg" variant="w" title={categories[i * 2]}>
                           {pdfProps[categories[i * 2]].map((pdf) => (
-                            <Dropdown.Item href={pdf.url} onClick={() => clickUpdate(
+                            <Dropdown.Item
+                              href={pdf.url}
+                              onClick={() => clickUpdate(
                                 { fileName: pdf.fileName, category: categories[i * 2] },
-                            )}>{pdf.fileName}</Dropdown.Item>))}
+                              )}
+                            >
+                              {pdf.fileName}
+                            </Dropdown.Item>
+                          ))}
                         </DropdownButton>
                       </div>
                     </Col>
                     <Col>
                       <DropdownButton id="dropdown-basic-button" size="lg" variant="w" title={categories[i * 2 + 1]}>
                         {pdfProps[categories[i * 2 + 1]].map((pdf) => (
-                          <Dropdown.Item href={pdf.url} onClick={() => clickUpdate(
+                          <Dropdown.Item
+                            href={pdf.url}
+                            onClick={() => clickUpdate(
                               { fileName: pdf.fileName, category: categories[i * 2 + 1] },
-                          )}>{pdf.fileName}</Dropdown.Item>))}
+                            )}
+                          >
+                            {pdf.fileName}
+                          </Dropdown.Item>
+                        ))}
                       </DropdownButton>
                     </Col>
                   </Row>
@@ -233,9 +245,15 @@ const homePage = ({
                     <Col>
                       <DropdownButton id="dropdown-basic-button" title={categories[i * 2]}>
                         {pdfProps[categories[i * 2]].map((pdf) => (
-                          <Dropdown.Item href={pdf.url} onClick={() => clickUpdate(
+                          <Dropdown.Item
+                            href={pdf.url}
+                            onClick={() => clickUpdate(
                               { fileName: pdf.fileName, category: categories[i * 2] },
-                          )}>{pdf.fileName}</Dropdown.Item>))}
+                            )}
+                          >
+                            {pdf.fileName}
+                          </Dropdown.Item>
+                        ))}
                       </DropdownButton>
                     </Col>
                   </Row>

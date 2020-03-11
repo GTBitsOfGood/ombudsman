@@ -3,12 +3,13 @@ import urls from "../../utils/urls";
 
 /**
  * @typedef {{ url: string, fileName: string, views: number, category: string }} pdf
+ * @typedef {{ fileName: string, views: number }} pdfLite
  */
 
 /**
  * Get a list of all PDFs.
  *
- * @returns {Promise<{pdfMap: {[category: string]: pdf[]}, sortedPdfs: pdf[]}>} object of PDF metadata
+ * @returns {Promise<{pdfMap: {[category: string]: pdf[]}, sortedPdfs: pdf[]}>} object of PDF properties
  */
 export const getPDF = () =>
   fetch(urls.baseUrl + urls.api.getPDF, {
@@ -29,9 +30,9 @@ export const getPDF = () =>
 
 /**
  * Increment clicks for a file.
- * 
- * @param {string} category 
- * @param {string} fileName 
+ *
+ * @param {string} category
+ * @param {string} fileName
  */
 export const updateClicks = (category, fileName) => {
   fetch(urls.baseUrl + urls.api.updateClicks, {
@@ -60,8 +61,8 @@ export const updateClicks = (category, fileName) => {
 
 /**
  * Get a list of all categories.
- * 
- * @returns {Promise<{[category: string]: pdf[]}>} a list of categories
+ *
+ * @returns {Promise<{[category: string]: pdfLite[]}>} a list of categories
  */
 export const getCategories = () =>
   fetch(urls.baseUrl + urls.api.categories, {

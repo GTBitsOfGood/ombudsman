@@ -8,7 +8,7 @@ export default {
   pages: {
     index: '/',
     search: '/search',
-    result: '/result'
+    result: '/result',
   },
   api: {
     getPDF: '/api/getPDF',

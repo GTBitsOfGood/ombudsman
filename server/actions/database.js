@@ -19,12 +19,13 @@ const dbCategory = "catArray";
 
 /**
  * @typedef {{ url: string, fileName: string, views: number, category: string }} pdf Note that url refers to the image URL.
+ * @typedef {{ fileName: string, views: number }} pdfLite
  */
 
 /**
  * Get a list of all categories and their PDFs.
- * 
- * @returns {Promise<{[category: string]: pdf[]}>} a list of categories and PDFs in those categories.
+ *
+ * @returns {Promise<{[category: string]: pdfLite[]}>} object mapping categories to a list of PDF property objects
  */
 export const getCategories = async () => {
   const firestoreRef = firestore.collection("categories").doc("categories");
@@ -36,9 +37,9 @@ export const getCategories = async () => {
 
 /**
  * Increment number of clicks for a certain file.
- * 
- * @param {string} category 
- * @param {string} fileName 
+ *
+ * @param {string} category category name
+ * @param {string} fileName file name
  */
 export const updateClicks = async (category, fileName) => {
   const firestoreRef = firestore.collection("categories").doc("categories");
@@ -48,12 +49,10 @@ export const updateClicks = async (category, fileName) => {
 
 /**
  * Get a list of all PDFs in the database.
- * 
- * @returns {Promise<{pdfMap: {[category: string]: pdf[]}, sortedPdfs: pdf[]}>}
- * where sortedPdfs is a list of all PDFs, sorted by most views to least views,
- * and in the case of a tie, then alphabetically.
  *
- * Each PDF is in the format of {
+ * @returns {Promise<{pdfMap: {[category: string]: pdf[]}, sortedPdfs: pdf[]}>} object with pdfMap which maps categories to a list of PDF property objects, and sortedPdfs which is a list of all PDFs, sorted by most views to least views, and in the case of a tie, then alphabetically.
+ *
+ * Each PDF property object is in the format of {
  *     url: string (image URL),
  *     fileName: string,
  *     views: number,
