@@ -4,8 +4,6 @@
         "es6": true
     },
     "extends": [
-        "airbnb-base",
-        "prettier"
     ],
     "plugins": [
         "prettier"
@@ -19,12 +17,5 @@
         "sourceType": "module"
     },
     "rules": {
-        "prettier/prettier": ["warn"],
-        "linebreak-style": 0,
-        "no-underscore-dangle": "off",
-        "import/prefer-default-export": "off",
-        "no-trailing-spaces": ["warn", {
-            "ignoreComments": true
-        }]
     }
 }

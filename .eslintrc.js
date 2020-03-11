@@ -3,7 +3,7 @@ module.exports = {
         "browser": true,
         "es6": true
     },
-    "extends": "airbnb",
+    "extends": "react-app",
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
@@ -16,10 +16,14 @@ module.exports = {
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "prettier",
     ],
     "rules": {
-	    "react/jsx-props-no-spreading": ["warn", {"custom": "ignore"}],
+        "prettier/prettier": ["warn", {
+            "singleQuote": true,
+            "trailingComma": "es5",
+        }],
         "jsx-a11y/anchor-is-valid": 0,
     },
 };
