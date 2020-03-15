@@ -19,7 +19,7 @@ const homePage = ({
 
   useEffect(() => {
     setPdfs(pdfProps);
-    setCheck(new Array(categories.length).fill(0));
+    setCheck(new Array(categories.length).fill(1));
   }, []);
 
 
@@ -40,10 +40,26 @@ const homePage = ({
                     Select a Category
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
+                    <div onClick={() => {
+                      if (checked.every((val) => val === 1))  {
+                        setCheck(new Array(categories.length).fill(0))
+                      } else {
+                        setCheck(new Array(categories.length).fill(1))
+                      }
+                    }}>
+                      <Form.Check
+                          className="dropdown-item"
+                          defaultValue="Select All"
+                          label="Select All"
+                          checked={checked.every((val) => val === 1)}
+                          filtertype="normalfilter"
+                          onChange={() => {/* no-op, change handled by the parent component */}}
+                      />
+                    </div>
                     {
                       categories.map((item, index) => (
                         <div onClick={() => {
-                          const currCheck = checked;
+                          let currCheck = checked;
                           currCheck[index] = (checked[index]) ? 0 : 1;
                           setCheck([...currCheck]);
                         }}>
