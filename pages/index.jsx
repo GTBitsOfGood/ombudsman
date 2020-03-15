@@ -30,7 +30,7 @@ const homePage = ({
       <br />
       <h2 align="center">Ombudsman Toolbox Search</h2>
       {errorMessage == null ? (
-        <div>
+        <div >
           <Row>
             <Col md={{ span: 6, offset: 3 }}>
               <div className="input-group">
@@ -42,16 +42,16 @@ const homePage = ({
                   <Dropdown.Menu>
                     {
                       categories.map((item, index) => (
-                        <div>
+                        <div onClick={() => {
+                          const currCheck = checked;
+                          currCheck[index] = (checked[index]) ? 0 : 1;
+                          setCheck([...currCheck]);
+                        }}>
                           <Form.Check
                             className="dropdown-item"
-                            onClick={() => {
-                              const currCheck = checked;
-                              currCheck[index] = (checked[index]) ? 0 : 1;
-                              setCheck([...currCheck]);
-                            }}
                             value={item}
                             label={item}
+                            checked={checked[index]}
                             filtertype="normalfilter"
                           />
                         </div>

@@ -18,7 +18,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <Navbar bg="light" expand="lg">
+          <Navbar style = {{fontFamily: 'Ubuntu'}} bg="light" expand="lg">
             <Navbar.Brand>Ombudsman</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
@@ -40,7 +40,7 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
-          <Navbar sticky="bottom" bg="light">
+          <Navbar style = {{fontFamily: 'Ubuntu'}} sticky="bottom" bg="light">
             <Navbar.Text>
               <Nav activeKey="/">
                 <Navbar.Brand>Ombudsman Toolbox</Navbar.Brand>
