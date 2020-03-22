@@ -1,4 +1,4 @@
-import { getKeywords } from "../../client/actions/keywords.js/index.js";
+import { getKeywords } from "../../client/actions/keywords.cjs/index.js";
 
 // @route   POST api/example
 // @desc    Example API

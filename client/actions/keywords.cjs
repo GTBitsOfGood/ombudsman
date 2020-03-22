@@ -1,11 +1,11 @@
-import { Corpus } from "tiny-tfidf-node";
+const {Corpus} = require("tiny-tfidf-node");
 const fs = require('fs');
 const pdf = require('pdf-parse');
 
 // documentation for this module can be found on https://www.npmjs.com/package/tiny-tfidf-node
 
 
-export const getKeyWords = async (documents) => {
+const getKeyWords = async (documents) => {
     var docTitles = []
     for(let doc of documents) {
         docTitles.push(doc)
@@ -22,8 +22,8 @@ export const getKeyWords = async (documents) => {
     // print top terms for document 3
     //console.log(corpus.getTopTermsForDocument("document1"));
 
-    let dataBuffer = fs.readFileSync('/Users/jacksanniota/gt/clubs/bog/ombudsman/testPDFs/Nursing Home Regulations (State).pdf');
-    let stopList = fs.readFileSync('/Users/jacksanniota/gt/clubs/bog/ombudsman/testPDFs/stoplist.txt').toString('utf-8');
+    let dataBuffer = fs.readFileSync('../../testPDFS/Nursing Home Regulations (State).pdf');
+    let stopList = fs.readFileSync('../../testPDFS/stoplist.txt').toString('utf-8');
     var stopArray = stopList.split("\n\n")
     // console.log(stopArray);
  
