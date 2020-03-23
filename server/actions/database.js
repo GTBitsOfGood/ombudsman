@@ -43,7 +43,7 @@ export const getCategories = async () => {
  */
 export const updateClicks = async (category, fileName) => {
   const firestoreRef = firestore.collection('categories').doc('categories');
-  const updateKey = `catArray.${[category]}.${[fileName]}.views`;
+  const updateKey = `catArray.${category}.${fileName}.views`;
   firestoreRef.update(updateKey, firebase.firestore.FieldValue.increment(1));
 };
 

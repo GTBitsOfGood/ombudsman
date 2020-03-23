@@ -10,30 +10,37 @@ admin.initializeApp();
 
 exports.generateMetadata = functions.storage.object().onFinalize(async (object) => {
     if (object.contentType === 'application/pdf') {
-        let corpusName = 'corpus';
-        let stoplistPath = 'stoplist.txt';
+        const corpusName = 'corpus';
+        const stoplistPath = 'stoplist.txt';
 
-        let fileBucket = object.bucket;
-        let filePath = object.name;
-        let tempFilePath = path.join(os.tmpdir(), filePath);
-        let tempStoplistPath = path.join(os.tmpdir(), stoplistPath);
+        const fileBucket = object.bucket;
+        const filePath = object.name;
+        const splitArr = filePath.split('/');
+        const folder = splitArr[0];
+        const file = splitArr[1];
+
+        const tempFilePath = path.join(os.tmpdir(), file);
+        const tempStoplistPath = path.join(os.tmpdir(), stoplistPath);
 
         await admin.storage().bucket(fileBucket).file(filePath).download({ destination: tempFilePath });
         await admin.storage().bucket(fileBucket).file(stoplistPath).download({ destination: tempStoplistPath });
 
-        let dataBuffer = fs.readFileSync(tempFilePath);
-        let stopList = fs.readFileSync(tempStoplistPath).toString('utf-8');
-        let stopArray = stopList.split('\n\n');
+        const dataBuffer = fs.readFileSync(tempFilePath);
+        const stopList = fs.readFileSync(tempStoplistPath).toString('utf-8');
+        const stopArray = stopList.split('\n\n');
         
-        console.log('stop', stopArray);
+        await pdf(dataBuffer).then(async (data) => {
+            const corpus = new Corpus([corpusName], [data.text,], false, stopArray);
 
-        pdf(dataBuffer).then(async (data) => {
-            const corpus = new Corpus(
-            [corpusName],
-            [data.text,], false, stopArray,
-            );
-            let topTerms = corpus.getTopTermsForDocument(corpusName);
-            await admin.database().ref('/testing').push({ 'filePath': topTerms[0][0] });
+            const topTerms = corpus.getTopTermsForDocument(corpusName);
+            let topKeywords = [];
+            for (let i = 0; i < 10; i++) {
+                topKeywords.push(topTerms[i][0]);
+            }
+
+            const splitFile = file.slice(0, -4);
+            const updateKey = `catArray.${folder}.${splitFile}.metadata`;
+            await admin.firestore().collection('categories').doc('categories').update(updateKey, topKeywords);
         });
 
         fs.unlinkSync(tempFilePath);
