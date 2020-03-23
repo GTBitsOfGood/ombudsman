@@ -30,7 +30,7 @@ const homePage = ({
       <br />
       <h2 align="center">Ombudsman Toolbox Search</h2>
       {errorMessage == null ? (
-        <div >
+        <div>
           <Row>
             <Col md={{ span: 6, offset: 3 }}>
               <div className="input-group">
@@ -42,18 +42,19 @@ const homePage = ({
                   <Dropdown.Menu>
                     <div onClick={() => {
                       if (checked.every((val) => val === 1))  {
-                        setCheck(new Array(categories.length).fill(0))
+                        setCheck(new Array(categories.length).fill(0));
                       } else {
-                        setCheck(new Array(categories.length).fill(1))
+                        setCheck(new Array(categories.length).fill(1));
                       }
-                    }}>
+                    }}
+                    >
                       <Form.Check
-                          className="dropdown-item"
-                          defaultValue="Select All"
-                          label="Select All"
-                          checked={checked.every((val) => val === 1)}
-                          filtertype="normalfilter"
-                          onChange={() => {/* no-op, change handled by the parent component */}}
+                        className="dropdown-item"
+                        defaultValue="Select All"
+                        label="Select All"
+                        checked={checked.every((val) => val === 1)}
+                        filtertype="normalfilter"
+                        onChange={() => { /* no-op, change handled by the parent component */ }}
                       />
                     </div>
                     {
@@ -62,7 +63,8 @@ const homePage = ({
                           let currCheck = checked;
                           currCheck[index] = (checked[index]) ? 0 : 1;
                           setCheck([...currCheck]);
-                        }}>
+                        }}
+                        >
                           <Form.Check
                             className="dropdown-item"
                             value={item}
