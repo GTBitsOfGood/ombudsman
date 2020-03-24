@@ -1,38 +1,53 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext, useEffect, useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
 
+import { useRouter } from 'next/router';
+import { updateClicks } from '../client/actions/api';
+import { PdfContext } from './context/pdf-context';
 import Link from 'next/link';
-import { getPDF, getCategories, updateClicks } from '../client/actions/api';
+import PropTypes from 'prop-types';
 
-const searchPage = ({
-  pdfProps, name, pdfs, errorMessage, clickUpdate, categories,
-}) => {
+const SearchPage = ({ clickUpdate }) => {
+  const [loading, pdfs, categories] = useContext(PdfContext);
   const [checked, setCheck] = useState([]);
+  const [filteredPdfs, setFilteredPdfs] = useState([]);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading) {
+      setCheck(new Array(categories.length).fill(1));
+      let filtered = [];
+      router.query.pdfs.map((item, index) => {
+        if (item === '1') filtered = filtered.concat(pdfs[categories[index]]);
+      });
+      filtered.sort((a, b) => (a.views < b.views ? 1 : -1));
+      setFilteredPdfs([...filtered]);
+    }
+  }, [loading, router.query]);
 
   return (
     <>
-      {errorMessage == null
-        ? (
-          <div>
-            <Row>
+      {loading ? (<div>Loading</div>) :
+          (
+            <div>
+              <Row>
+                <Col>
+                  <Link href={{ pathname: '/' }}><a>Home</a></Link>
+                  <a> / Search Results</a>
+                </Col>
+              </Row>
+              <br />
+              <br />
               <Col>
-                <a href="/">Home</a>
-                <a> / Search Results</a>
-              </Col>
-            </Row>
-            <br />
-            <br />
-            <Col>
-              <Dropdown>
-                <Dropdown.Toggle>
-                  Filter By
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  {
+                <Dropdown>
+                  <Dropdown.Toggle>
+                    Filter By
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    {
                     categories.map((item, index) => (
                       <div>
                         <Form.Check
@@ -49,11 +64,10 @@ const searchPage = ({
                       </div>
                     ))
                   }
-                </Dropdown.Menu>
-              </Dropdown>
-            </Col>
-            {Object.keys(pdfProps).map((category) => (
-              pdfProps[category].map((msg) => (
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Col>
+              {filteredPdfs.map((msg) => (
                 <Row>
                   <Col md={{ span: 7, offset: 2 }}>
                     <h2>
@@ -85,43 +99,19 @@ const searchPage = ({
                   </Col>
                   <hr />
                 </Row>
-              ))))}
-          </div>
-        ) : (
-          <h4>
-            SSR Error:
-            {errorMessage}
-          </h4>
+              ))}
+            </div>
         )}
     </>
   );
 };
 
-searchPage.getInitialProps = async ({ query }) => {
-  const pdfJ = await getPDF();
-  const categoriesJ = await getCategories();
-  const catArray = Object.keys(categoriesJ);
-  const pdfMap = [];
-  query.pdfs.map((item, index) => {
-    if (item === '1') pdfMap.push(pdfJ.pdfMap[catArray[index]]);
-  });
-  return { pdfProps: pdfMap, pdfs: query.pdfs, categories: catArray };
+SearchPage.propTypes = {
+  clickUpdate: PropTypes.func
 };
 
-searchPage.propTypes = {
-  pdfProps: PropTypes.arrayOf(Object),
-  name: PropTypes.string,
-  pdfs: PropTypes.arrayOf(Object),
-  clickUpdate: PropTypes.func,
-  errorMessage: PropTypes.string,
-  categories: PropTypes.arrayOf(Object),
+SearchPage.defaultProps = {
+  clickUpdate: (data) => (updateClicks(data.category, data.fileName)),
 };
-searchPage.defaultProps = {
-  pdfProps: {},
-  name: null,
-  pdfs: [],
-  clickUpdate: (data) => updateClicks(data.category, data.fileName),
-  errorMessage: null,
-  categories: [],
-};
-export default searchPage;
+
+export default SearchPage;
