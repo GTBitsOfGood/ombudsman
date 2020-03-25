@@ -38,3 +38,5 @@ PdfContextProvider.propTypes = {
 PdfContextProvider.defaultProps = {
     children: null
 };
+
+export default PdfContextProvider;
