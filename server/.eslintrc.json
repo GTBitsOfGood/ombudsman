@@ -4,8 +4,6 @@
         "node": true
     },
     "extends": [
-        "airbnb-base",
-        "prettier"
     ],
     "plugins": [
         "prettier"
@@ -19,10 +17,5 @@
         "sourceType": "module"
     },
     "rules": {
-        "prettier/prettier": ["error"],
-        "linebreak-style": 0,
-        "no-underscore-dangle": "off",
-        "no-console": "off",
-        "import/prefer-default-export": "off"
     }
 }
