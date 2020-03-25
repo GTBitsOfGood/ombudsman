@@ -47,8 +47,7 @@ const SearchPage = ({ clickUpdate }) => {
                     Filter By
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    {
-                    categories.map((item, index) => (
+                    {categories.map((item, index) => (
                       <div>
                         <Form.Check
                           className="dropdown-item"
@@ -62,8 +61,7 @@ const SearchPage = ({ clickUpdate }) => {
                           filtertype="normalfilter"
                         />
                       </div>
-                    ))
-                  }
+))}
                   </Dropdown.Menu>
                 </Dropdown>
               </Col>
