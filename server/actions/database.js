@@ -73,17 +73,22 @@ export const getPDF = async () => {
     let promises = [];
     promises = foldItems.map(async file => {
       let views = 0;
-      if (
-        file.name.slice(0, -4) in categoryMap[category] &&
-        'views' in categoryMap[category][file.name.slice(0, -4)]
-      ) {
-        views = categoryMap[category][file.name.slice(0, -4)].views;
+      let metadata = [];
+      const slicedFileName = file.name.slice(0, -4);
+
+      if (slicedFileName in categoryMap[category]) {
+        if ('views' in categoryMap[category][slicedFileName])
+          views = categoryMap[category][slicedFileName].views;
+        if ('metadata' in categoryMap[category][slicedFileName])
+          metadata = categoryMap[category][slicedFileName].metadata;
       }
+
       return file.getDownloadURL().then(imgURL => {
         const pdfData = {
           url: imgURL,
           fileName: file.name,
           views,
+          metadata,
           category
         };
         pdfMap[category].push(pdfData);

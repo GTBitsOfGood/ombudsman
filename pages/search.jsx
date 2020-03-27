@@ -19,12 +19,35 @@ const SearchPage = ({ clickUpdate }) => {
   useEffect(() => {
     if (!loading) {
       setCheck(new Array(categories.length).fill(1));
+
+      const searchArr = router.query.term.split(' ');
       let filtered = [];
       router.query.pdfs.map((item, index) => {
         if (item === '1') filtered = filtered.concat(pdfs[categories[index]]);
       });
+
+      let searchFiltered = new Set();
+
+      // Search Based on exact matches
+      // searchArr.map(term => {
+      //   filtered.map((pdf) => {
+      //     if (pdf.metadata.includes(term.toLowerCase())) searchFiltered.add(pdf);
+      //   })
+      // });
+
+      // Search based on match of first 5 characters
+      searchArr.map(term => {
+        const subTerm = term.substring(0, 5).toLowerCase();
+        filtered.map(pdf => {
+          pdf.metadata.map(data => {
+            if (data.substring(0, 5).toLowerCase() === subTerm) searchFiltered.add(pdf);
+          });
+        })
+      });
+
+      filtered = Array.from(searchFiltered);
       filtered.sort((a, b) => (a.views < b.views ? 1 : -1));
-      setFilteredPdfs([...filtered]);
+      setFilteredPdfs(filtered);
     }
   }, [loading, router.query]);
 
