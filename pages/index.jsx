@@ -15,6 +15,7 @@ import { PdfContext } from './context/pdf-context';
 const HomePage = ({ clickUpdate }) => {
   const [loading, pdfs, categories, sortedPdfs] = useContext(PdfContext);
   const [checked, setCheck] = useState([]);
+  const [query, setQuery] = useState('');
 
   useEffect(() => {
     if (!loading) setCheck(new Array(categories.length).fill(1));
@@ -33,7 +34,7 @@ const HomePage = ({ clickUpdate }) => {
                 <Row>
                   <Col md={{ span: 6, offset: 3 }}>
                     <div className="input-group">
-                      <Form.Control type="text" placeholder="Search" />
+                      <Form.Control type="text" placeholder="Search" onChange={(e) => setQuery(e.target.value)}/>
                       <Dropdown>
                         <Dropdown.Toggle>
                           Select a Category
@@ -77,7 +78,7 @@ const HomePage = ({ clickUpdate }) => {
                         </Dropdown.Menu>
                       </Dropdown>
                   &nbsp;
-                      <Link href={{ pathname: '/search', query: { pdfs: checked } }}>
+                      <Link href={{ pathname: '/search', query: { pdfs: checked, term: query } }}>
                         <Button variant="outline-success">Search</Button>
                       </Link>
                     </div>
