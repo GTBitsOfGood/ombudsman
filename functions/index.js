@@ -8,6 +8,7 @@ const { Corpus } = require('tiny-tfidf-node');
 
 admin.initializeApp();
 
+
 exports.generateMetadata = functions.storage.object().onFinalize(async (object) => {
     if (object.contentType === 'application/pdf') {
         const corpusName = 'corpus';
@@ -34,7 +35,7 @@ exports.generateMetadata = functions.storage.object().onFinalize(async (object) 
 
             const topTerms = corpus.getTopTermsForDocument(corpusName);
             let topKeywords = [];
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 20; i++) {
                 topKeywords.push(topTerms[i][0]);
             }
 
