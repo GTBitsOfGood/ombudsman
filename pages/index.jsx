@@ -34,7 +34,7 @@ const HomePage = ({ clickUpdate }) => {
                 <Row>
                   <Col md={{ span: 6, offset: 3 }}>
                     <div className="input-group">
-                      <Form.Control type="text" placeholder="Search" onChange={(e) => setQuery(e.target.value)}/>
+                      <Form.Control type="text" placeholder="Search" onChange={(e) => setQuery(e.target.value)} />
                       <Dropdown>
                         <Dropdown.Toggle>
                           Select a Category
@@ -101,8 +101,7 @@ const HomePage = ({ clickUpdate }) => {
                           <a
                             href={sortedPdfs[0].url}
                             onClick={() => clickUpdate(
-                        { fileName: sortedPdfs[0].fileName, category: sortedPdfs[0].category },
-                      )}
+                        { fileName: sortedPdfs[0].fileName, category: sortedPdfs[0].category })}
                           >
                             <br />
                             <button type="button" className="btn btn-primary">View</button>

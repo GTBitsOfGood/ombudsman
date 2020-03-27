@@ -34,14 +34,14 @@ class MyApp extends App {
             </Nav>
             {router.pathname === '/' ? null :
                 (
-                    <Nav className="ml-auto">
-                      <div className="input-group">
-                        <Form.Control type="text" placeholder="Search" />
-                        <Link href={{ pathname: '/search', query: { pdfs: [1, 1, 1, 1, 1, 1] } }} passHref>
-                          <Button variant="outline-success">Search</Button>
-                        </Link>
-                      </div>
-                    </Nav>
+                  <Nav className="ml-auto">
+                    <div className="input-group">
+                      <Form.Control type="text" placeholder="Search" />
+                      <Link href={{ pathname: '/search', query: { pdfs: [1, 1, 1, 1, 1, 1] } }} passHref>
+                        <Button variant="outline-success">Search</Button>
+                      </Link>
+                    </div>
+                  </Nav>
                 )}
           </Navbar.Collapse>
         </Navbar>
