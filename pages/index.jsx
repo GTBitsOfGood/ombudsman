@@ -204,9 +204,9 @@ const HomePage = ({ clickUpdate }) => {
               if (i * 2 + 1 < categories.length) {
                 return (
                   <Row>
-                    <Col>
+                    <Col md = {{span: 6, offset: 0}}>
                       <div align="right">
-                        <DropdownButton id="dropdown-basic-button" size="lg" variant="w" title={categories[i * 2]}>
+                        <DropdownButton id="dropdown-basic-button" variant="w" size="lg" title={categories[i * 2]}>
                           {pdfs[categories[i * 2]].map((pdf) => (
                             <Dropdown.Item
                               href={pdf.url}
@@ -220,8 +220,8 @@ const HomePage = ({ clickUpdate }) => {
                         </DropdownButton>
                       </div>
                     </Col>
-                    <Col>
-                      <DropdownButton id="dropdown-basic-button" size="lg" variant="w" title={categories[i * 2 + 1]}>
+                    <Col md = {{span: 6, offset: 0}}>
+                      <DropdownButton id="dropdown-basic-button" variant="w" size="lg" title={categories[i * 2 + 1]}>
                         {pdfs[categories[i * 2 + 1]].map((pdf) => (
                           <Dropdown.Item
                             href={pdf.url}
@@ -239,19 +239,21 @@ const HomePage = ({ clickUpdate }) => {
               } if (i * 2 < categories.length) {
                 return (
                   <Row>
-                    <Col>
-                      <DropdownButton id="dropdown-basic-button" title={categories[i * 2]}>
-                        {pdfs[categories[i * 2]].map((pdf) => (
-                          <Dropdown.Item
-                            href={pdf.url}
-                            onClick={() => clickUpdate(
-                              { fileName: pdf.fileName, category: categories[i * 2] },
-                            )}
-                          >
-                            {pdf.fileName}
-                          </Dropdown.Item>
-                        ))}
-                      </DropdownButton>
+                    <Col md = {{span: 6, offset: 0}}>
+                      <div align="right">
+                        <DropdownButton id="dropdown-basic-button" size="lg" variant="w" title={categories[i * 2]}>
+                          {pdfs[categories[i * 2]].map((pdf) => (
+                            <Dropdown.Item
+                              href={pdf.url}
+                              onClick={() => clickUpdate(
+                                { fileName: pdf.fileName, category: categories[i * 2] },
+                              )}
+                            >
+                              {pdf.fileName}
+                            </Dropdown.Item>
+                          ))}
+                        </DropdownButton>
+                      </div>
                     </Col>
                   </Row>
                 );
@@ -259,11 +261,6 @@ const HomePage = ({ clickUpdate }) => {
               return null;
             })}
                 </Container>
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
                 <br />
               </div>
             </div>
