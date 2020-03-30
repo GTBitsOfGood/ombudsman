@@ -8,14 +8,17 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Link from 'next/link';
-
+import Loading from "../client/components/Loading/Loading";
 import { updateClicks } from '../client/actions/api';
 import { PdfContext } from './context/pdf-context';
+import {useRouter} from "next/router";
+import Footer from "../client/components/Footer/Footer";
 
 const HomePage = ({ clickUpdate }) => {
   const [loading, pdfs, categories, sortedPdfs] = useContext(PdfContext);
   const [checked, setCheck] = useState([]);
   const [query, setQuery] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
     if (!loading) setCheck(new Array(categories.length).fill(1));
@@ -24,9 +27,9 @@ const HomePage = ({ clickUpdate }) => {
   return (
     <>
       {loading ?
-          (<div>Loading</div>) :
+          (<Loading/>) :
           (
-            <div><br />
+            <><br />
               <br />
               <br />
               <h2 align="center">Ombudsman Toolbox Search</h2>
@@ -34,7 +37,7 @@ const HomePage = ({ clickUpdate }) => {
                 <Row>
                   <Col md={{ span: 6, offset: 3 }}>
                     <div className="input-group">
-                      <Form.Control type="text" placeholder="Search" onChange={(e) => setQuery(e.target.value)} />
+                      <Form.Control type="text" placeholder="Search" onChange={(e) => (setQuery(e.target.value))} />
                       <Dropdown>
                         <Dropdown.Toggle>
                           Select a Category
@@ -92,7 +95,7 @@ const HomePage = ({ clickUpdate }) => {
                 <br />
                 <h4 align="center">Frequently Viewed Documents</h4>
                 <br />
-                <Container fluid="true" align="center">
+                <div align="center">
                   <Row>
                     <Col>
                       <div className="card card-block">
@@ -193,13 +196,12 @@ const HomePage = ({ clickUpdate }) => {
                       </div>
                     </Col>
                   </Row>
-                </Container>
+                </div>
                 <br />
                 <hr />
                 <br />
                 <h4 align="center">Find by Category</h4>
                 <br />
-                <Container>
                   {categories.map((category, i) => {
               if (i * 2 + 1 < categories.length) {
                 return (
@@ -260,10 +262,10 @@ const HomePage = ({ clickUpdate }) => {
               }
               return null;
             })}
-                </Container>
                 <br />
               </div>
-            </div>
+            </>
+
 )}
     </>
   );
