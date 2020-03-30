@@ -17,7 +17,7 @@ class MyApp extends App {
         <Head>
           <title>Ombudsman</title>
         </Head>
-          <div className='main-wrapper' style={{"min-height": "100vh", "height": "100%"}}>
+          <div className='main-wrapper'>
               <Header path={router.pathname}/>
               <div className="App">
                   <div className="Content">
