@@ -13,6 +13,14 @@ const routes = [
     name: 'Result',
     link: urls.pages.result,
   },
+  {
+    name: 'Help',
+    link: urls.pages.help,
+  },
+  {
+    name: 'Login',
+    link: urls.pages.login,
+  },
 ];
 
 export default routes;
