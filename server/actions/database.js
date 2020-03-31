@@ -1,6 +1,7 @@
 import firebase from 'firebase';
 import 'firebase/storage';
 import 'firebase/firestore';
+import firebaseui from 'firebaseui';
 
 global.XMLHttpRequest = require('xhr2');
 
@@ -104,4 +105,21 @@ export const getPDF = async () => {
     return a.fileName > b.fileName ? 1 : -1;
   });
   return { pdfMap, sortedPdfs };
+};
+
+
+// Firebase Authentication 
+
+export const authenticate = async(email, password) => {
+  var auth = firebase.auth();
+  auth.signInWithEmailAndPassword(email, password).catch(function(error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    if (errorCode == 'auth/wrong-password') {
+      alert('Wrong Password');
+    } else {
+      alert(errorMessage);
+    }
+    console.log(error);
+  });
 };
