@@ -1,8 +1,15 @@
 import { getPDF } from "../../server/actions/database";
 
-// @route   POST api/example
-// @desc    Example API
-// @access  Public
+/**
+ * Get all PDFs.
+ *
+ * @route GET api/getPDF
+ * @access Public
+ * @param {object} req
+ * @param {object} res
+ * Send JSON in the format of {success: boolean, payload: {pdfMap: Object.<string, pdf[]>, sortedPdfs: pdf[]}
+ * @typedef {{ url: string, fileName: string, views: number, category: string }} pdf
+ */
 const handler = (req, res) =>
   getPDF()
     .then(text =>
