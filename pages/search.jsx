@@ -7,21 +7,22 @@ import { updateClicks } from '../client/actions/api';
 import { PdfContext } from './context/pdf-context';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import Loading from "../client/components/Loading/Loading";
-import urls from "../utils/urls";
+import Loading from '../client/components/Loading/Loading';
+import urls from '../utils/urls';
 
 const SearchPage = ({ clickUpdate }) => {
   const [loading, pdfs, categories] = useContext(PdfContext);
   const [checked, setCheck] = useState([]);
+  const [searhTerm, setSearchTerm] = useState('');
   const [searchArr, setSearchArr] = useState([]);
   const [filteredPdfs, setFilteredPdfs] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
     if (!loading) {
-
       let filtered = [];
-      if (checked.length === 0) {
+      if (checked.length === 0 || searhTerm !== router.query.term) {
+        setSearchTerm(router.query.term);
         setSearchArr(router.query.term.split(' '));
         router.query.pdfs.map((item, index) => {
           if (item === '1') filtered = filtered.concat(pdfs[categories[index]]);
@@ -58,12 +59,12 @@ const SearchPage = ({ clickUpdate }) => {
       filtered.sort((a, b) => (a.views < b.views ? 1 : -1));
       setFilteredPdfs(filtered);
     }
-  }, [loading, router.query, checked]);
+  }, [loading, router.query.pdfs, checked]);
 
 
   return (
     <>
-      {loading ? (<Loading/>) :
+      {loading ? (<Loading />) :
           (
             <>
               <Row>
@@ -79,7 +80,8 @@ const SearchPage = ({ clickUpdate }) => {
                   <h4>Filter By</h4>
                   <div onClick={() => (
                     checked.every((val) => val === 1) ? setCheck(new Array(categories.length).fill(0)) : setCheck(new Array(categories.length).fill(1))
-                  )}>
+                  )}
+                  >
                     <Form.Check
                       className="dropdown-item custom-checkbox"
                       defaultValue="Select All"
@@ -104,14 +106,15 @@ const SearchPage = ({ clickUpdate }) => {
                         filtertype="normalfilter"
                         onChange={() => { /* no-op, change handled by the parent component */ }}
                       />
-                    </div>))}
+                    </div>
+))}
                 </Col>
                 <Col md={{ span: 9, offset: 0 }}>
                   {filteredPdfs.map((msg) => (
                     <Row>
                       <Col md={{ span: 9, offset: 0 }}>
                         <h2>
-                          <Link href={{pathname: urls.pages.result}}>{msg.fileName}</Link>
+                          <Link href={{ pathname: urls.pages.result }}>{msg.fileName}</Link>
                         </h2>
                         <h3>Effective Date: 3/12/13</h3>
                         <h5>

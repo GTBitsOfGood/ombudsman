@@ -3,16 +3,14 @@ import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Link from 'next/link';
-import Loading from "../client/components/Loading/Loading";
+import Loading from '../client/components/Loading/Loading';
 import { updateClicks } from '../client/actions/api';
 import { PdfContext } from './context/pdf-context';
-import {useRouter} from "next/router";
-import Footer from "../client/components/Footer/Footer";
+import { useRouter } from 'next/router';
 
 const HomePage = ({ clickUpdate }) => {
   const [loading, pdfs, categories, sortedPdfs] = useContext(PdfContext);
@@ -27,7 +25,7 @@ const HomePage = ({ clickUpdate }) => {
   return (
     <>
       {loading ?
-          (<Loading/>) :
+          (<Loading />) :
           (
             <><br />
               <br />
@@ -202,11 +200,11 @@ const HomePage = ({ clickUpdate }) => {
                 <br />
                 <h4 align="center">Find by Category</h4>
                 <br />
-                  {categories.map((category, i) => {
+                {categories.map((category, i) => {
               if (i * 2 + 1 < categories.length) {
                 return (
                   <Row>
-                    <Col md = {{span: 6, offset: 0}}>
+                    <Col md={{ span: 6, offset: 0 }}>
                       <div align="right">
                         <DropdownButton id="dropdown-basic-button" variant="w" size="lg" title={categories[i * 2]}>
                           {pdfs[categories[i * 2]].map((pdf) => (
@@ -222,7 +220,7 @@ const HomePage = ({ clickUpdate }) => {
                         </DropdownButton>
                       </div>
                     </Col>
-                    <Col md = {{span: 6, offset: 0}}>
+                    <Col md={{ span: 6, offset: 0 }}>
                       <DropdownButton id="dropdown-basic-button" variant="w" size="lg" title={categories[i * 2 + 1]}>
                         {pdfs[categories[i * 2 + 1]].map((pdf) => (
                           <Dropdown.Item
@@ -241,7 +239,7 @@ const HomePage = ({ clickUpdate }) => {
               } if (i * 2 < categories.length) {
                 return (
                   <Row>
-                    <Col md = {{span: 6, offset: 0}}>
+                    <Col md={{ span: 6, offset: 0 }}>
                       <div align="right">
                         <DropdownButton id="dropdown-basic-button" size="lg" variant="w" title={categories[i * 2]}>
                           {pdfs[categories[i * 2]].map((pdf) => (
