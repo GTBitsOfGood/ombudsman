@@ -51,7 +51,9 @@ class MyDocument extends Document {
             <Navbar.Toggle />
             <Navbar.Collapse className="justify-content-end">
               <Navbar.Text>
+			  <Link href="/login" passHref>
                 <Button variant="outline-dark">ADD DOCUMENTS</Button>
+			  </Link>
               </Navbar.Text>
             </Navbar.Collapse>
           </Navbar>
