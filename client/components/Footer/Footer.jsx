@@ -3,6 +3,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 import urls from '../../../utils/urls';
+import PropTypes from 'prop-types';
 
 const Footer = ({ path }) => (
   <Navbar sticky="bottom" bg="light">
@@ -25,5 +26,13 @@ const Footer = ({ path }) => (
     </Navbar.Collapse>
   </Navbar>
 );
+
+Footer.propTypes = {
+  path: PropTypes.string
+};
+
+Footer.defaultProps = {
+  path: '/'
+};
 
 export default Footer;

@@ -29,3 +29,7 @@ html, body, #__next {
     white-space: normal;
     word-break: normal;
 }
+
+Row {
+    margin-top: 2%
+}
