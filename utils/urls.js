@@ -9,9 +9,13 @@ export default {
     index: '/',
     search: '/search',
     result: '/result',
+    help: '/help',
+    login: '/login',
   },
   api: {
     getPDF: '/api/getPDF',
     updateClicks: '/api/updateClicks',
+    authenticate: '/api/authenticate',
+    signOut: '/api/signOut',
   },
 };
