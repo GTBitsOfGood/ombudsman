@@ -58,3 +58,53 @@ export const updateClicks = (category, fileName) => {
       return json.payload;
     });
 };
+
+export const authenticate = (email, password) => {
+  fetch(urls.baseUrl + urls.api.updateClicks, {
+    method: 'post',
+    mode: 'no-cors',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      category,
+      fileName
+    })
+  })
+    .then(response => response.json())
+    .then(json => {
+      if (json == null) {
+        throw new Error('Could not connect to API!');
+      } else if (!json.success) {
+        throw new Error(json.message);
+      }
+
+      return json.payload;
+    });
+};
+
+export const signOut = () => {
+  fetch(urls.baseUrl + urls.api.updateClicks, {
+    method: 'post',
+    mode: 'no-cors',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      category,
+      fileName
+    })
+  })
+    .then(response => response.json())
+    .then(json => {
+      if (json == null) {
+        throw new Error('Could not connect to API!');
+      } else if (!json.success) {
+        throw new Error(json.message);
+      }
+
+      return json.payload;
+    });
+};
