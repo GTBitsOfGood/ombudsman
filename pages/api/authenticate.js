@@ -3,7 +3,7 @@ import { authenticate } from '../../server/actions/database';
 const handler = (req, res) => {
   const data = JSON.parse(req.body);
   authenticate(data.email, data.password)
-    .then(text => 
+    .then(text =>
       res.status(201).json({
         success: true,
         payload: text
@@ -15,6 +15,6 @@ const handler = (req, res) => {
         message: error
       })
     );
-}
+};
 
 export default handler;

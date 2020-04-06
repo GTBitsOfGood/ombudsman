@@ -4,7 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 import urls from '../../../utils/urls';
 import PropTypes from 'prop-types';
-import Link from 'next/link'
+import Link from 'next/link';
 
 const Footer = ({ path }) => (
   <Navbar sticky="bottom" bg="light">
