@@ -25,6 +25,21 @@ html, body, #__next {
     overflow-y: auto;
 }
 
+.dropdown {
+    display:inline-block;
+}
+
+.absolute-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* .vertical-center {
+    padding-top: 250px;
+} */
+
 .custom-checkbox {
     white-space: normal;
     word-break: normal;
