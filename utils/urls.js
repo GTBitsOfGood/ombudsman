@@ -11,6 +11,7 @@ export default {
     result: '/result',
     help: '/help',
     login: '/login',
+    PdfComponent: '/pdf',
   },
   api: {
     getPDF: '/api/getPDF',

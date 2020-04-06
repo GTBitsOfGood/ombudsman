@@ -7,10 +7,12 @@ import Form from 'react-bootstrap/Form';
 
 import Link from 'next/link';
 import { getPDF, updateClicks } from '../client/actions/api';
+import PdfComponent from './PdfComponent';
 
 const helpPage = ({
   pdfProps, name, errorMessage, clickUpdate, categories,
-}) => (
+}) => {
+  (
   <>
     {errorMessage == null
       ? (
@@ -20,6 +22,9 @@ const helpPage = ({
           <h2>
 			How do I use the Ombudsman Toolbox?
 		  </h2>
+      <Link href=>
+        
+      </Link>
 		  <p>
 			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam convallis est et ornare maximus. Morbi mattis, tellus maximus elementum mollis, magna sapien dictum ante, blandit aliquet neque sapien sit amet nulla. Vestibulum faucibus lorem non nulla lacinia, eu iaculis turpis sollicitudin. Nunc eget elit laoreet, malesuada risus quis, mollis leo. Nam sit amet sollicitudin elit. Integer est neque, scelerisque vel sem at, fringilla placerat ex. Nam cursus tortor sed diam tincidunt interdum.
 		  </p>

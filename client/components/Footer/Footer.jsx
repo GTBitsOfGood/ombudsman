@@ -15,6 +15,9 @@ const Footer = ({ path }) => (
         <Nav.Item>
           <Nav.Link href="/help">Help</Nav.Link>
         </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href={urls.pages.PdfComponent}>Sample PDF</Nav.Link>
+        </Nav.Item>
       </Nav>
     </Navbar.Text>
     <Navbar.Toggle />
