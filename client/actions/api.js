@@ -60,7 +60,7 @@ export const updateClicks = (category, fileName) => {
 };
 
 export const authenticate = (email, password) => {
-  fetch(urls.baseUrl + urls.api.updateClicks, {
+  fetch(urls.baseUrl + urls.api.authenticate, {
     method: 'post',
     mode: 'no-cors',
     credentials: 'include',
@@ -68,8 +68,8 @@ export const authenticate = (email, password) => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      category,
-      fileName
+      email,
+      password
     })
   })
     .then(response => response.json())
@@ -85,17 +85,10 @@ export const authenticate = (email, password) => {
 };
 
 export const signOut = () => {
-  fetch(urls.baseUrl + urls.api.updateClicks, {
-    method: 'post',
+  fetch(urls.baseUrl + urls.api.signOut, {
+    method: 'get',
     mode: 'no-cors',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      category,
-      fileName
-    })
+    credentials: 'include'
   })
     .then(response => response.json())
     .then(json => {
