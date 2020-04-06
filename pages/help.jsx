@@ -6,7 +6,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
 
 import Link from 'next/link';
-import { getPDF, getCategories, updateClicks } from '../client/actions/api';
+import { getPDF, updateClicks } from '../client/actions/api';
 
 const helpPage = ({
   pdfProps, name, errorMessage, clickUpdate, categories,
@@ -45,7 +45,7 @@ const helpPage = ({
 
 helpPage.getInitialProps = async () => {
   const pdfJ = await getPDF();
-  const categoriesJ = await getCategories();
+  const categoriesJ = pdfJ.pdfMap;
   const catArray = Object.keys(categoriesJ);
   const pdfMap = [];
   return { pdfProps: pdfMap, categories: catArray, };
@@ -54,14 +54,12 @@ helpPage.getInitialProps = async () => {
 helpPage.propTypes = {
   pdfProps: PropTypes.arrayOf(Object),
   name: PropTypes.string,
-  pdfs: PropTypes.arrayOf(Object),
   clickUpdate: PropTypes.func,
   errorMessage: PropTypes.string,
 };
 helpPage.defaultProps = {
   pdfProps: {},
   name: null,
-  pdfs: [],
   clickUpdate: (data) => updateClicks(data.category, data.fileName),
   errorMessage: null,
 };
