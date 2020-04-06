@@ -9,15 +9,17 @@ global.XMLHttpRequest = require('xhr2');
 if (!firebase.apps.length) {
   const firebaseConfig = {
     apiKey: 'AIzaSyDu2fblA5PCmdknt6reohIMeOlqgf-B1No',
-    // authDomain: '<your-auth-domain>',
+    authDomain: 'ombudsman-a8077.firebaseapp.com',
     projectId: 'ombudsman-a8077',
     storageBucket: 'gs://ombudsman-a8077.appspot.com'
   };
   firebase.initializeApp(firebaseConfig);
 }
+
 const storage = firebase.storage();
 const firestore = firebase.firestore();
 const auth = firebase.auth();
+
 const dbCategory = 'catArray';
 
 /**

@@ -10,13 +10,11 @@ import Link from 'next/link';
 import Loading from '../client/components/Loading/Loading';
 import { updateClicks } from '../client/actions/api';
 import { PdfContext } from './context/pdf-context';
-import { useRouter } from 'next/router';
 
 const HomePage = ({ clickUpdate }) => {
   const [loading, pdfs, categories, sortedPdfs] = useContext(PdfContext);
   const [checked, setCheck] = useState([]);
   const [query, setQuery] = useState('');
-  const router = useRouter();
 
   useEffect(() => {
     if (!loading) setCheck(new Array(categories.length).fill(1));
@@ -27,38 +25,37 @@ const HomePage = ({ clickUpdate }) => {
       {loading ?
           (<Loading />) :
           (
-            <><br />
-              <br />
-              <br />
-              <h2 align="center">Ombudsman Toolbox Search</h2>
+            <>
               <div>
-                <Row>
-                  <Col md={{ span: 6, offset: 3 }}>
-                    <div className="input-group">
-                      <Form.Control type="text" placeholder="Search" onChange={(e) => (setQuery(e.target.value))} />
-                      <Dropdown>
-                        <Dropdown.Toggle>
-                          Select a Category
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                          <div onClick={() => {
+                <div className="main-search">
+                  <h2 align="center">Ombudsman Toolbox Search</h2>
+                  <Row>
+                    <Col md={{ span: 6, offset: 3 }}>
+                      <div className="input-group">
+                        <Form.Control type="text" placeholder="Search" onChange={(e) => (setQuery(e.target.value))} />
+                        <Dropdown>
+                          <Dropdown.Toggle>
+                            Select a Category
+                          </Dropdown.Toggle>
+                          <Dropdown.Menu>
+                            <div onClick={() => {
                       if (checked.every((val) => val === 1))  {
                         setCheck(new Array(categories.length).fill(0));
                       } else {
                         setCheck(new Array(categories.length).fill(1));
                       }
                     }}
-                          >
-                            <Form.Check
-                              className="dropdown-item"
-                              defaultValue="Select All"
-                              label="Select All"
-                              checked={checked.every((val) => val === 1)}
-                              filtertype="normalfilter"
-                              onChange={() => { /* no-op, change handled by the parent component */ }}
-                            />
-                          </div>
-                          {
+                            >
+                              <Form.Check
+                                className="dropdown-item"
+                                defaultValue="Select All"
+                                label="Select All"
+                                checked={checked.every((val) => val === 1)}
+                                filtertype="normalfilter"
+                                onChange={() => { /* no-op, change handled by the parent component */ }}
+                              />
+                            </div>
+                            {
                       categories.map((item, index) => (
                         <div onClick={() => {
                           let currCheck = checked;
@@ -76,25 +73,18 @@ const HomePage = ({ clickUpdate }) => {
                         </div>
                       ))
                     }
-                        </Dropdown.Menu>
-                      </Dropdown>
-                  &nbsp;
-                      <Link href={{ pathname: '/search', query: { pdfs: checked, term: query } }}>
-                        <Button variant="outline-success">Search</Button>
-                      </Link>
-                    </div>
-                  </Col>
-                </Row>
-                <br />
-                <br />
-                <br />
-                <br />
-                <hr />
-                <br />
-                <h4 align="center">Frequently Viewed Documents</h4>
-                <br />
-                <div align="center">
-                  <Row>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                        <Link href={{ pathname: '/search', query: { selected: checked, term: query } }}>
+                          <Button variant="outline-success">Search</Button>
+                        </Link>
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
+                <div className="freq-viewed" align="center">
+                  <h4 align="center" className="my-4">Frequently Viewed Documents</h4>
+                  <Row className="mb-3">
                     <Col>
                       <div className="card card-block">
                         {sortedPdfs[0].fileName}
@@ -143,8 +133,7 @@ const HomePage = ({ clickUpdate }) => {
                       </div>
                     </Col>
                   </Row>
-                  <br />
-                  <Row>
+                  <Row className="mb-3">
                     <Col>
                       <div className="card card-block">
                         {sortedPdfs[3].fileName}
@@ -194,73 +183,71 @@ const HomePage = ({ clickUpdate }) => {
                       </div>
                     </Col>
                   </Row>
+                  <hr />
                 </div>
-                <br />
-                <hr />
-                <br />
-                <h4 align="center">Find by Category</h4>
-                <br />
-                {categories.map((category, i) => {
-              if (i * 2 + 1 < categories.length) {
-                return (
-                  <Row>
-                    <Col md={{ span: 6, offset: 0 }}>
-                      <div align="right">
-                        <DropdownButton id="dropdown-basic-button" variant="w" size="lg" title={categories[i * 2]}>
-                          {pdfs[categories[i * 2]].map((pdf) => (
+                <div className="find-category">
+                  <h4 align="center" className="my-4">Find by Category</h4>
+                  {categories.map((category, i) => {
+                if (i * 2 + 1 < categories.length) {
+                  return (
+                    <Row>
+                      <Col md={{ span: 6, offset: 0 }}>
+                        <div align="right">
+                          <DropdownButton id="dropdown-basic-button" variant="w" size="lg" title={categories[i * 2]}>
+                            {pdfs[categories[i * 2]].map((pdf) => (
+                              <Dropdown.Item
+                                href={pdf.url}
+                                onClick={() => clickUpdate(
+                                  { fileName: pdf.fileName, category: categories[i * 2] },
+                                )}
+                              >
+                                {pdf.fileName}
+                              </Dropdown.Item>
+                            ))}
+                          </DropdownButton>
+                        </div>
+                      </Col>
+                      <Col md={{ span: 6, offset: 0 }}>
+                        <DropdownButton id="dropdown-basic-button" variant="w" size="lg" title={categories[i * 2 + 1]}>
+                          {pdfs[categories[i * 2 + 1]].map((pdf) => (
                             <Dropdown.Item
                               href={pdf.url}
                               onClick={() => clickUpdate(
-                                { fileName: pdf.fileName, category: categories[i * 2] },
+                                { fileName: pdf.fileName, category: categories[i * 2 + 1] },
                               )}
                             >
                               {pdf.fileName}
                             </Dropdown.Item>
                           ))}
                         </DropdownButton>
-                      </div>
-                    </Col>
-                    <Col md={{ span: 6, offset: 0 }}>
-                      <DropdownButton id="dropdown-basic-button" variant="w" size="lg" title={categories[i * 2 + 1]}>
-                        {pdfs[categories[i * 2 + 1]].map((pdf) => (
-                          <Dropdown.Item
-                            href={pdf.url}
-                            onClick={() => clickUpdate(
-                              { fileName: pdf.fileName, category: categories[i * 2 + 1] },
-                            )}
-                          >
-                            {pdf.fileName}
-                          </Dropdown.Item>
-                        ))}
-                      </DropdownButton>
-                    </Col>
-                  </Row>
-                );
-              } if (i * 2 < categories.length) {
-                return (
-                  <Row>
-                    <Col md={{ span: 6, offset: 0 }}>
-                      <div align="right">
-                        <DropdownButton id="dropdown-basic-button" size="lg" variant="w" title={categories[i * 2]}>
-                          {pdfs[categories[i * 2]].map((pdf) => (
-                            <Dropdown.Item
-                              href={pdf.url}
-                              onClick={() => clickUpdate(
-                                { fileName: pdf.fileName, category: categories[i * 2] },
-                              )}
-                            >
-                              {pdf.fileName}
-                            </Dropdown.Item>
-                          ))}
-                        </DropdownButton>
-                      </div>
-                    </Col>
-                  </Row>
-                );
-              }
-              return null;
-            })}
-                <br />
+                      </Col>
+                    </Row>
+                  );
+                } if (i * 2 < categories.length) {
+                  return (
+                    <Row>
+                      <Col md={{ span: 6, offset: 0 }}>
+                        <div align="right">
+                          <DropdownButton id="dropdown-basic-button" size="lg" variant="w" title={categories[i * 2]}>
+                            {pdfs[categories[i * 2]].map((pdf) => (
+                              <Dropdown.Item
+                                href={pdf.url}
+                                onClick={() => clickUpdate(
+                                  { fileName: pdf.fileName, category: categories[i * 2] },
+                                )}
+                              >
+                                {pdf.fileName}
+                              </Dropdown.Item>
+                            ))}
+                          </DropdownButton>
+                        </div>
+                      </Col>
+                    </Row>
+                  );
+                }
+                return null;
+              })}
+                </div>
               </div>
             </>
 
@@ -268,6 +255,7 @@ const HomePage = ({ clickUpdate }) => {
     </>
   );
 };
+
 
 HomePage.propTypes = {
   clickUpdate: PropTypes.func

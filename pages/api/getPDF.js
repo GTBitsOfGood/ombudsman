@@ -19,10 +19,10 @@ const handler = (req, res) =>
         payload: text
       })
     )
-    .catch(() =>
+    .catch((error) =>
       res.status(201).json({
         success: false,
-        message: 'Failed to run action!'
+        message: error
       })
     );
 

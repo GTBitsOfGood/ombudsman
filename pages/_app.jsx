@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { withRouter } from 'next/router';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../public/static/App.css';
+import '../public/static/components.css';
 import { PdfContextProvider } from './context/pdf-context';
 import Footer from '../client/components/Footer/Footer';
 import Header from '../client/components/Header/Header';
