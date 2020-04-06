@@ -1,6 +1,8 @@
 import firebase from 'firebase';
 import 'firebase/storage';
 import 'firebase/firestore';
+import 'firebase/auth';
+
 
 global.XMLHttpRequest = require('xhr2');
 
@@ -15,6 +17,7 @@ if (!firebase.apps.length) {
 }
 const storage = firebase.storage();
 const firestore = firebase.firestore();
+const auth = firebase.auth();
 const dbCategory = 'catArray';
 
 /**
@@ -104,4 +107,24 @@ export const getPDF = async () => {
     return a.fileName > b.fileName ? 1 : -1;
   });
   return { pdfMap, sortedPdfs };
+};
+
+export const authenticate = async (email, password) => {
+  let result = 'Login successful';
+  try {
+    await auth.signInWithEmailAndPassword(email, password);
+  } catch(error) {
+    result = error.message;
+  }
+  return result;
+};
+
+export const signOut = async () => {
+  let result = 'Sign out successful';
+  try {
+    await auth.signOut();
+  } catch(error) {
+    result = error.message;
+  }
+  return result;
 };
