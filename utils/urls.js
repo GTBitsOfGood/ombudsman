@@ -15,5 +15,7 @@ export default {
   api: {
     getPDF: '/api/getPDF',
     updateClicks: '/api/updateClicks',
+    authenticate: '/api/authenticate',
+    signOut: '/api/signOut',
   },
 };

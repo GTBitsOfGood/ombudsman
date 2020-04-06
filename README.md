@@ -6,11 +6,7 @@ The master branch is hosted on Zeit Now at [https://ombudsman.now.sh/](https://o
 
 We're using Firebase as the database (contact us for the URL). There's no authentication being used at the moment.
 
-To install dependencies, run `npm install` in the directory where you've cloned this repo. There's a known error with Firebase in Node, so you’ll need to modify this file: node_modules/@firebase/storage/dist/index.cjs.js, and add this line to the top of the file -
-
-```
-global.XMLHttpRequest = require('xhr2');
-```
+To install dependencies, run `npm install` in the directory where you've cloned this repo.
 
 To deploy this locally, run
 
