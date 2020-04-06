@@ -554,6 +554,8 @@ module.exports = {
         // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-adjacent-inline-elements.md
         // TODO: enable? semver-major
         'react/no-adjacent-inline-elements': 'off',
+        'react-hooks/exhaustive-deps': 'off',
+        'array-callback-return': 'off',
 
         // Enforce a specific function type for function components
         // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/function-component-definition.md
