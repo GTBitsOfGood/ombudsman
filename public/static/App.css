@@ -1,9 +1,18 @@
 @import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
 
-html, body, head, #__next {
+html, #__next {
     font-family: 'Ubuntu', sans-serif;
     width: 100%;
     height: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: 'Ubuntu', sans-serif;
+    width: 100%;
     margin: 0;
     padding: 0;
     position: relative;
@@ -12,6 +21,7 @@ html, body, head, #__next {
 .App {
     width: 100%;
     height: 100%;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
@@ -19,11 +29,30 @@ html, body, head, #__next {
 .App > .Content {
     width: 100%;
     height: 100%;
-    padding: 16px;
-    overflow-x: hidden;
+    padding: 16pt;
     overflow-y: auto;
 }
 
 .dropdown {
     display:inline-block;
+}
+
+.absolute-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* .vertical-center {
+    padding-top: 250px;
+} */
+
+.custom-checkbox {
+    white-space: normal;
+    word-break: normal;
+}
+
+Row {
+    margin-top: 2%
 }

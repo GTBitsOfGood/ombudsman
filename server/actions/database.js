@@ -1,20 +1,25 @@
 import firebase from 'firebase';
 import 'firebase/storage';
 import 'firebase/firestore';
+import 'firebase/auth';
+
 
 global.XMLHttpRequest = require('xhr2');
 
 if (!firebase.apps.length) {
   const firebaseConfig = {
     apiKey: 'AIzaSyDu2fblA5PCmdknt6reohIMeOlqgf-B1No',
-    // authDomain: '<your-auth-domain>',
+    authDomain: 'ombudsman-a8077.firebaseapp.com',
     projectId: 'ombudsman-a8077',
     storageBucket: 'gs://ombudsman-a8077.appspot.com'
   };
   firebase.initializeApp(firebaseConfig);
 }
+
 const storage = firebase.storage();
 const firestore = firebase.firestore();
+const auth = firebase.auth();
+
 const dbCategory = 'catArray';
 
 /**
@@ -73,17 +78,22 @@ export const getPDF = async () => {
     let promises = [];
     promises = foldItems.map(async file => {
       let views = 0;
-      if (
-        file.name.slice(0, -4) in categoryMap[category] &&
-        'views' in categoryMap[category][file.name.slice(0, -4)]
-      ) {
-        views = categoryMap[category][file.name.slice(0, -4)].views;
+      let metadata = [];
+      const slicedFileName = file.name.slice(0, -4);
+
+      if (slicedFileName in categoryMap[category]) {
+        if ('views' in categoryMap[category][slicedFileName])
+          views = categoryMap[category][slicedFileName].views;
+        if ('metadata' in categoryMap[category][slicedFileName])
+          metadata = categoryMap[category][slicedFileName].metadata;
       }
+
       return file.getDownloadURL().then(imgURL => {
         const pdfData = {
           url: imgURL,
           fileName: file.name,
           views,
+          metadata,
           category
         };
         pdfMap[category].push(pdfData);
@@ -99,4 +109,24 @@ export const getPDF = async () => {
     return a.fileName > b.fileName ? 1 : -1;
   });
   return { pdfMap, sortedPdfs };
+};
+
+export const authenticate = async (email, password) => {
+  let result = 'Login successful';
+  try {
+    await auth.signInWithEmailAndPassword(email, password);
+  } catch(error) {
+    result = error.message;
+  }
+  return result;
+};
+
+export const signOut = async () => {
+  let result = 'Sign out successful';
+  try {
+    await auth.signOut();
+  } catch(error) {
+    result = error.message;
+  }
+  return result;
 };

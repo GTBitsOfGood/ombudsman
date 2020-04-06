@@ -1,77 +1,37 @@
 import App from 'next/app';
 import React from 'react';
 import Head from 'next/head';
-// import Header from '../client/components/Header';
-import '../public/static/App.css';
+import { withRouter } from 'next/router';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../public/static/App.css';
+import '../public/static/components.css';
 import { PdfContextProvider } from './context/pdf-context';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import Form from 'react-bootstrap/Form';
-import Link from 'next/link';
-import Button from 'react-bootstrap/Button';
-
-const homeName = 'HomePage';
+import Footer from '../client/components/Footer/Footer';
+import Header from '../client/components/Header/Header';
 
 class MyApp extends App {
   render() {
-    const { Component, pageProps } = this.props;
+    const { router, Component, pageProps } = this.props;
 
     return (
       <>
         <Head>
           <title>Ombudsman</title>
         </Head>
-        <div className="App">
-          <Navbar style={{ fontFamily: 'Ubuntu' }} bg="light" expand="lg">
-            <Navbar.Brand>Ombudsman</Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="mr-auto" activeKey={Component.name === homeName ? '/' : '/search'}>
-                <Nav.Item>
-                  <Nav.Link href="/" eventKey="/">Home</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link href="/help">Help</Nav.Link>
-                </Nav.Item>
-              </Nav>
-              {Component.name === homeName ? null :
-                        (
-                          <Nav className="ml-auto">
-                            <div className="input-group">
-                              <Form.Control type="text" placeholder="Search" />
-                              <Link href={{ pathname: '/search', query: { pdfs: [1, 1, 1, 1, 1, 1] } }} passHref>
-                                <Button variant="outline-success">Search</Button>
-                              </Link>
-                            </div>
-                          </Nav>
-)}
-            </Navbar.Collapse>
-          </Navbar>
-          <div className="Content">
-            <PdfContextProvider>
-              <Component {...pageProps} />
-            </PdfContextProvider>
-          </div>
+        <div className="main-wrapper">
+          <PdfContextProvider>
+            <Header path={router.pathname} />
+            <div className="App">
+              <div className="Content">
+                <Component {...pageProps} />
+              </div>
+            </div>
+            <Footer path={router.pathname} />
+          </PdfContextProvider>
         </div>
-        <Navbar style={{ fontFamily: 'Ubuntu' }} sticky="bottom" bg="light">
-          <Navbar.Text>
-            <Nav activeKey="/">
-              <Navbar.Brand>Ombudsman Toolbox</Navbar.Brand>
-              <Nav.Link href="/" eventKey="/">Home</Nav.Link>
-              <Nav.Link href="/help">Help</Nav.Link>
-            </Nav>
-          </Navbar.Text>
-          <Navbar.Toggle />
-          <Navbar.Collapse className="justify-content-end">
-            <Navbar.Text>
-              <Button variant="outline-dark">ADD DOCUMENTS</Button>
-            </Navbar.Text>
-          </Navbar.Collapse>
-        </Navbar>
       </>
     );
   }
 }
 
-export default MyApp;
+export default withRouter(MyApp);
