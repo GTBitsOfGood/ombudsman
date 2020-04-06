@@ -34,7 +34,7 @@ export const getPDF = () =>
  * @param {string} category
  * @param {string} fileName
  */
-export const updateClicks = (category, fileName) => {
+export const updateClicks = (category, fileName) =>
   fetch(urls.baseUrl + urls.api.updateClicks, {
     method: 'post',
     mode: 'no-cors',
@@ -57,9 +57,8 @@ export const updateClicks = (category, fileName) => {
 
       return json.payload;
     });
-};
 
-export const authenticate = (email, password) => {
+export const authenticate = (email, password) => 
   fetch(urls.baseUrl + urls.api.authenticate, {
     method: 'post',
     mode: 'no-cors',
@@ -82,9 +81,8 @@ export const authenticate = (email, password) => {
 
       return json.payload;
     });
-};
 
-export const signOut = () => {
+export const signOut = () => 
   fetch(urls.baseUrl + urls.api.signOut, {
     method: 'get',
     mode: 'no-cors',
@@ -100,4 +98,3 @@ export const signOut = () => {
 
       return json.payload;
     });
-};

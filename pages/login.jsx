@@ -7,13 +7,18 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import { PdfContext } from './context/pdf-context';
 import Loading from '../client/components/Loading/Loading';
-import urls from '../utils/urls';
+import { authenticate } from '../client/actions/api';
 import Link from 'next/link';
 
-const LoginPage = () => {
+const LoginPage = ({signIn}) => {
   const [loading, pdfs, categories] = useContext(PdfContext);
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+
+  const handleLogin = async () => {
+	let response = await authenticate(email, password);
+	alert(response);
+  }
 
   return (<>
     {loading ? (<Loading/>) : (
@@ -46,7 +51,8 @@ const LoginPage = () => {
 			</Col>
 			<Row className="mt-4">
 				<Col>
-					<div className="absolute-center"><Button variant="outline-success">Login</Button></div>
+					<div className="absolute-center">
+						<Button variant="outline-success" onClick={handleLogin}>Login</Button></div>
 				</Col>
 			</Row>
 			<Row className="mt-2">
@@ -57,6 +63,14 @@ const LoginPage = () => {
         </Container>
       </>)}
   </>);
+};
+
+LoginPage.propTypes = {
+	signIn: PropTypes.func
+};
+  
+LoginPage.defaultProps = {
+	signIn: (email, password) => (authenticate(email, password)),
 };
 
 export default LoginPage;

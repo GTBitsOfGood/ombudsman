@@ -4,6 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 import urls from '../../../utils/urls';
 import PropTypes from 'prop-types';
+import Link from 'next/link'
 
 const Footer = ({ path }) => (
   <Navbar sticky="bottom" bg="light">
@@ -21,7 +22,7 @@ const Footer = ({ path }) => (
     <Navbar.Toggle />
     <Navbar.Collapse className="justify-content-end">
       <Navbar.Text>
-        <Button variant="outline-dark">ADD DOCUMENTS</Button>
+        <Link href="/login"><Button variant="outline-dark">ADD DOCUMENTS</Button></Link>
       </Navbar.Text>
     </Navbar.Collapse>
   </Navbar>
