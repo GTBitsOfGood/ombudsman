@@ -2,7 +2,7 @@
 
 The [Office of the State Long-Term Care Ombudsman (Georgia)](https://www.georgiaombudsman.org/) works to advocate for the concerns of residents in long-term care facilties. This website provides a means to host and search through legal documents that may be relevant for this purpose.
 
-The master branch is hosted on Zeit Now at [https://ombudsman.now.sh/](https://ombudsman.now.sh/). 
+The production branch is hosted on Zeit Now at [https://ombudsman-dev.now.sh/](https://ombudsman-dev.now.sh/). 
 
 We're using Firebase as the database (contact us for the URL). There's no authentication being used at the moment.
 
@@ -21,7 +21,7 @@ From https://github.com/GTBitsOfGood/nextjs-starter/
 ## Stack
 * React.js: Front-end
 * Next.js: API routes and server-side rendering
-* MongoDB: Permanently storing info
+* Firebase: Storing information and files
 * Zeit Now: Hosting and automatic GitHub build hooks
 * eslint: Automatically identifying and fixing code errors
 * prettier: Setting a common code style and fixing any issues
@@ -40,21 +40,7 @@ From https://github.com/GTBitsOfGood/nextjs-starter/
 - For production, to add, use `now secrets add <secret-name> <secret-value>`
 - For production, to remove, use `now secrets rm <secret-name>`
 
-## Running
-
-### MongoDB
-
-A running instance of MongoDB is required this project.
-- By default, development uses MongoDB on your computer, if you would like to use an external database, enter `export MONGO_DEV_DB='URLHERE'` (macOS/Linux) or `setx MONGO_DEV_DB URLHERE` (Windows) and skip the instructions below.
-- [Download MongoDB Community Server](https://www.mongodb.com/download-center/community)
-- Go through the installation instructions.
-  - Atlas is recommended for basic testing.
-  - Leave the port at default 27017
-- Create the `nextjs` database. (or choose another name, but make sure to change it in `utils/urls.js`)
-- You're done!
-
 ### Development
-- Setup MongoDB with the instructions above
 - Clone this project to your computer
 - Navigate to this project in terminal and enter `npm install`
 - Rename `example.env` to `.env` and fill it out with the dev config
