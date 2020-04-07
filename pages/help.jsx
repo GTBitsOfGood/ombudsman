@@ -35,7 +35,3 @@ const helpPage = () => {
   </>)};
 
 export default helpPage;
-
-// If we replace the URL with https://firebasestorage.googleapis.com/v0/b/ombudsman-a8077.appspot.com/o/LTCO%20Program%2FOlder%20Americans%20Act%20(Federal%20Law).pdf?alt=media&token=99424932-4bab-4ef2-b1ad-1abfa9dd785a or even after putting it in encodeURI() it doesn't render for some reason
-
-export default PdfComponent;
