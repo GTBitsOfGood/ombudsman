@@ -1,65 +1,40 @@
-// From https://github.com/mozilla/pdf.js/tree/master/examples/create-react-app
-
-import React, { useRef, useEffect } from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Loading from '../client/components/Loading/Loading';
+import { PdfContext } from './context/pdf-context';
 
-import pdfjs from 'pdfjs-dist';
-import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry';
+const helpPage = () => {
+  const [loading] = useContext(PdfContext);
+  return (<>
+    {loading ? (<Loading/>) : (
+      <>
+        <div>
+          <Row>
+            <Col md={{ span: 5, offset: 3 }}>
+              <h2>
+                How do I use the Ombudsman Toolbox?
+              </h2>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam convallis est et ornare maximus. Morbi mattis, tellus maximus elementum mollis, magna sapien dictum ante, blandit aliquet neque sapien sit amet nulla. Vestibulum faucibus lorem non nulla lacinia, eu iaculis turpis sollicitudin. Nunc eget elit laoreet, malesuada risus quis, mollis leo. Nam sit amet sollicitudin elit. Integer est neque, scelerisque vel sem at, fringilla placerat ex. Nam cursus tortor sed diam tincidunt interdum.
+              </p>
+              <h2>
+                Keep in Mind...
+              </h2>
+              <ul>
+                <li>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam convallis est et ornare maximus. Morbi mattis, tellus maximus elementum mollis, magna sapien dictum ante, blandit aliquet neque sapien sit amet nulla.
+                </li>
+              </ul>
+            </Col>
+          </Row>
+        </div>
+        </>
+      )}
+  </>)};
 
-pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker;
-
-const PdfComponent = ({ src }) => {
-  const canvasRef = useRef(null);
-
-  useEffect(() => {
-    const fetchPdf = async () => {
-      const loadingTask = pdfjs.getDocument(src);
-
-      const pdf = await loadingTask.promise;
-
-      const firstPageNumber = 1;
-
-      const page = await pdf.getPage(firstPageNumber);
-
-      const scale = 1.5;
-      const viewport = page.getViewport({ scale: scale });
-
-      // Prepare canvas using PDF page dimensions
-      const canvas = canvasRef.current;
-
-      const context = canvas.getContext('2d');
-      canvas.height = viewport.height;
-      canvas.width = viewport.width;
-
-      // Render PDF page into canvas context
-      const renderContext = {
-        canvasContext: context,
-        viewport: viewport
-      };
-      const renderTask = page.render(renderContext);
-
-      await renderTask.promise;
-    };
-
-    fetchPdf();
-  }, [src]);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      width="100%"
-      height="100%"
-    />
-  );
-};
-
-PdfComponent.propTypes = {
-  src: PropTypes.string
-};
-
-PdfComponent.defaultProps = {
-  src: 'https://www.cdc.gov/coronavirus/2019-ncov/downloads/2019-ncov-factsheet.pdf'
-};
+export default helpPage;
 
 // If we replace the URL with https://firebasestorage.googleapis.com/v0/b/ombudsman-a8077.appspot.com/o/LTCO%20Program%2FOlder%20Americans%20Act%20(Federal%20Law).pdf?alt=media&token=99424932-4bab-4ef2-b1ad-1abfa9dd785a or even after putting it in encodeURI() it doesn't render for some reason
 
