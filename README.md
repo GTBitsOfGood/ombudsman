@@ -2,7 +2,7 @@
 
 The [Office of the State Long-Term Care Ombudsman (Georgia)](https://www.georgiaombudsman.org/) works to advocate for the concerns of residents in long-term care facilties. This website provides a means to host and search through legal documents that may be relevant for this purpose.
 
-The master branch is hosted on Zeit Now at [https://ombudsman.now.sh/](https://ombudsman.now.sh/). 
+The production branch is hosted on Zeit Now at [https://ombudsman-dev.now.sh/](https://ombudsman-dev.now.sh/). 
 
 We're using Firebase as the database (contact us for the URL). There's no authentication being used at the moment.
 
