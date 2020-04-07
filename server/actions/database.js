@@ -9,15 +9,18 @@ global.XMLHttpRequest = require('xhr2');
 if (!firebase.apps.length) {
   const firebaseConfig = {
     apiKey: 'AIzaSyDu2fblA5PCmdknt6reohIMeOlqgf-B1No',
-    // authDomain: '<your-auth-domain>',
+    authDomain: 'ombudsman-a8077.firebaseapp.com',
     projectId: 'ombudsman-a8077',
-    storageBucket: 'gs://ombudsman-a8077.appspot.com'
+    storageBucket: 'gs://ombudsman-a8077.appspot.com',
+    databaseURL: "https://ombudsman-a8077.firebaseio.com",
   };
   firebase.initializeApp(firebaseConfig);
 }
+
 const storage = firebase.storage();
 const firestore = firebase.firestore();
 const auth = firebase.auth();
+
 const dbCategory = 'catArray';
 
 /**
@@ -49,6 +52,21 @@ export const updateClicks = async (category, fileName) => {
   const updateKey = `catArray.${[category]}.${[fileName]}.views`;
   firestoreRef.update(updateKey, firebase.firestore.FieldValue.increment(1));
 };
+
+/**
+ * Add keyword to metadata
+ *
+ * @param {string} category category name
+ * @param {string} fileName file name
+ * @param {string} keyWord new keyword to be added
+ */
+export const addKeyword = async (category, fileName, keyWord) => {
+  const firestoreRef = firestore.collection('categories').doc('categories');
+  const updateKey = `catArray.${[category]}.${[fileName]}.metadata`;
+  firestoreRef.update(updateKey, firebase.firestore.FieldValue.arrayUnion(keyWord));
+};
+
+
 
 /**
  * Get a list of all PDFs in the database.

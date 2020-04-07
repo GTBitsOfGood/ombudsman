@@ -6,9 +6,10 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import urls from '../../../utils/urls';
 import { PdfContext } from '../../../pages/context/pdf-context';
+import PropTypes from 'prop-types';
 
 const Header = ({ path }) => {
-    const [loading, _, categories] = useContext(PdfContext);
+    const [loading, , categories] = useContext(PdfContext);
     const [query, setQuery] = useState('');
 
     return (loading ? (<></>) : (
@@ -29,7 +30,7 @@ const Header = ({ path }) => {
                   <Nav className="ml-auto">
                     <div className="input-group">
                       <Form.Control type="text" placeholder="Search" onChange={(e) => (setQuery(e.target.value))} />
-                      <Link href={{ pathname: urls.pages.search, query: { pdfs: new Array(categories.length).fill(1), term: query } }} passHref>
+                      <Link href={{ pathname: urls.pages.search, query: { selected: new Array(categories.length).fill(1), term: query } }} passHref>
                         <Button variant="outline-success">Search</Button>
                       </Link>
                     </div>
@@ -38,6 +39,14 @@ const Header = ({ path }) => {
         </Navbar.Collapse>
       </Navbar>
 ));
+};
+
+Header.propTypes = {
+  path: PropTypes.string
+};
+
+Header.defaultProps = {
+  path: '/'
 };
 
 export default Header;

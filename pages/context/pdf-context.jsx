@@ -9,6 +9,7 @@ export const PdfContextProvider = ({ children }) => {
     const [categories, setCategories] = useState(null);
     const [sortedPdfs, setSortedPdfs] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [query, setQuery] = useState('');
 
     const getPdfs = async () => {
         setLoading(true);
@@ -25,14 +26,14 @@ export const PdfContextProvider = ({ children }) => {
     }, []);
 
     return (
-      <PdfContext.Provider value={[loading, pdfs, categories, sortedPdfs]}>
+      <PdfContext.Provider value={[loading, pdfs, categories, sortedPdfs, query, setQuery]}>
         {children}
       </PdfContext.Provider>
     );
 };
 
 PdfContextProvider.propTypes = {
-    children: PropTypes.objectOf(Object)
+    children: PropTypes.arrayOf(Object)
 };
 
 PdfContextProvider.defaultProps = {
