@@ -130,3 +130,37 @@ export const addKeyword = (category, fileName, keyWord) =>
 
       return json.payload;
     });
+
+    /**
+ * upload file to Firebase
+ *
+ * @param {string} category
+ * @param {string} fileName
+ * @param {File} file
+ */
+export const uploadDocument = (category, fileName, file) => {
+
+const formData = new FormData();
+formData.append(category, fileName);
+formData.append(file);
+
+fetch(urls.baseUrl + urls.api.addKeyword, {
+  method: 'post',
+  mode: 'no-cors',
+  credentials: 'include',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: formData
+})
+  .then(response => response.json())
+  .then(json => {
+    if (json == null) {
+      throw new Error('Could not connect to API!');
+    } else if (!json.success) {
+      throw new Error(json.message);
+    }
+
+    return json.payload;
+  });
+}

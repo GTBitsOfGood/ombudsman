@@ -73,13 +73,17 @@ export const addKeyword = async (category, fileName, keyWord) => {
  * @param {string} fileName file name
  * @param {File} file file to be uploaded
  */
-export const uploadFile = async (category, fileName, file) => {
+export const uploadDocuemnt = async (category, fileName, file) => {
   const firebaseRef = firebase.storage().ref();
-  const fileRef = firebaseRef.child(`${[category]}/${[fileName]}`);
+  const fileRef = firebaseRef.child(`${[category]}/${[filename]}`);
   console.log(fileRef.fullPath);
-  fileRef.put(file).then(function(snapshot) {
-    console.log('Uploaded a blob or file!');
-  });
+  try {
+    fileRef.put(file).then(function(snapshot) {
+      console.log('Uploaded a blob or file!');
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // uploadFile("Money Follows the Person", "test.pdf", new File("testPDFs/MoneyFollowsThePerson_FY14_Final_0.pdf"));
