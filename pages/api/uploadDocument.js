@@ -16,7 +16,7 @@ import { uploadDocument } from '../../server/actions/database';
  */
 const handler = (req, res) => {
   const data = JSON.parse(req.body);
-  addKeyword(data.category, data.fileName, data.file)
+  uploadDocument(data.category, data.fileName, data.file)
     .then(text =>
       res.status(201).json({
         success: true,

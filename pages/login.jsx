@@ -16,8 +16,8 @@ const LoginPage = ({ signIn }) => {
   const [email, setEmail] = useState('');
 
   const handleLogin = async () => {
-	let response = await authenticate(email, password);
-	alert(response);
+	  let response = await authenticate(email, password);
+	  alert(response);
   };
 
   return (

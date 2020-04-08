@@ -141,16 +141,14 @@ export const addKeyword = (category, fileName, keyWord) =>
 export const uploadDocument = (category, fileName, file) => {
 
 const formData = new FormData();
-formData.append(category, fileName);
-formData.append(file);
+formData.append('category', category);
+formData.append('fileName', fileName)
+formData.append('file', file);
 
-fetch(urls.baseUrl + urls.api.addKeyword, {
+fetch(urls.baseUrl + urls.api.uploadDocument, {
   method: 'post',
   mode: 'no-cors',
   credentials: 'include',
-  headers: {
-    'Content-Type': 'application/json'
-  },
   body: formData
 })
   .then(response => response.json())

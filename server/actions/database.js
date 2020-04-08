@@ -73,29 +73,24 @@ export const addKeyword = async (category, fileName, keyWord) => {
  * @param {string} fileName file name
  * @param {File} file file to be uploaded
  */
-export const uploadDocuemnt = async (category, fileName, file) => {
+export const uploadDocument = async (category, fileName, file) => {
+  console.log('access');
+  console.log(category, fileName, typeof(file));
   const firebaseRef = firebase.storage().ref();
-  const fileRef = firebaseRef.child(`${[category]}/${[filename]}`);
-  console.log(fileRef.fullPath);
-  try {
-    fileRef.put(file).then(function(snapshot) {
-      console.log('Uploaded a blob or file!');
-    });
-  } catch (error) {
-    console.log(error);
-  }
+  const fileRef = firebaseRef.child(`${category}/${fileName}`);
+  await fileRef.put(file);
 };
 
-// uploadFile("Money Follows the Person", "test.pdf", new File("testPDFs/MoneyFollowsThePerson_FY14_Final_0.pdf"));
-var fs = require('fs');
+// // uploadFile("Money Follows the Person", "test.pdf", new File("testPDFs/MoneyFollowsThePerson_FY14_Final_0.pdf"));
+// var fs = require('fs');
 
-var file = fs.readFile('/Users/jacksanniota/gt/clubs/bog/ombudsman/testPDFs/MoneyFollowsThePerson_FY14_Final_0.pdf', 'utf8', function(err, data) {
-    if (err) throw err;
-    // console.log(data);
-});
-uploadFile("Money Follows the Person", "MoneyFollowsThePerson_FY14_Final_0.pdf", file);
+// var file = fs.readFile('/Users/jacksanniota/gt/clubs/bog/ombudsman/testPDFs/MoneyFollowsThePerson_FY14_Final_0.pdf', 'utf8', function(err, data) {
+//     if (err) throw err;
+//     // console.log(data);
+// });
+// uploadFile("Money Follows the Person", "MoneyFollowsThePerson_FY14_Final_0.pdf", file);
 
-console.log("hi");
+// console.log("hi");
 
 
 
