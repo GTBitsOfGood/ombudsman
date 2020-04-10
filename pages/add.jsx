@@ -10,7 +10,8 @@ import { PdfContext } from './context/pdf-context';
 import Loading from '../client/components/Loading/Loading';
 import withAuth from '../client/components/Admin/auth';
 import { uploadDocument } from '../server/actions/database';
-//import { updateInfo } from '../server/actions/ database';
+// import { addInfo } from '../client/actions/api';
+import { addInfo } from '../server/actions/database';
 
 
 const AddPage = () => {
@@ -18,8 +19,8 @@ const AddPage = () => {
   const [file, setFile] = useState(null);
   const [title, setTitle] = useState(null);
   const [category, setCategory] = useState(null);
-  const [tag, setTag] = useState(null);
-  const [keywords, setKeywords] = useState(null);
+  const [tag, setTag] = useState('State');
+  const [keyWords, setKeywords] = useState(null);
   const [desc, setDesc] = useState(null);
 
 	return (
@@ -105,7 +106,8 @@ const AddPage = () => {
                   multiple
                   labelKey="name"
                   onChange={(selected) => {
-                    setKeywords({ selected });
+                    const keyWordList = selected.map(select => select.name)
+                    setKeywords(keyWordList);
                   }}
                   options={[]}
                   newSelectionPrefix="Add a new keyword: "
@@ -158,7 +160,7 @@ const AddPage = () => {
                 <Button
                  variant="primary"
                  onClick={(event) => {
-                   console.log("hi");
+                   addInfo(category.selected[0], title, tag, desc, keyWords);
 								}}
                 >Submit</Button>
               </Col>

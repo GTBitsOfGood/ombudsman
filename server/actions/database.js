@@ -90,6 +90,7 @@ export const uploadDocument = async (category, fileName, file) => {
  * 
  */
 export const addInfo = async (category, fileName, tag, description, keyWords) => {
+  fileName = fileName.slice(0,-4);
   const firestoreRef = firestore.collection('categories').doc('categories');
   const updateKey = `catArray.${[category]}.${[fileName]}`;
   firestoreRef.update(updateKey + `.tag`, tag);
