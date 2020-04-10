@@ -80,6 +80,28 @@ export const uploadDocument = async (category, fileName, file) => {
 };
 
 /**
+ * add document information to firestore
+ *
+ * @param {string} category category name
+ * @param {string} fileName file name
+ * @param {string} tag federal or state tag
+ * @param {string} description federal or state tag
+ * @param {Array} keyWords keyword to add to the metadata
+ * 
+ */
+export const addInfo = async (category, fileName, tag, description, keyWords) => {
+  const firestoreRef = firestore.collection('categories').doc('categories');
+  const updateKey = `catArray.${[category]}.${[fileName]}`;
+  firestoreRef.update(updateKey + `.tag`, tag);
+  firestoreRef.update(updateKey + `.description`, description);
+  keyWords.forEach (keyWord => { 
+    firestoreRef.update(updateKey+ `.metadata`, firebase.firestore.FieldValue.arrayUnion(keyWord));
+  }); 
+};
+
+
+
+/**
  * Get a list of all PDFs in the database.
  *
  * @returns {Promise<{pdfMap: {[category: string]: pdf[]}, sortedPdfs: pdf[]}>} object with pdfMap which maps categories to a list of PDF property objects, and sortedPdfs which is a list of all PDFs, sorted by most views to least views, and in the case of a tie, then alphabetically.
