@@ -8,7 +8,6 @@ const { Corpus } = require('tiny-tfidf-node');
 
 admin.initializeApp();
 
-
 exports.generateMetadata = functions.storage.object().onFinalize(async (object) => {
     if (object.contentType === 'application/pdf') {
         const corpusName = 'corpus';
@@ -41,7 +40,7 @@ exports.generateMetadata = functions.storage.object().onFinalize(async (object) 
 
             const splitFile = file.slice(0, -4);
             const updateKey = `catArray.${folder}.${splitFile}.metadata`;
-            await admin.firestore().collection('categories').doc('categories').update(updateKey, topKeywords);
+            await admin.firestore().collection('categories').doc('categories').update(updateKey, admin.firestore.FieldValue.arrayUnion(...topKeywords));
         });
 
         fs.unlinkSync(tempFilePath);
