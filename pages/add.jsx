@@ -16,11 +16,11 @@ import { uploadDocument } from '../server/actions/database';
 const AddPage = () => {
 	const [loading, pdfs, categories] = useContext(PdfContext);
   const [file, setFile] = useState(null);
-  const [title, setTitle] = useState(null);
-  const [category, setCategory] = useState(null);
-  const [tag, setTag] = useState(null);
-  const [keywords, setKeywords] = useState(null);
-  const [desc, setDesc] = useState(null);
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState([]);
+  const [tag, setTag] = useState("State");
+  const [keyWords, setKeyWords] = useState([]);
+  const [desc, setDesc] = useState("");
 
 	return (
   <>
@@ -43,7 +43,7 @@ const AddPage = () => {
                     onChange={(event) => {
                         setFile(event.target.files[0]);
                         setTitle(event.target.files[0].name);
-												uploadDocument('test', 'test.pdf', event.target.files[0]);
+												//uploadDocument('test', 'test.pdf', event.target.files[0]);
 											}}
                   />
                   <label className="custom-file-label">
@@ -105,7 +105,8 @@ const AddPage = () => {
                   multiple
                   labelKey="name"
                   onChange={(selected) => {
-                    setKeywords({ selected });
+                    setKeyWords({ selected });
+                    console.log({ selected });
                   }}
                   options={[]}
                   newSelectionPrefix="Add a new keyword: "
@@ -158,7 +159,8 @@ const AddPage = () => {
                 <Button
                  variant="primary"
                  onClick={(event) => {
-                   console.log("hi");
+                   uploadDocument(category.selected[0], title, file);
+                   console.log("submit clicked");
 								}}
                 >Submit</Button>
               </Col>
