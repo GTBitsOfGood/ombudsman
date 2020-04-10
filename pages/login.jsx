@@ -12,16 +12,21 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import urls from '../utils/urls';
 import withAuth from '../client/components/Admin/auth';
+import { useCookies } from 'react-cookie';
 
 const LoginPage = ({ signIn }) => {
   const [loading] = useContext(PdfContext);
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [cookies, setCookie] = useCookies(['admin']);
   const router = useRouter();
 
   const handleLogin = async () => {
     let response = await authenticate(email, password);
-    router.push(urls.pages.add);
+    if (response === 'Login successful') {
+      setCookie('admin', 'true', {'path': '/'});
+      router.push(urls.pages.add);
+    } else alert(response);
   };
 
   return (

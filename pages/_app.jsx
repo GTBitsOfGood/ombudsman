@@ -10,6 +10,7 @@ import Footer from '../client/components/Footer/Footer';
 import Header from '../client/components/Header/Header';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import urls from '../utils/urls';
+import { CookiesProvider } from 'react-cookie';
 
 class MyApp extends App {
 
@@ -26,11 +27,13 @@ class MyApp extends App {
         <div className="main-wrapper">
           <PdfContextProvider>
             <Header path={router.pathname} admin={admin} />
-            <div className="App">
-              <div className="Content">
-                <Component {...pageProps} />
+            <CookiesProvider>
+              <div className="App">
+                <div className="Content">
+                  <Component {...pageProps} />
+                </div>
               </div>
-            </div>
+            </CookiesProvider>
             {admin ? (<></>) : (<Footer path={router.pathname} />)}
           </PdfContextProvider>
         </div>
