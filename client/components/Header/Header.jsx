@@ -19,13 +19,13 @@ const Header = ({ path, admin }) => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto" activeKey={path}>
             <Nav.Item>
-              <Link href={admin ? urls.pages.add : urls.pages.index}><Nav.Link href={admin ? urls.pages.add : urls.pages.index}>{admin ? 'Manage Documents' : 'Home'}</Nav.Link></Link>
+              <Link href={admin ? urls.pages.manage : urls.pages.index}><Nav.Link href={admin ? urls.pages.manage : urls.pages.index}>{admin ? 'Manage Documents' : 'Home'}</Nav.Link></Link>
             </Nav.Item>
             <Nav.Item>
               <Link href={admin ? urls.pages.add : urls.pages.help}><Nav.Link href={admin ? urls.pages.add : urls.pages.help}>{admin ? 'Add Documents' : 'Help'}</Nav.Link></Link>
             </Nav.Item>
           </Nav>
-          {path === urls.pages.index || admin ? (<></>) :
+          {path === urls.pages.index || path === urls.pages.add || admin ? (<></>) :
                 (
                   <Nav className="ml-auto">
                     <div className="input-group">

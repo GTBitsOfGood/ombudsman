@@ -109,26 +109,6 @@ export const signOut = () =>
       return json.payload;
     });
 
-/**
- * Returns a user object if signed in or null otherwise
- *
- */
-export const isSignedIn = () =>
-  fetch(urls.baseUrl + urls.api.isSignedIn, {
-    method: 'get',
-    mode: 'no-cors',
-    credentials: 'include'
-  })
-    .then(response => response.json())
-    .then(json => {
-      if (json == null) {
-        throw new Error('Could not connect to API!');
-      } else if (!json.success) {
-        throw new Error(json.message);
-      }
-
-      return json.payload;
-    });
 
 /**
  * Add keyword to metadata for a file

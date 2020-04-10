@@ -22,9 +22,13 @@ const routes = [
     link: urls.pages.login,
   },
   {
+    name: 'Manage',
+    link: urls.pages.manage,
+  },
+  {
     name: 'Add',
     link: urls.pages.add,
-  }
+  },
 ];
 
 export default routes;

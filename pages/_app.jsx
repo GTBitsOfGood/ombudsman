@@ -10,13 +10,14 @@ import Footer from '../client/components/Footer/Footer';
 import Header from '../client/components/Header/Header';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import urls from '../utils/urls';
+import { CookiesProvider } from 'react-cookie';
 
 class MyApp extends App {
 
   render() {
     const { router, Component, pageProps } = this.props;
     let admin = false;
-    if (router.pathname === urls.pages.add) admin = true;
+    if (router.pathname === urls.pages.add || router.pathname === urls.pages.manage) admin = true;
 
     return (
       <>
@@ -26,11 +27,13 @@ class MyApp extends App {
         <div className="main-wrapper">
           <PdfContextProvider>
             <Header path={router.pathname} admin={admin} />
-            <div className="App">
-              <div className="Content">
-                <Component {...pageProps} />
+            <CookiesProvider>
+              <div className="App">
+                <div className="Content">
+                  <Component {...pageProps} />
+                </div>
               </div>
-            </div>
+            </CookiesProvider>
             {admin ? (<></>) : (<Footer path={router.pathname} />)}
           </PdfContextProvider>
         </div>

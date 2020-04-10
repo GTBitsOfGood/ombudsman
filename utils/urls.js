@@ -11,7 +11,8 @@ export default {
     result: '/result',
     help: '/help',
     login: '/login',
-    add: '/add'
+    manage: '/manage',
+    add: '/add',
   },
   api: {
     getPDF: '/api/getPDF',
