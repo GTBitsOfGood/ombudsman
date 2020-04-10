@@ -80,14 +80,6 @@ export const uploadDocument = async (category, fileName, file) => {
 };
 
 /**
- * Returns the user object if signed in or null otherwise.
- *
- */
-export const isSignedIn = async () => {
-  return await auth.currentUser;
-};
-
-/**
  * Get a list of all PDFs in the database.
  *
  * @returns {Promise<{pdfMap: {[category: string]: pdf[]}, sortedPdfs: pdf[]}>} object with pdfMap which maps categories to a list of PDF property objects, and sortedPdfs which is a list of all PDFs, sorted by most views to least views, and in the case of a tie, then alphabetically.
