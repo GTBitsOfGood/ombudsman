@@ -10,10 +10,17 @@ import { PdfContext } from './context/pdf-context';
 import Loading from '../client/components/Loading/Loading';
 import withAuth from '../client/components/Admin/auth';
 import { uploadDocument } from '../server/actions/database';
+//import { updateInfo } from '../server/actions/ database';
+
 
 const AddPage = () => {
 	const [loading, pdfs, categories] = useContext(PdfContext);
-	const [file, setFile] = useState(null);
+  const [file, setFile] = useState(null);
+  const [title, setTitle] = useState(null);
+  const [category, setCategory] = useState(null);
+  const [tag, setTag] = useState(null);
+  const [keywords, setKeywords] = useState(null);
+  const [desc, setDesc] = useState(null);
 
 	return (
   <>
@@ -34,7 +41,8 @@ const AddPage = () => {
                     type="file"
                     className="custom-file-input"
                     onChange={(event) => {
-												setFile(event.target.files[0]);
+                        setFile(event.target.files[0]);
+                        setTitle(event.target.files[0].name);
 												uploadDocument('test', 'test.pdf', event.target.files[0]);
 											}}
                   />
@@ -56,7 +64,10 @@ const AddPage = () => {
                   <Typeahead
                     labelKey="name"
                     positionFixed
-									// onChange={setSelected}
+									  onChange={(selected) => {
+                      setCategory({ selected });
+                      console.log({ selected });
+                    }}
                     options={categories}
                     placeholder="Choose a category..."
                     newSelectionPrefix="Add a new category: "
@@ -65,7 +76,12 @@ const AddPage = () => {
                 </Form>
               </Col>
               <Col className="mt-1">
-                <Form.Control as="select">
+                <Form.Control
+                as="select"
+                onChange={(event) => {
+                  setTag(event.target.value);
+                }}
+                >
                   <option
                     value="State"
                     label="State"
@@ -88,7 +104,9 @@ const AddPage = () => {
                   allowNew
                   multiple
                   labelKey="name"
-                  onChange={(e) => console.log(e)}
+                  onChange={(selected) => {
+                    setKeywords({ selected });
+                  }}
                   options={[]}
                   newSelectionPrefix="Add a new keyword: "
                   placeholder="Add custom keywords..."
@@ -103,7 +121,11 @@ const AddPage = () => {
             <Row>
               <Col className="mt-1">
                 <InputGroup>
-                  <FormControl as="textarea" />
+                  <FormControl
+                  as="textarea"
+                  onChange={(event) => {
+                    setDesc(event.target.value);
+                  }}/>
                 </InputGroup>
               </Col>
             </Row>
@@ -133,7 +155,12 @@ const AddPage = () => {
             <Row align="right">
               <Col className="mt-5">
                 <Button variant="light">Cancel</Button>
-                <Button variant="primary">Submit</Button>
+                <Button
+                 variant="primary"
+                 onClick={(event) => {
+                   console.log("hi");
+								}}
+                >Submit</Button>
               </Col>
             </Row>
           </Col>
