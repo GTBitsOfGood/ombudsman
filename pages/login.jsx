@@ -11,6 +11,7 @@ import { authenticate } from '../client/actions/api';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import urls from '../utils/urls';
+import withAuth from '../client/components/Admin/auth';
 
 const LoginPage = ({ signIn }) => {
   const [loading] = useContext(PdfContext);
@@ -80,4 +81,4 @@ LoginPage.defaultProps = {
 	signIn: (email, password) => (authenticate(email, password)),
 };
 
-export default LoginPage;
+export default withAuth(LoginPage);

@@ -9,7 +9,7 @@ import { Typeahead } from 'react-bootstrap-typeahead';
 import { PdfContext } from './context/pdf-context';
 import Loading from '../client/components/Loading/Loading';
 import withAuth from '../client/components/Admin/auth';
-import {uploadDocument} from '../server/actions/database';
+import { uploadDocument } from '../server/actions/database';
 
 const AddPage = () => {
 	const [loading, pdfs, categories] = useContext(PdfContext);

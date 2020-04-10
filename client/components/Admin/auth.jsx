@@ -10,6 +10,7 @@ export const withAuth = (WrappedComponent) => (props) => {
   const signedIn = async () => {
     const admin = await isSignedIn();
     if (!admin) router.push(urls.pages.login);
+    if (admin) router.push(urls.pages.add);
   };
 
   useEffect(() => {
