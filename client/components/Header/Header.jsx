@@ -8,24 +8,24 @@ import urls from '../../../utils/urls';
 import { PdfContext } from '../../../pages/context/pdf-context';
 import PropTypes from 'prop-types';
 
-const Header = ({ path }) => {
+const Header = ({ path, admin }) => {
     const [loading, , categories] = useContext(PdfContext);
     const [query, setQuery] = useState('');
 
     return (loading ? (<></>) : (
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand>Ombudsman</Navbar.Brand>
+        <Navbar.Brand>{admin ? 'Ombudsman Toolbox' : 'Ombudsman'}</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto" activeKey={path}>
             <Nav.Item>
-              <Nav.Link href={urls.pages.index}>Home</Nav.Link>
+              <Link href={admin ? urls.pages.manage : urls.pages.index}><Nav.Link href={admin ? urls.pages.manage : urls.pages.index}>{admin ? 'Manage Documents' : 'Home'}</Nav.Link></Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link href="/help">Help</Nav.Link>
+              <Link href={admin ? urls.pages.add : urls.pages.help}><Nav.Link href={admin ? urls.pages.add : urls.pages.help}>{admin ? 'Add Documents' : 'Help'}</Nav.Link></Link>
             </Nav.Item>
           </Nav>
-          {path === urls.pages.index ? null :
+          {path === urls.pages.index || path === urls.pages.add || admin ? (<></>) :
                 (
                   <Nav className="ml-auto">
                     <div className="input-group">

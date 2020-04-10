@@ -19,5 +19,7 @@ export default {
     updateClicks: '/api/updateClicks',
     authenticate: '/api/authenticate',
     signOut: '/api/signOut',
+    uploadDocument: '/api/uploadDocument',
+    isSignedIn: '/api/isSignedIn'
   },
 };

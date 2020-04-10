@@ -58,6 +58,12 @@ export const updateClicks = (category, fileName) =>
       return json.payload;
     });
 
+/**
+ * Attempts to sign in the user and returns a message with the sign-in status.
+ * 
+ * @param {string} email
+ * @param {string} password
+ */
 export const authenticate = (email, password) =>
   fetch(urls.baseUrl + urls.api.authenticate, {
     method: 'post',
@@ -82,8 +88,33 @@ export const authenticate = (email, password) =>
       return json.payload;
     });
 
+/**
+ * Signs out the user.
+ *
+ */
 export const signOut = () =>
   fetch(urls.baseUrl + urls.api.signOut, {
+    method: 'get',
+    mode: 'no-cors',
+    credentials: 'include'
+  })
+    .then(response => response.json())
+    .then(json => {
+      if (json == null) {
+        throw new Error('Could not connect to API!');
+      } else if (!json.success) {
+        throw new Error(json.message);
+      }
+
+      return json.payload;
+    });
+
+/**
+ * Returns a user object if signed in or null otherwise
+ *
+ */
+export const isSignedIn = () =>
+  fetch(urls.baseUrl + urls.api.isSignedIn, {
     method: 'get',
     mode: 'no-cors',
     credentials: 'include'
