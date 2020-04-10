@@ -9,15 +9,18 @@ import { PdfContext } from './context/pdf-context';
 import Loading from '../client/components/Loading/Loading';
 import { authenticate } from '../client/actions/api';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import urls from '../utils/urls';
 
 const LoginPage = ({ signIn }) => {
   const [loading] = useContext(PdfContext);
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const router = useRouter();
 
   const handleLogin = async () => {
-	  let response = await authenticate(email, password);
-	  alert(response);
+    let response = await authenticate(email, password);
+    router.push(urls.pages.add);
   };
 
   return (

@@ -21,6 +21,10 @@ const routes = [
     name: 'Login',
     link: urls.pages.login,
   },
+  {
+    name: 'Add',
+    link: urls.pages.add,
+  }
 ];
 
 export default routes;

@@ -12,7 +12,7 @@ if (!firebase.apps.length) {
     authDomain: 'ombudsman-a8077.firebaseapp.com',
     projectId: 'ombudsman-a8077',
     storageBucket: 'gs://ombudsman-a8077.appspot.com',
-    databaseURL: "https://ombudsman-a8077.firebaseio.com",
+    databaseURL: 'https://ombudsman-a8077.firebaseio.com',
   };
   firebase.initializeApp(firebaseConfig);
 }
@@ -54,7 +54,7 @@ export const updateClicks = async (category, fileName) => {
 };
 
 /**
- * Add keyword to metadata
+ * Adds keyword to metadata.
  *
  * @param {string} category category name
  * @param {string} fileName file name
@@ -67,32 +67,25 @@ export const addKeyword = async (category, fileName, keyWord) => {
 };
 
 /**
- * Add keyword to metadata
+ * Adds a file object (pdf) to storage.
  *
  * @param {string} category category name
  * @param {string} fileName file name
  * @param {File} file file to be uploaded
  */
 export const uploadDocument = async (category, fileName, file) => {
-  console.log('access');
-  console.log(category, fileName, typeof(file));
   const firebaseRef = firebase.storage().ref();
   const fileRef = firebaseRef.child(`${category}/${fileName}`);
   await fileRef.put(file);
 };
 
-// // uploadFile("Money Follows the Person", "test.pdf", new File("testPDFs/MoneyFollowsThePerson_FY14_Final_0.pdf"));
-// var fs = require('fs');
-
-// var file = fs.readFile('/Users/jacksanniota/gt/clubs/bog/ombudsman/testPDFs/MoneyFollowsThePerson_FY14_Final_0.pdf', 'utf8', function(err, data) {
-//     if (err) throw err;
-//     // console.log(data);
-// });
-// uploadFile("Money Follows the Person", "MoneyFollowsThePerson_FY14_Final_0.pdf", file);
-
-// console.log("hi");
-
-
+/**
+ * Returns the user object if signed in or null otherwise.
+ *
+ */
+export const isSignedIn = async () => {
+  return await auth.currentUser;
+};
 
 /**
  * Get a list of all PDFs in the database.
@@ -162,6 +155,11 @@ export const authenticate = async (email, password) => {
   }
   return result;
 };
+
+/**
+ * Signs the current user out.
+ *
+ */
 
 export const signOut = async () => {
   let result = 'Sign out successful';
