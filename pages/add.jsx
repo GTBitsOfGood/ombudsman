@@ -17,11 +17,11 @@ import { addInfo } from '../server/actions/database';
 const AddPage = () => {
 	const [loading, pdfs, categories] = useContext(PdfContext);
   const [file, setFile] = useState(null);
-  const [title, setTitle] = useState(null);
-  const [category, setCategory] = useState(null);
-  const [tag, setTag] = useState('State');
-  const [keyWords, setKeywords] = useState(null);
-  const [desc, setDesc] = useState(null);
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState([]);
+  const [tag, setTag] = useState("State");
+  const [keyWords, setKeyWords] = useState([]);
+  const [desc, setDesc] = useState("");
 
 	return (
   <>
@@ -44,7 +44,7 @@ const AddPage = () => {
                     onChange={(event) => {
                         setFile(event.target.files[0]);
                         setTitle(event.target.files[0].name);
-												uploadDocument('test', 'test.pdf', event.target.files[0]);
+												//uploadDocument('test', 'test.pdf', event.target.files[0]);
 											}}
                   />
                   <label className="custom-file-label">
@@ -66,7 +66,7 @@ const AddPage = () => {
                     labelKey="name"
                     positionFixed
 									  onChange={(selected) => {
-                      setCategory({ selected });
+                      setCategory( selected[0] );
                       console.log({ selected });
                     }}
                     options={categories}
@@ -107,7 +107,7 @@ const AddPage = () => {
                   labelKey="name"
                   onChange={(selected) => {
                     const keyWordList = selected.map(select => select.name)
-                    setKeywords(keyWordList);
+                    setKeyWords(keyWordList);
                   }}
                   options={[]}
                   newSelectionPrefix="Add a new keyword: "
@@ -160,7 +160,8 @@ const AddPage = () => {
                 <Button
                  variant="primary"
                  onClick={(event) => {
-                   addInfo(category.selected[0], title, tag, desc, keyWords);
+                   uploadDocument(category, title, file);
+                   addInfo(category, title, tag, desc, keyWords);
 								}}
                 >Submit</Button>
               </Col>
