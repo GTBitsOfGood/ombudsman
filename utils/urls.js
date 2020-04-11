@@ -13,6 +13,8 @@ export default {
     login: '/login',
     manage: '/manage',
     add: '/add',
+    edit: '/edit',
+    edithelp: '/edithelp',
   },
   api: {
     getPDF: '/api/getPDF',

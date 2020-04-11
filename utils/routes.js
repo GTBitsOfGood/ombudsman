@@ -29,6 +29,14 @@ const routes = [
     name: 'Add',
     link: urls.pages.add,
   },
+  {
+    name: 'Edit',
+    link: urls.pages.edit,
+  },
+  {
+    name: 'EditHelp',
+    link: urls.pages.edithelp,
+  },
 ];
 
 export default routes;

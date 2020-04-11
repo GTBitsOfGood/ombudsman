@@ -8,8 +8,8 @@ import '../public/static/components.css';
 import { PdfContextProvider } from './context/pdf-context';
 import Footer from '../client/components/Footer/Footer';
 import Header from '../client/components/Header/Header';
-import 'react-bootstrap-typeahead/css/Typeahead.css';
 import urls from '../utils/urls';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 import { CookiesProvider } from 'react-cookie';
 
 class MyApp extends App {
