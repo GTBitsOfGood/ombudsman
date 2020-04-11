@@ -142,7 +142,7 @@ export const addKeyword = (category, fileName, keyWord) =>
       return json.payload;
     });
 
-    /**
+/**
  * Adds document info to firestore
  *
  * @param {string} category category name
@@ -152,29 +152,29 @@ export const addKeyword = (category, fileName, keyWord) =>
  * @param {Array} keyWords keyword to add to the metadata
  */
 export const addInfo = (category, fileName, tag, description, keyWords) =>
-fetch(urls.baseUrl + urls.api.addInfo, {
-  method: 'post',
-  mode: 'no-cors',
-  credentials: 'include',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    category,
-    fileName,
-    tag, 
-    description, 
-    keyWords
+  fetch(urls.baseUrl + urls.api.addInfo, {
+    method: 'post',
+    mode: 'no-cors',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      category,
+      fileName,
+      tag, 
+      description, 
+      keyWords
+    })
   })
-})
-  .then(response => response.json())
-  .then(json => {
-    if (json == null) {
-      throw new Error('Could not connect to API!');
-    } else if (!json.success) {
-      console.log(json)
-      throw new Error(json.message);
-    }
+    .then(response => response.json())
+    .then(json => {
+      if (json == null) {
+        throw new Error('Could not connect to API!');
+      } else if (!json.success) {
+        console.log(json)
+        throw new Error(json.message);
+      }
 
-    return json.payload;
+      return json.payload;
   });

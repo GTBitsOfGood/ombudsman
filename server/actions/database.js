@@ -49,7 +49,7 @@ export const getCategories = async () => {
  */
 export const updateClicks = async (category, fileName) => {
   const firestoreRef = firestore.collection('categories').doc('categories');
-  const updateKey = `catArray.${[category]}.${[fileName]}.views`;
+  const updateKey = `catArray.${category}.${fileName}.views`;
   firestoreRef.update(updateKey, firebase.firestore.FieldValue.increment(1));
 };
 
@@ -62,7 +62,7 @@ export const updateClicks = async (category, fileName) => {
  */
 export const addKeyword = async (category, fileName, keyWord) => {
   const firestoreRef = firestore.collection('categories').doc('categories');
-  const updateKey = `catArray.${[category]}.${[fileName]}.metadata`;
+  const updateKey = `catArray.${category}.${fileName}.metadata`;
   firestoreRef.update(updateKey, firebase.firestore.FieldValue.arrayUnion(keyWord));
 };
 
@@ -80,7 +80,7 @@ export const uploadDocument = async (category, fileName, file) => {
 };
 
 /**
- * add document information to firestore
+ * Adds document information to firestore
  *
  * @param {string} category category name
  * @param {string} fileName file name
@@ -89,18 +89,15 @@ export const uploadDocument = async (category, fileName, file) => {
  * @param {Array} keyWords keyword to add to the metadata
  * 
  */
+
+ //TODO: Update function calls to batch call
 export const addInfo = async (category, fileName, tag, description, keyWords) => {
-  fileName = fileName.slice(0,-4);
   const firestoreRef = firestore.collection('categories').doc('categories');
-  const updateKey = `catArray.${[category]}.${[fileName]}`;
-  firestoreRef.update(updateKey + `.tag`, tag);
-  firestoreRef.update(updateKey + `.description`, description);
-  keyWords.forEach (keyWord => { 
-    firestoreRef.update(updateKey+ `.metadata`, firebase.firestore.FieldValue.arrayUnion(keyWord));
-  }); 
+  const updateKey = `catArray.${category}.${fileName}`;
+  firestoreRef.update(updateKey + '.tag', tag);
+  firestoreRef.update(updateKey + '.description', description);
+  firestoreRef.update(updateKey + '.metadata', firebase.firestore.FieldValue.arrayUnion(...keyWords));
 };
-
-
 
 /**
  * Get a list of all PDFs in the database.
