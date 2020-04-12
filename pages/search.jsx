@@ -10,6 +10,18 @@ import PropTypes from 'prop-types';
 import Loading from '../client/components/Loading/Loading';
 import urls from '../utils/urls';
 
+/*
+ *
+ */
+function editDistance(w1, w2) {
+    var dist = 0;
+    for (var i = 0; i < Math.min(w1.length, w2.length); i++) {
+        dist += (w1.charAt(i) != w2.charAt(i)) ? 1 : 0;
+    }
+    dist += (w1.length != w2.length) ? Math.abs(w1.length - w2.length) : 0;
+    return dist;
+}
+
 const SearchPage = ({ clickUpdate }) => {
   const [loading, pdfs, categories] = useContext(PdfContext);
   const [checked, setCheck] = useState([]);
