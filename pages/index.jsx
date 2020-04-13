@@ -117,41 +117,9 @@ const HomePage = ({ clickUpdate }) => {
                   {categories.map((category, i) => {
                     return (i * 2 < categories.length) ?
                       <Row>
-                        <Col md={{ span: 6, offset: 0 }}>
-                          <div align="right">
-                            <DropdownButton id="dropdown-basic-button" variant="w" size="lg" title={categories[i * 2]}>
-                              {pdfs[categories[i * 2]].map((pdf) => (
-                                <Link href={{ pathname: '/render', query: { url: pdf.url } }}>
-                                  <a
-                                    className="dropdown-item"
-                                    onClick={() => clickUpdate(
-                                      { fileName: pdf.fileName, category: categories[i * 2] },
-                                    )}
-                                  >
-                                    {pdf.fileName}
-                                  </a>
-                                </Link>
-                              ))}
-                            </DropdownButton>
-                          </div>
-                        </Col>
+                        <CategoryDropdown categoryName={categories[i * 2]} categoryPdfs={pdfs[categories[i * 2]]} align="right" />
                         {(i * 2 + 1 < categories.length) ?
-                          <Col md={{ span: 6, offset: 0 }}>
-                            <DropdownButton id="dropdown-basic-button" variant="w" size="lg" title={categories[i * 2 + 1]}>
-                              {pdfs[categories[i * 2 + 1]].map((pdf) => (
-                                <Link href={{ pathname: '/render', query: { url: pdf.url } }}>
-                                  <a
-                                    className="dropdown-item"
-                                    onClick={() => clickUpdate(
-                                      { fileName: pdf.fileName, category: categories[i * 2 + 1] },
-                                    )}
-                                  >
-                                    {pdf.fileName}
-                                  </a>
-                                </Link>
-                              ))}
-                            </DropdownButton>
-                          </Col>
+                          <CategoryDropdown categoryName={categories[i * 2 + 1]} categoryPdfs={pdfs[categories[i * 2 + 1]]} align="left" />
                         : null}
                       </Row>
                     : null;
@@ -164,7 +132,6 @@ const HomePage = ({ clickUpdate }) => {
   );
 };
 
-
 HomePage.propTypes = {
   clickUpdate: PropTypes.func
 };
@@ -174,3 +141,43 @@ HomePage.defaultProps = {
 };
 
 export default HomePage;
+
+function CategoryDropdown({ categoryName, categoryPdfs, clickUpdate, align }) {
+  return <Col md={{ span: 6, offset: 0 }}>
+    <div align={align}>
+      <DropdownButton id="dropdown-basic-button" variant="w" size="lg" title={categoryName}>
+        {categoryPdfs.map((pdf) => (
+          <Link href={{ pathname: '/render', query: { url: pdf.url } }}>
+            <a
+              className="dropdown-item"
+              onClick={() => clickUpdate(
+                { fileName: pdf.fileName, category: categoryName },
+              )}
+            >
+              {pdf.fileName}
+            </a>
+          </Link>
+        ))}
+      </DropdownButton>
+    </div>
+  </Col>;
+}
+
+CategoryDropdown.propTypes = {
+  categoryName: PropTypes.string,
+  categoryPdfs: PropTypes.arrayOf(PropTypes.shape({
+    url: PropTypes.string,
+    fileName: PropTypes.string,
+    views: PropTypes.number,
+    category: PropTypes.string
+  })),
+  clickUpdate: PropTypes.func,
+  align: PropTypes.string
+};
+
+CategoryDropdown.defaultProps = {
+  categoryName: '',
+  categoryPdfs: {},
+  clickUpdate: (data) => updateClicks(data.category, data.fileName),
+  align: 'left'
+};
