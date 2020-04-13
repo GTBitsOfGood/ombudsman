@@ -12,7 +12,7 @@ const Header = ({ path, admin }) => {
   const [loading, , categories] = useContext(PdfContext);
   const [query, setQuery] = useState('');
 
-  return (loading ? (<></>) : (
+  return (
     <Navbar bg="light" expand="lg">
       <Navbar.Brand>{admin ? 'Ombudsman Toolbox' : 'Ombudsman'}</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -33,7 +33,7 @@ const Header = ({ path, admin }) => {
             </Link>
           </Nav.Item>
         </Nav>
-        {path === urls.pages.index || path === urls.pages.add || admin ? (<></>) : (
+        {loading || path === urls.pages.index || path === urls.pages.add || admin ? null : (
           <Nav className="ml-auto">
             <div className="input-group">
               <Form.Control type="text" placeholder="Search" onChange={(e) => (setQuery(e.target.value))} />
@@ -42,10 +42,11 @@ const Header = ({ path, admin }) => {
               </Link>
             </div>
           </Nav>
-        )}
+          )
+        }
       </Navbar.Collapse>
     </Navbar>
-  ));
+  );
 };
 
 Header.propTypes = {
