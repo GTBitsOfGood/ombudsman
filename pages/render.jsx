@@ -12,20 +12,18 @@ const RenderPage = () => {
   return (
     <>
       {loading ? <Loading /> : (
-        <>
-          <iframe
-            title="PDF render"
-            style={{
-              width: '99%',
-              height: '99%',
-              frameborder: 0
-            }}
-            display="block"
-            height="100vh"
-            width="100vw"
-            src={pdfViewerUrl + encodeURIComponent(router.query.url)}
-          />
-        </>
+        <iframe
+          title="PDF render"
+          style={{
+            width: '99%',
+            height: '99%',
+            frameborder: 0
+          }}
+          display="block"
+          height="100vh"
+          width="100vw"
+          src={pdfViewerUrl + encodeURIComponent(router.query.url)}
+        />
       )}
     </>
   );
