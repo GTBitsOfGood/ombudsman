@@ -121,14 +121,16 @@ const HomePage = ({ clickUpdate }) => {
                           <div align="right">
                             <DropdownButton id="dropdown-basic-button" variant="w" size="lg" title={categories[i * 2]}>
                               {pdfs[categories[i * 2]].map((pdf) => (
-                                <Dropdown.Item
-                                  href={pdf.url}
-                                  onClick={() => clickUpdate(
-                                    { fileName: pdf.fileName, category: categories[i * 2] },
-                                  )}
-                                >
-                                  {pdf.fileName}
-                                </Dropdown.Item>
+                                <Link href={{ pathname: '/render', query: { url: pdf.url } }}>
+                                  <a
+                                    className="dropdown-item"
+                                    onClick={() => clickUpdate(
+                                      { fileName: pdf.fileName, category: categories[i * 2] },
+                                    )}
+                                  >
+                                    {pdf.fileName}
+                                  </a>
+                                </Link>
                               ))}
                             </DropdownButton>
                           </div>
@@ -137,14 +139,16 @@ const HomePage = ({ clickUpdate }) => {
                           <Col md={{ span: 6, offset: 0 }}>
                             <DropdownButton id="dropdown-basic-button" variant="w" size="lg" title={categories[i * 2 + 1]}>
                               {pdfs[categories[i * 2 + 1]].map((pdf) => (
-                                <Dropdown.Item
-                                  href={pdf.url}
-                                  onClick={() => clickUpdate(
-                                    { fileName: pdf.fileName, category: categories[i * 2 + 1] },
-                                  )}
-                                >
-                                  {pdf.fileName}
-                                </Dropdown.Item>
+                                <Link href={{ pathname: '/render', query: { url: pdf.url } }}>
+                                  <a
+                                    className="dropdown-item"
+                                    onClick={() => clickUpdate(
+                                      { fileName: pdf.fileName, category: categories[i * 2 + 1] },
+                                    )}
+                                  >
+                                    {pdf.fileName}
+                                  </a>
+                                </Link>
                               ))}
                             </DropdownButton>
                           </Col>
