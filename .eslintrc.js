@@ -110,7 +110,7 @@ module.exports = {
 
         // Validate closing tag location in JSX
         // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-closing-tag-location.md
-        'react/jsx-closing-tag-location': 'warn',
+        'react/jsx-closing-tag-location': 'off',
 
         // Enforce or disallow spaces inside of curly braces in JSX attributes
         // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-curly-spacing.md
@@ -323,7 +323,7 @@ module.exports = {
 
         // Prevent missing parentheses around multilines JSX
         // https://github.com/yannickcr/eslint-plugin-react/blob/843d71a432baf0f01f598d7cf1eea75ad6896e4b/docs/rules/jsx-wrap-multilines.md
-        'react/jsx-wrap-multilines': ['warn', {
+        'react/jsx-wrap-multilines': ['off', {
             declaration: 'parens-new-line',
             assignment: 'parens-new-line',
             return: 'parens-new-line',
@@ -335,7 +335,7 @@ module.exports = {
 
         // Require that the first prop in a JSX element be on a new line when the element is multiline
         // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-first-prop-new-line.md
-        'react/jsx-first-prop-new-line': ['error', 'multiline-multiprop'],
+        'react/jsx-first-prop-new-line': ['off', 'multiline-multiprop'],
 
         // Enforce spacing around jsx equals signs
         // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-equals-spacing.md
@@ -421,7 +421,7 @@ module.exports = {
 
         // Enforce a defaultProps definition for every prop that is not a required prop
         // https://github.com/yannickcr/eslint-plugin-react/blob/843d71a432baf0f01f598d7cf1eea75ad6896e4b/docs/rules/require-default-props.md
-        'react/require-default-props': ['error', {
+        'react/require-default-props': ['warn', {
             forbidDefaultForRequired: true,
         }],
 

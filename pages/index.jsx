@@ -23,7 +23,7 @@ const HomePage = ({ clickUpdate }) => {
   return (
     <>
       {loading ?
-          (<Loading />) :
+        (<Loading />) :
           (
             <>
               <div>
@@ -31,7 +31,7 @@ const HomePage = ({ clickUpdate }) => {
                   <h2 align="center">Ombudsman Toolbox Search</h2>
                   <Row>
                     <Col md={{ span: 6, offset: 3 }}>
-                      <div className="input-group">
+                      <form onSubmit={suppressEvent} className="input-group" role="search">
                         <Form.Control type="text" placeholder="Search" onChange={(e) => (setQuery(e.target.value))} />
                         <Dropdown>
                           <Dropdown.Toggle>
@@ -39,12 +39,12 @@ const HomePage = ({ clickUpdate }) => {
                           </Dropdown.Toggle>
                           <Dropdown.Menu>
                             <div onClick={() => {
-                      if (checked.every((val) => val === 1))  {
-                        setCheck(new Array(categories.length).fill(0));
-                      } else {
-                        setCheck(new Array(categories.length).fill(1));
-                      }
-                    }}
+                              if (checked.every((val) => val === 1))  {
+                                setCheck(new Array(categories.length).fill(0));
+                              } else {
+                                setCheck(new Array(categories.length).fill(1));
+                              }
+                            }}
                             >
                               <Form.Check
                                 className="dropdown-item"
@@ -56,206 +56,81 @@ const HomePage = ({ clickUpdate }) => {
                               />
                             </div>
                             {
-                      categories.map((item, index) => (
-                        <div onClick={() => {
-                          let currCheck = checked;
-                          currCheck[index] = (checked[index]) ? 0 : 1;
-                          setCheck([...currCheck]);
-                        }}
-                        >
-                          <Form.Check
-                            className="dropdown-item"
-                            value={item}
-                            label={item}
-                            checked={checked[index]}
-                            filtertype="normalfilter"
-                          />
-                        </div>
-                      ))
-                    }
+                              categories.map((item, index) => (
+                                <div key={item} onClick={() => {
+                                  let currCheck = checked;
+                                  currCheck[index] = (checked[index]) ? 0 : 1;
+                                  setCheck([...currCheck]);
+                                }}
+                                >
+                                  <Form.Check
+                                    className="dropdown-item"
+                                    value={item}
+                                    label={item}
+                                    checked={checked[index]}
+                                    filtertype="normalfilter"
+                                  />
+                                </div>
+                              ))
+                            }
                           </Dropdown.Menu>
                         </Dropdown>
                         <Link href={{ pathname: '/search', query: { selected: checked, term: query } }}>
-                          <Button variant="outline-success">Search</Button>
+                          <Button variant="outline-success" type="submit">Search</Button>
                         </Link>
-                      </div>
+                      </form>
                     </Col>
                   </Row>
                 </div>
                 <div className="freq-viewed" align="center">
                   <h4 align="center" className="my-4">Frequently Viewed Documents</h4>
-                  <Row className="mb-3">
-                    <Col>
-                      <div className="card card-block">
-                        {sortedPdfs[0].fileName}
-                        <p>
-                          <a
-                            href={sortedPdfs[0].url}
-                            onClick={() => clickUpdate(
-                        { fileName: sortedPdfs[0].fileName, category: sortedPdfs[0].category })}
-                          >
-                            <br />
-                            <button type="button" className="btn btn-primary">View</button>
-                          </a>
-                        </p>
-                      </div>
-                    </Col>
-                    <Col>
-                      <div className="card card-block">
-                        {sortedPdfs[1].fileName}
-                        <p>
-                          <a
-                            href={sortedPdfs[1].url}
-                            onClick={() => clickUpdate(
-                        { fileName: sortedPdfs[1].fileName, category: sortedPdfs[1].category },
-                      )}
-                          >
-                            <br />
-                            <button type="button" className="btn btn-primary">View</button>
-                          </a>
-                        </p>
-                      </div>
-                    </Col>
-                    <Col>
-                      <div className="card card-block">
-                        {sortedPdfs[2].fileName}
-                        <p>
-                          <a
-                            href={sortedPdfs[2].url}
-                            onClick={() => clickUpdate(
-                        { fileName: sortedPdfs[2].fileName, category: sortedPdfs[2].category },
-                      )}
-                          >
-                            <br />
-                            <button type="button" className="btn btn-primary">View</button>
-                          </a>
-                        </p>
-                      </div>
-                    </Col>
-                  </Row>
-                  <Row className="mb-3">
-                    <Col>
-                      <div className="card card-block">
-                        {sortedPdfs[3].fileName}
-                        <p>
-                          <a
-                            href={sortedPdfs[3].url}
-                            onClick={() => clickUpdate(
-                        { fileName: sortedPdfs[3].fileName, category: sortedPdfs[3].category },
-                      )}
-                          >
-                            <br />
-                            <button type="button" className="btn btn-primary">View</button>
-                          </a>
-                        </p>
-                      </div>
-                    </Col>
-                    <Col>
-                      <div className="card card-block">
-                        {sortedPdfs[4].fileName}
-                        <p>
-                          <a
-                            href={sortedPdfs[4].url}
-                            onClick={() => clickUpdate(
-                        { fileName: sortedPdfs[4].fileName, category: sortedPdfs[4].category },
-                      )}
-                          >
-                            <br />
-                            <button type="button" className="btn btn-primary">View</button>
-                          </a>
-                        </p>
-                      </div>
-                    </Col>
-                    <Col>
-                      <div className="card card-block">
-                        {sortedPdfs[5].fileName}
-                        <p>
-                          <a
-                            href={sortedPdfs[5].url}
-                            onClick={() => clickUpdate(
-                        { fileName: sortedPdfs[5].fileName, category: sortedPdfs[5].category },
-                      )}
-                          >
-                            <br />
-                            <button type="button" className="btn btn-primary">View</button>
-                          </a>
-                        </p>
-                      </div>
-                    </Col>
-                  </Row>
+                  {
+                    [0, 1].map(row => {
+                      return <Row className="mb-3" key={row}>
+                        {
+                          [row * 3 + 0, row * 3 + 1,  row * 3 + 2].map(i => {
+                            return <Col key={i}>
+                              <div className="card card-block">
+                                {sortedPdfs[i].fileName}
+                                <p>
+                                  <Link href={{ pathname: '/render', query: { url: sortedPdfs[i].url } }}>
+                                    <a
+                                      onClick={() => clickUpdate(
+                                        { fileName: sortedPdfs[i].fileName, category: sortedPdfs[i].category })}
+                                    >
+                                      <br />
+                                      <button type="button" className="btn btn-primary">View</button>
+                                    </a>
+                                  </Link>
+                                </p>
+                              </div>
+                            </Col>;
+                          })
+                        }
+                      </Row>;
+                    })
+                  }
                   <hr />
                 </div>
                 <div className="find-category">
                   <h4 align="center" className="my-4">Find by Category</h4>
                   {categories.map((category, i) => {
-                if (i * 2 + 1 < categories.length) {
-                  return (
-                    <Row>
-                      <Col md={{ span: 6, offset: 0 }}>
-                        <div align="right">
-                          <DropdownButton id="dropdown-basic-button" variant="w" size="lg" title={categories[i * 2]}>
-                            {pdfs[categories[i * 2]].map((pdf) => (
-                              <Dropdown.Item
-                                href={pdf.url}
-                                onClick={() => clickUpdate(
-                                  { fileName: pdf.fileName, category: categories[i * 2] },
-                                )}
-                              >
-                                {pdf.fileName}
-                              </Dropdown.Item>
-                            ))}
-                          </DropdownButton>
-                        </div>
-                      </Col>
-                      <Col md={{ span: 6, offset: 0 }}>
-                        <DropdownButton id="dropdown-basic-button" variant="w" size="lg" title={categories[i * 2 + 1]}>
-                          {pdfs[categories[i * 2 + 1]].map((pdf) => (
-                            <Dropdown.Item
-                              href={pdf.url}
-                              onClick={() => clickUpdate(
-                                { fileName: pdf.fileName, category: categories[i * 2 + 1] },
-                              )}
-                            >
-                              {pdf.fileName}
-                            </Dropdown.Item>
-                          ))}
-                        </DropdownButton>
-                      </Col>
-                    </Row>
-                  );
-                } if (i * 2 < categories.length) {
-                  return (
-                    <Row>
-                      <Col md={{ span: 6, offset: 0 }}>
-                        <div align="right">
-                          <DropdownButton id="dropdown-basic-button" size="lg" variant="w" title={categories[i * 2]}>
-                            {pdfs[categories[i * 2]].map((pdf) => (
-                              <Dropdown.Item
-                                href={pdf.url}
-                                onClick={() => clickUpdate(
-                                  { fileName: pdf.fileName, category: categories[i * 2] },
-                                )}
-                              >
-                                {pdf.fileName}
-                              </Dropdown.Item>
-                            ))}
-                          </DropdownButton>
-                        </div>
-                      </Col>
-                    </Row>
-                  );
-                }
-                return null;
-              })}
+                    return (i * 2 < categories.length) ?
+                      <Row key={category}>
+                        <CategoryDropdown categoryName={categories[i * 2]} categoryPdfs={pdfs[categories[i * 2]]} align="right" />
+                        {(i * 2 + 1 < categories.length) ?
+                          <CategoryDropdown categoryName={categories[i * 2 + 1]} categoryPdfs={pdfs[categories[i * 2 + 1]]} align="left" />
+                        : null}
+                      </Row>
+                    : null;
+                  })}
                 </div>
               </div>
             </>
-
-)}
+          )}
     </>
   );
 };
-
 
 HomePage.propTypes = {
   clickUpdate: PropTypes.func
@@ -264,4 +139,49 @@ HomePage.propTypes = {
 HomePage.defaultProps = {
   clickUpdate: (data) => updateClicks(data.category, data.fileName)
 };
+
 export default HomePage;
+
+function suppressEvent(e) {
+  e.preventDefault();
+};
+
+function CategoryDropdown({ categoryName, categoryPdfs, clickUpdate, align }) {
+  return <Col md={{ span: 6, offset: 0 }}>
+    <div align={align}>
+      <DropdownButton id="dropdown-basic-button" variant="w" size="lg" title={categoryName}>
+        {categoryPdfs.map((pdf) => (
+          <Link href={{ pathname: '/render', query: { url: pdf.url } }} key={pdf.fileName}>
+            <a
+              className="dropdown-item"
+              onClick={() => clickUpdate(
+                { fileName: pdf.fileName, category: categoryName },
+              )}
+            >
+              {pdf.fileName}
+            </a>
+          </Link>
+        ))}
+      </DropdownButton>
+    </div>
+  </Col>;
+}
+
+CategoryDropdown.propTypes = {
+  categoryName: PropTypes.string,
+  categoryPdfs: PropTypes.arrayOf(PropTypes.shape({
+    url: PropTypes.string,
+    fileName: PropTypes.string,
+    views: PropTypes.number,
+    category: PropTypes.string
+  })),
+  clickUpdate: PropTypes.func,
+  align: PropTypes.string
+};
+
+CategoryDropdown.defaultProps = {
+  categoryName: '',
+  categoryPdfs: {},
+  clickUpdate: (data) => updateClicks(data.category, data.fileName),
+  align: 'left'
+};

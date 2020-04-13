@@ -9,6 +9,8 @@ import Link from 'next/link';
 import PropTypes from 'prop-types';
 import Loading from '../client/components/Loading/Loading';
 import urls from '../utils/urls';
+import { Document, Page, pdfjs } from 'react-pdf';
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 /*
  *
@@ -118,14 +120,18 @@ const SearchPage = ({ clickUpdate }) => {
                           onChange={() => { /* no-op, change handled by the parent component */ }}
                         />
                       </div>
-))}
+                    ))}
                   </Col>
                   <Col md={{ span: 9, offset: 0 }}>
-                    {filteredPdfs.map((msg) => (
+                    {filteredPdfs.length === 0
+                    ? <p style={{ fontSize: '1.5rem' }}>No results found.</p>
+                    : filteredPdfs.map((msg) => (
                       <Row>
                         <Col md={{ span: 9, offset: 0 }}>
                           <h2>
-                            <Link href={{ pathname: urls.pages.result, query: { fileName: msg.fileName, fileURL: msg.url, term: setSearchTerm, selected: checked } }}>{msg.fileName}</Link>
+                            <Link href={{ pathname: urls.pages.result, query: { fileName: msg.fileName, fileURL: msg.url, term: setSearchTerm, selected: checked } }}>
+                              {msg.fileName}
+                            </Link>
                           </h2>
                           <h3>Effective Date: 3/12/13</h3>
                           <h5>
@@ -135,23 +141,23 @@ const SearchPage = ({ clickUpdate }) => {
                         </Col>
                         <Col md={{ span: 3, offset: 0 }}>
                           <div align="center">
-                            <div className="card card-block">
-                              insert pdf
-                              <br />
-                              preview here
-                              <br />
-                              <br />
-                              <br />
+                            <div className="card card-block" style={{ height: '320px' }}>
+                              {/* See https://github.com/wojtekmaj/react-pdf/issues/512 or https://github.com/wojtekmaj/react-pdf/issues/236 for tips on how to not hardcode the height */}
+                              <Document file={msg.url}>
+                                <Page pageNumber={1} scale={0.35} />
+                              </Document>
                             </div>
-                            <br />
-                            <a href={msg.url} onClick={() => clickUpdate({ fileName: msg.fileName, category: msg.category })}>
-                              <button type="button" className="btn btn-primary">OPEN PDF</button>
-                            </a>
+                            <Link href={{ pathname: '/render', query: { url: msg.url } }}>
+                              <a onClick={() => clickUpdate({ fileName: msg.fileName, category: msg.category })}>
+                                <button type="button" className="btn btn-primary">OPEN PDF</button>
+                              </a>
+                            </Link>
+                            <br /><br />
                           </div>
                         </Col>
                         <hr />
                       </Row>
-              ))}
+                    ))}
                   </Col>
                 </Row>
               </div>
