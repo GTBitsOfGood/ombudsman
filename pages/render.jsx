@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
 import Loading from '../client/components/Loading/Loading';
 import { PdfContext } from './context/pdf-context';
 import { useRouter } from 'next/router';
@@ -30,14 +29,6 @@ const RenderPage = () => {
       )}
     </>
   );
-};
-
-RenderPage.propTypes = {
-  url: PropTypes.string,
-};
-
-RenderPage.defaultProps = {
-  url: '',
 };
 
 export default RenderPage;
