@@ -123,7 +123,9 @@ const SearchPage = ({ clickUpdate }) => {
                     ))}
                   </Col>
                   <Col md={{ span: 9, offset: 0 }}>
-                    {filteredPdfs.map((msg) => (
+                    {filteredPdfs.length === 0
+                    ? <p style={{ fontSize: '1.5rem' }}>No results found.</p>
+                    : filteredPdfs.map((msg) => (
                       <Row>
                         <Col md={{ span: 9, offset: 0 }}>
                           <h2>
