@@ -9,7 +9,7 @@ import Loading from '../client/components/Loading/Loading';
 import withAuth from '../client/components/Admin/auth';
 import { uploadDocument } from '../server/actions/database';
 import { addInfo } from '../client/actions/api';
-import {Formik} from 'formik';
+import { Formik } from 'formik';
 import * as yup from 'yup';
 
 const schema = yup.object({
@@ -65,37 +65,38 @@ const AddPage = () => {
                   <Form.Row>
                     <Form.Group as={Col}>
                       <Form.Label>Category</Form.Label>
-                        <Typeahead
-                          name="category"
-                          labelKey="name"
-                          positionFixed
-                          onChange={(selected) => {
-                            const newValues = { ...values };
-                            newValues['category'] = selected[0] ? (selected[0].name ? (selected[0].name) : selected[0]) : (selected);
-                            setValues(newValues, false);
-                          }}
-                          options={categories}
-                          placeholder="Choose a category..."
-                          newSelectionPrefix="Add a new category: "
-                          allowNew
-                          selectHintOnEnter
-                          isInvalid={errors.category}
-                          />
+                      <Typeahead
+                        name="category"
+                        labelKey="name"
+                        positionFixed
+                        onChange={(selected) => {
+                          const newValues = { ...values };
+                          newValues['category'] = selected[0] ? (selected[0].name ? (selected[0].name) : selected[0]) : (selected);
+                          setValues(newValues, false);
+                        }}
+                        options={categories}
+                        placeholder="Choose a category..."
+                        newSelectionPrefix="Add a new category: "
+                        allowNew
+                        selectHintOnEnter
+                        isInvalid={errors.category}
+                      />
                     </Form.Group>
                     <Form.Group as={Col}>
                       <Form.Label>State/Federal</Form.Label>
                       <Form.Control
                         name="tag"
                         as="select"
-                        onChange={handleChange}>
-                          <option
-                            value="State"
-                            label="State"
-                          />
-                          <option
-                            value="Federal"
-                            label="Federal"
-                          />
+                        onChange={handleChange}
+                      >
+                        <option
+                          value="State"
+                          label="State"
+                        />
+                        <option
+                          value="Federal"
+                          label="Federal"
+                        />
                       </Form.Control>
                     </Form.Group>
                   </Form.Row>
@@ -134,7 +135,7 @@ const AddPage = () => {
                   <div align="right">
                     <Button variant="light">Cancel</Button>
                     <Button align="right" type="submit" variant="primary">Submit</Button>
-                    </div>
+                  </div>
                 </Form>)}
             </Formik>
           </Col>
@@ -143,9 +144,8 @@ const AddPage = () => {
 							</Col> */}
         </Row>
       </div>
-      )}
-  </>
-);
+    )}
+  </>);
 };
 
 export default withAuth(AddPage);
