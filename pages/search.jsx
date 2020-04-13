@@ -9,19 +9,16 @@ import Link from 'next/link';
 import PropTypes from 'prop-types';
 import Loading from '../client/components/Loading/Loading';
 import urls from '../utils/urls';
+import * as levenshtein from 'damerau-levenshtein';
 import { Document, Page, pdfjs } from 'react-pdf';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-/*
- *
+/**
+ * Split by punctuation, notably not including apostrophes.
+ * @param {string} str 
  */
-function editDistance(w1, w2) {
-    var dist = 0;
-    for (var i = 0; i < Math.min(w1.length, w2.length); i++) {
-        dist += (w1.charAt(i) != w2.charAt(i)) ? 1 : 0;
-    }
-    dist += (w1.length != w2.length) ? Math.abs(w1.length - w2.length) : 0;
-    return dist;
+function splitByPunctuation(str) {
+  return str.split(/([ .,–—:();:"?/\-&_“”^*#@!<>])/);
 }
 
 const SearchPage = ({ clickUpdate }) => {
@@ -37,40 +34,32 @@ const SearchPage = ({ clickUpdate }) => {
       let filtered = [];
       if (checked.length === 0 || searchTerm !== router.query.term) {
         setSearchTerm(router.query.term);
-        setSearchArr(router.query.term.split(' '));
-        router.query.selected.map((item, index) => {
+        setSearchArr(splitByPunctuation(router.query.term));
+        router.query.selected.forEach((item, index) => {
           if (item === '1') filtered = filtered.concat(pdfs[categories[index]]);
         });
         setCheck(router.query.selected.map(item => (parseInt(item))));
       } else {
-        checked.map((item, index) => {
+        checked.forEach((item, index) => {
           if (item === 1) filtered = filtered.concat(pdfs[categories[index]]);
         });
       }
 
       let searchFiltered = new Set();
 
-      // Search Based on exact matches
-      // searchArr.map(term => {
-      //   filtered.map((pdf) => {
-      //     if (pdf.metadata.includes(term.toLowerCase())) searchFiltered.add(pdf);
-      //   })
-      // });
-
-      // Search based on match of first 5 characters
       if (searchArr.length !== 0 && searchArr[0] !== '') {
-        searchArr.map(term => {
-          const subTerm = term.substring(0, 5).toLowerCase();
-          filtered.map(pdf => {
-            pdf.metadata.map(data => {
-              if (data.substring(0, 5).toLowerCase() === subTerm) searchFiltered.add(pdf);
+        searchArr.forEach(term => {
+          filtered.forEach(pdf => {
+            pdf.metadata.concat(splitByPunctuation(pdf.fileName)).forEach(data => {
+              if (levenshtein(data.toLowerCase(), term.toLowerCase()).similarity > 0.8)
+                searchFiltered.add(pdf);
             });
           });
         });
 
         filtered = Array.from(searchFiltered);
       }
-      filtered.sort((a, b) => (a.views < b.views ? 1 : -1));
+      filtered.sort((a, b) => b.views - a.views);
       setFilteredPdfs(filtered);
     }
   }, [loading, router.query.selected, checked]);
@@ -141,10 +130,10 @@ const SearchPage = ({ clickUpdate }) => {
                         </Col>
                         <Col md={{ span: 3, offset: 0 }}>
                           <div align="center">
-                            <div className="card card-block" style={{ height: '320px' }}>
+                            <div className="card card-block" style={{ height: '280px' }}>
                               {/* See https://github.com/wojtekmaj/react-pdf/issues/512 or https://github.com/wojtekmaj/react-pdf/issues/236 for tips on how to not hardcode the height */}
                               <Document file={msg.url}>
-                                <Page pageNumber={1} scale={0.35} />
+                                <Page pageNumber={1} scale={0.3} />
                               </Document>
                             </div>
                             <Link href={{ pathname: '/render', query: { url: msg.url } }}>

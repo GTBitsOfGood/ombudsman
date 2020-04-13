@@ -149,7 +149,7 @@ export const addKeyword = (category, fileName, keyWord) =>
  * @param {string} fileName file name
  * @param {string} tag federal or state tag
  * @param {string} description federal or state tag
- * @param {Array} keyWords keyword to add to the metadata
+ * @param {string[]} keyWords keyword to add to the metadata
  */
 export const addInfo = (category, fileName, tag, description, keyWords) =>
   fetch(urls.baseUrl + urls.api.addInfo, {
@@ -162,8 +162,8 @@ export const addInfo = (category, fileName, tag, description, keyWords) =>
     body: JSON.stringify({
       category,
       fileName,
-      tag, 
-      description, 
+      tag,
+      description,
       keyWords
     })
   })
@@ -172,7 +172,7 @@ export const addInfo = (category, fileName, tag, description, keyWords) =>
       if (json == null) {
         throw new Error('Could not connect to API!');
       } else if (!json.success) {
-        console.log(json)
+        console.log(json);
         throw new Error(json.message);
       }
 

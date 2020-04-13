@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import { PdfContext } from './context/pdf-context';
+import React from 'react';
 import { useRouter } from 'next/router';
 
 const RenderPage = () => {
