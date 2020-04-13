@@ -162,8 +162,8 @@ export const addInfo = (category, fileName, tag, description, keyWords) =>
     body: JSON.stringify({
       category,
       fileName,
-      tag, 
-      description, 
+      tag,
+      description,
       keyWords
     })
   })
@@ -172,7 +172,7 @@ export const addInfo = (category, fileName, tag, description, keyWords) =>
       if (json == null) {
         throw new Error('Could not connect to API!');
       } else if (!json.success) {
-        console.log(json)
+        console.log(json);
         throw new Error(json.message);
       }
 

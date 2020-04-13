@@ -9,17 +9,8 @@ import Loading from '../client/components/Loading/Loading';
 import withAuth from '../client/components/Admin/auth';
 import { uploadDocument } from '../server/actions/database';
 import { addInfo } from '../client/actions/api';
-import {Formik} from 'formik';
-import * as yup from 'yup';
-
-const schema = yup.object({
-  file: yup.object().required(),
-  title: yup.string().required(),
-  category: yup.string().required(),
-  tag: yup.string().required(),
-  keyWords: yup.array(),
-  description: yup.string(),
-});
+import { Formik } from 'formik';
+import { addFormSchema } from '../client/components/Validation/validation';
 
 const AddPage = () => {
 	const [loading, pdfs, categories] = useContext(PdfContext);
@@ -33,61 +24,63 @@ const AddPage = () => {
           <Col md={{ span: 8, offset: 2 }}>
             <h1 align="center">Add Document</h1>
             <Formik
-              validationSchema={schema}
-              onSubmit={async ({title, tag, file, category, keywords, description}) => {
+              validationSchema={addFormSchema}
+              onSubmit={async ({ title, tag, file, category, keywords, description }) => {
                 await uploadDocument(category, title, file.file);
                 await addInfo(category, title, tag, description, keywords);
                 alert('Successfully added the document');
               }}
-              initialValues={{title: 'Choose a file...', tag: 'State', description: '', keywords: []}}
+              initialValues={{ file: null, category: '', title: 'Choose a file...', tag: 'State', description: '', keywords: [] }}
             >
-              {({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, setValues}) =>
-                (<Form noValidate validated={validated} onSubmit={handleSubmit}>
-                  <Form.Row>
-                    <Form.Group as={Col}>
-                      <Form.Label>Upload Document</Form.Label>
-                      <Form.File 
-                        id="custom-file"
-                        name="file"
-                        label={values.title}
-                        custom
-                        onChange={(event) => {
+              {({ handleSubmit, handleChange, values, touched, errors, setValues }) =>
+                (
+                  <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                    <Form.Row>
+                      <Form.Group as={Col}>
+                        <Form.Label>Upload Document</Form.Label>
+                        <Form.File
+                          id="custom-file"
+                          name="file"
+                          label={values.title}
+                          custom
+                          onChange={(event) => {
                           const newValues = { ...values };
-                          newValues['file'] = {file: event.target.files[0]};
-                          newValues['title'] = event.target.files[0].name;
-                          setValues(newValues, false);
+                          newValues.file = { file: event.target.files[0] };
+                          newValues.title = event.target.files[0].name;
+                          setValues(newValues);
                         }}
-                        isInvalid={errors.file}
-                      />
-                      <Form.Control.Feedback type="invalid">{errors.file}</Form.Control.Feedback>
-                    </Form.Group>
-                  </Form.Row>
-                  <Form.Row>
-                    <Form.Group as={Col}>
-                      <Form.Label>Category</Form.Label>
+                          isInvalid={touched.file && errors.file}
+                        />
+                        <Form.Control.Feedback type="invalid">{errors.file}</Form.Control.Feedback>
+                      </Form.Group>
+                    </Form.Row>
+                    <Form.Row>
+                      <Form.Group as={Col}>
+                        <Form.Label>Category</Form.Label>
                         <Typeahead
                           name="category"
                           labelKey="name"
                           positionFixed
                           onChange={(selected) => {
                             const newValues = { ...values };
-                            newValues['category'] = selected[0] ? (selected[0].name ? (selected[0].name) : selected[0]) : (selected);
-                            setValues(newValues, false);
+                            newValues.category = selected[0] ? (selected[0].name ? (selected[0].name) : selected[0]) : (selected);
+                            setValues(newValues);
                           }}
                           options={categories}
                           placeholder="Choose a category..."
                           newSelectionPrefix="Add a new category: "
                           allowNew
                           selectHintOnEnter
-                          isInvalid={errors.category}
-                          />
-                    </Form.Group>
-                    <Form.Group as={Col}>
-                      <Form.Label>State/Federal</Form.Label>
-                      <Form.Control
-                        name="tag"
-                        as="select"
-                        onChange={handleChange}>
+                          isInvalid={touched.category && errors.category}
+                        />
+                      </Form.Group>
+                      <Form.Group as={Col}>
+                        <Form.Label>State/Federal</Form.Label>
+                        <Form.Control
+                          name="tag"
+                          as="select"
+                          onChange={handleChange}
+                        >
                           <option
                             value="State"
                             label="State"
@@ -96,46 +89,48 @@ const AddPage = () => {
                             value="Federal"
                             label="Federal"
                           />
-                      </Form.Control>
-                    </Form.Group>
-                  </Form.Row>
-                  <Form.Row>
-                    <Form.Group as={Col}>
-                      <Form.Label>Keywords</Form.Label>
-                      <Typeahead
-                        name="keywords"
-                        allowNew
-                        multiple
-                        labelKey="name"
-                        onChange={(selected) => {
+                        </Form.Control>
+                      </Form.Group>
+                    </Form.Row>
+                    <Form.Row>
+                      <Form.Group as={Col}>
+                        <Form.Label>Keywords</Form.Label>
+                        <Typeahead
+                          name="keywords"
+                          allowNew
+                          multiple
+                          labelKey="name"
+                          onChange={(selected) => {
                           const newValues = { ...values };
                           const keyWordList = selected.map(select => select.name);
-                          newValues['keywords'] = keyWordList;
+                          newValues.keywords = keyWordList;
                           setValues(newValues);
                         }}
-                        options={[]}
-                        newSelectionPrefix="Add a new keyword: "
-                        placeholder="Add custom keywords..."
-                        selectHintOnEnter
-                      />
-                    </Form.Group>
-                  </Form.Row>
-                  <Form.Row>
-                    <Form.Group as={Col}>
-                      <Form.Label>Description</Form.Label>
-                      <Form.Control
-                        name="description"
-                        as="textarea"
-                        onChange={handleChange}
-                        isInvalid={errors.description}/>
-                      <Form.Control.Feedback type="invalid">{errors.description}</Form.Control.Feedback>
-                    </Form.Group>
-                  </Form.Row>
-                  <div align="right">
-                    <Button variant="light">Cancel</Button>
-                    <Button align="right" type="submit" variant="primary">Submit</Button>
+                          options={[]}
+                          newSelectionPrefix="Add a new keyword: "
+                          placeholder="Add custom keywords..."
+                          selectHintOnEnter
+                        />
+                      </Form.Group>
+                    </Form.Row>
+                    <Form.Row>
+                      <Form.Group as={Col}>
+                        <Form.Label>Description</Form.Label>
+                        <Form.Control
+                          name="description"
+                          as="textarea"
+                          onChange={handleChange}
+                          isInvalid={errors.description}
+                        />
+                        <Form.Control.Feedback type="invalid">{errors.description}</Form.Control.Feedback>
+                      </Form.Group>
+                    </Form.Row>
+                    <div align="right">
+                      <Button variant="light">Cancel</Button>
+                      <Button align="right" type="submit" variant="primary">Submit</Button>
                     </div>
-                </Form>)}
+                  </Form>
+)}
             </Formik>
           </Col>
           {/* <Col md={{ span: 3 }}>

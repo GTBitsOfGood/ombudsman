@@ -90,7 +90,7 @@ export const uploadDocument = async (category, fileName, file) => {
  * 
  */
 
- //TODO: Update function calls to batch call
+ // TODO: Update function calls to batch call
 export const addInfo = async (category, fileName, tag, description, keyWords) => {
   const firestoreRef = firestore.collection('categories').doc('categories');
   const updateKey = `catArray.${category}.${fileName}`;
