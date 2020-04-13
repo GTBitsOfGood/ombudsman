@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;1,400&display=swap');
 
 html, #__next {
     font-family: 'Ubuntu', sans-serif;
@@ -16,6 +16,14 @@ body {
     margin: 0;
     padding: 0;
     position: relative;
+}
+
+h1, h2 {
+    font-weight: lighter;
+}
+
+h3 {
+    font-size: 1.4rem;
 }
 
 .App {

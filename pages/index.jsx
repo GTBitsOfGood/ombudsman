@@ -30,7 +30,7 @@ const HomePage = ({ clickUpdate }) => {
             <>
               <div>
                 <div className="main-search">
-                  <h2 align="center">Ombudsman Toolbox Search</h2>
+                  <h1 align="center">Ombudsman Toolbox Search</h1>
                   <Row>
                     <Col md={{ span: 6, offset: 3 }}>
                       <form onSubmit={suppressEvent} className="input-group" role="search">
@@ -85,7 +85,7 @@ const HomePage = ({ clickUpdate }) => {
                   </Row>
                 </div>
                 <div className="freq-viewed" align="center">
-                  <h4 align="center" className="my-4">Frequently Viewed Documents</h4>
+                  <h2 align="center" className="my-4">Frequently Viewed Documents</h2>
                   {width > 600 ?
                     [0, 1].map(row =>
                       <Row className="mb-3" key={row}>
@@ -109,7 +109,7 @@ const HomePage = ({ clickUpdate }) => {
                         )}
                       </Row>
                     ) :
-                    [0, 1, 2, 3, 4, 5].map(i => 
+                    [0, 1, 2, 3, 4, 5].map(i =>
                       <div className="card card-block">
                         {sortedPdfs[i].fileName}
                         <p>
@@ -128,7 +128,7 @@ const HomePage = ({ clickUpdate }) => {
                   <hr />
                 </div>
                 <div className="find-category">
-                  <h4 align="center" className="my-4">Find by Category</h4>
+                  <h2 align="center" className="my-4">Find by Category</h2>
                   {categories.map((category, i) =>
                     width > 900 ?
                       ((i * 2 < categories.length) ?

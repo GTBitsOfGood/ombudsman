@@ -18,7 +18,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
  * @param {string} str 
  */
 function splitByPunctuation(str) {
-  return str.split(/([ .,–—:();:"?/\-&])/);
+  return str.split(/([ .,–—:();:"?/\-&_“”^*#@!<>])/);
 }
 
 const SearchPage = ({ clickUpdate }) => {
@@ -130,10 +130,10 @@ const SearchPage = ({ clickUpdate }) => {
                         </Col>
                         <Col md={{ span: 3, offset: 0 }}>
                           <div align="center">
-                            <div className="card card-block" style={{ height: '320px' }}>
+                            <div className="card card-block" style={{ height: '280px' }}>
                               {/* See https://github.com/wojtekmaj/react-pdf/issues/512 or https://github.com/wojtekmaj/react-pdf/issues/236 for tips on how to not hardcode the height */}
                               <Document file={msg.url}>
-                                <Page pageNumber={1} scale={0.35} />
+                                <Page pageNumber={1} scale={0.3} />
                               </Document>
                             </div>
                             <Link href={{ pathname: '/render', query: { url: msg.url } }}>
