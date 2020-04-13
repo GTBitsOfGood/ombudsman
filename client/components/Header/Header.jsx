@@ -35,12 +35,12 @@ const Header = ({ path, admin }) => {
         </Nav>
         {loading || path === urls.pages.index || path === urls.pages.add || admin ? null : (
           <Nav className="ml-auto">
-            <div className="input-group">
+            <form className="input-group" onFormSubmit={suppressEvent}>
               <Form.Control type="text" placeholder="Search" onChange={(e) => (setQuery(e.target.value))} />
               <Link href={{ pathname: urls.pages.search, query: { selected: new Array(categories.length).fill(1), term: query } }} passHref>
-                <Button variant="outline-success">Search</Button>
+                <Button variant="outline-success" type="submit">Search</Button>
               </Link>
-            </div>
+            </form>
           </Nav>
           )
         }
@@ -48,6 +48,10 @@ const Header = ({ path, admin }) => {
     </Navbar>
   );
 };
+
+function suppressEvent(e) {
+  e.preventDefault();
+}
 
 Header.propTypes = {
   path: PropTypes.string,

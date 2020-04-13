@@ -31,7 +31,7 @@ const HomePage = ({ clickUpdate }) => {
                   <h2 align="center">Ombudsman Toolbox Search</h2>
                   <Row>
                     <Col md={{ span: 6, offset: 3 }}>
-                      <div className="input-group">
+                      <form onSubmit={suppressEvent} className="input-group" role="search">
                         <Form.Control type="text" placeholder="Search" onChange={(e) => (setQuery(e.target.value))} />
                         <Dropdown>
                           <Dropdown.Toggle>
@@ -76,9 +76,9 @@ const HomePage = ({ clickUpdate }) => {
                           </Dropdown.Menu>
                         </Dropdown>
                         <Link href={{ pathname: '/search', query: { selected: checked, term: query } }}>
-                          <Button variant="outline-success">Search</Button>
+                          <Button variant="outline-success" type="submit">Search</Button>
                         </Link>
-                      </div>
+                      </form>
                     </Col>
                   </Row>
                 </div>
@@ -141,6 +141,10 @@ HomePage.defaultProps = {
 };
 
 export default HomePage;
+
+function suppressEvent(e) {
+  e.preventDefault();
+};
 
 function CategoryDropdown({ categoryName, categoryPdfs, clickUpdate, align }) {
   return <Col md={{ span: 6, offset: 0 }}>
