@@ -35,9 +35,9 @@ const Header = ({ path, admin }) => {
         </Nav>
         {loading || path === urls.pages.index || path === urls.pages.add || admin ? null : (
           <Nav className="ml-auto">
-            <form className="input-group" onFormSubmit={suppressEvent}>
+            <form className="input-group" onFormSubmit={suppressEvent} role="search">
               <Form.Control type="text" placeholder="Search" onChange={(e) => (setQuery(e.target.value))} />
-              <Link href={{ pathname: urls.pages.search, query: { selected: new Array(categories.length).fill(1), term: query } }} passHref>
+              <Link href={{ pathname: urls.pages.search, query: { selected: new Array(categories.length).fill(1), term: query } }}>
                 <Button variant="outline-success" type="submit">Search</Button>
               </Link>
             </form>
