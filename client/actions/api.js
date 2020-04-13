@@ -149,7 +149,7 @@ export const addKeyword = (category, fileName, keyWord) =>
  * @param {string} fileName file name
  * @param {string} tag federal or state tag
  * @param {string} description federal or state tag
- * @param {Array} keyWords keyword to add to the metadata
+ * @param {string[]} keyWords keyword to add to the metadata
  */
 export const addInfo = (category, fileName, tag, description, keyWords) =>
   fetch(urls.baseUrl + urls.api.addInfo, {

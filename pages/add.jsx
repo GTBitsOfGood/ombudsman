@@ -138,9 +138,8 @@ const AddPage = () => {
 							</Col> */}
         </Row>
       </div>
-      )}
-  </>
-);
+    )}
+  </>);
 };
 
 export default withAuth(AddPage);
