@@ -60,9 +60,9 @@ const HomePage = ({ clickUpdate }) => {
                             {
                               categories.map((item, index) => (
                                 <div key={item} onClick={() => {
-                                  let currCheck = checked;
+                                  let currCheck = [...checked];
                                   currCheck[index] = (checked[index]) ? 0 : 1;
-                                  setCheck([...currCheck]);
+                                  setCheck(currCheck);
                                 }}
                                 >
                                   <Form.Check
