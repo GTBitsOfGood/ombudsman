@@ -57,7 +57,7 @@ const HomePage = ({ clickUpdate }) => {
                             </div>
                             {
                               categories.map((item, index) => (
-                                <div onClick={() => {
+                                <div key={item} onClick={() => {
                                   let currCheck = checked;
                                   currCheck[index] = (checked[index]) ? 0 : 1;
                                   setCheck([...currCheck]);
@@ -86,10 +86,10 @@ const HomePage = ({ clickUpdate }) => {
                   <h4 align="center" className="my-4">Frequently Viewed Documents</h4>
                   {
                     [0, 1].map(row => {
-                      return <Row className="mb-3">
+                      return <Row className="mb-3" key={row}>
                         {
                           [row * 3 + 0, row * 3 + 1,  row * 3 + 2].map(i => {
-                            return <Col>
+                            return <Col key={i}>
                               <div className="card card-block">
                                 {sortedPdfs[i].fileName}
                                 <p>
@@ -116,7 +116,7 @@ const HomePage = ({ clickUpdate }) => {
                   <h4 align="center" className="my-4">Find by Category</h4>
                   {categories.map((category, i) => {
                     return (i * 2 < categories.length) ?
-                      <Row>
+                      <Row key={category}>
                         <CategoryDropdown categoryName={categories[i * 2]} categoryPdfs={pdfs[categories[i * 2]]} align="right" />
                         {(i * 2 + 1 < categories.length) ?
                           <CategoryDropdown categoryName={categories[i * 2 + 1]} categoryPdfs={pdfs[categories[i * 2 + 1]]} align="left" />
@@ -147,7 +147,7 @@ function CategoryDropdown({ categoryName, categoryPdfs, clickUpdate, align }) {
     <div align={align}>
       <DropdownButton id="dropdown-basic-button" variant="w" size="lg" title={categoryName}>
         {categoryPdfs.map((pdf) => (
-          <Link href={{ pathname: '/render', query: { url: pdf.url } }}>
+          <Link href={{ pathname: '/render', query: { url: pdf.url } }} key={pdf.fileName}>
             <a
               className="dropdown-item"
               onClick={() => clickUpdate(
