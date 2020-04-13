@@ -14,7 +14,9 @@ const Header = ({ path, admin }) => {
 
   return (
     <Navbar bg="light" expand="lg">
-      <Navbar.Brand>{admin ? 'Ombudsman Toolbox' : 'Ombudsman'}</Navbar.Brand>
+      <Link href={urls.pages.index}>
+        <Navbar.Brand style={{ cursor: 'pointer' }}>{admin ? 'Ombudsman Toolbox' : 'Ombudsman'}</Navbar.Brand>
+      </Link>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto" activeKey={path}>
@@ -42,8 +44,7 @@ const Header = ({ path, admin }) => {
               </Link>
             </form>
           </Nav>
-          )
-        }
+        )}
       </Navbar.Collapse>
     </Navbar>
   );
