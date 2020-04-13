@@ -34,19 +34,19 @@ const AddPage = () => {
             <h1 align="center">Add Document</h1>
             <Formik
               validationSchema={schema}
-              onSubmit={async ({title, tag, file, category, keywords, description}) => {
+              onSubmit={async ({ title, tag, file, category, keywords, description }) => {
                 await uploadDocument(category, title, file.file);
                 await addInfo(category, title, tag, description, keywords);
                 alert('Successfully added the document');
               }}
-              initialValues={{title: 'Choose a file...', tag: 'State', description: '', keywords: []}}
+              initialValues={{ title: 'Choose a file...', tag: 'State', description: '', keywords: [] }}
             >
-              {({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, setValues}) =>
+              {({ handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, setValues }) =>
                 (<Form noValidate validated={validated} onSubmit={handleSubmit}>
                   <Form.Row>
                     <Form.Group as={Col}>
                       <Form.Label>Upload Document</Form.Label>
-                      <Form.File 
+                      <Form.File
                         id="custom-file"
                         name="file"
                         label={values.title}
