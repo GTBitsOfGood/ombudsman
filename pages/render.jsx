@@ -16,12 +16,10 @@ const RenderPage = () => {
           title="PDF render"
           style={{
             width: '99%',
-            height: '99%',
+            height: '80vh',
             frameborder: 0
           }}
           display="block"
-          height="100vh"
-          width="100vw"
           src={pdfViewerUrl + encodeURIComponent(router.query.url)}
         />
       )}
