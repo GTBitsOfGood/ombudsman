@@ -10,7 +10,7 @@ import Link from 'next/link';
 import { PdfContext } from './context/pdf-context';
 import urls from '../utils/urls';
 
-const managePage = () => {
+const ManagePage = () => {
   const [loading, pdfs, categories, sortedPdfs] = useContext(PdfContext);
   const [checked, setCheck] = useState([]);
   const [filteredPdfs, setFilteredPdfs] = useState(sortedPdfs);
@@ -91,4 +91,4 @@ const managePage = () => {
   </>);
 };
 
-export default managePage;
+export default ManagePage;

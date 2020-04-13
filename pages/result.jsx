@@ -10,7 +10,7 @@ import { PdfContext } from './context/pdf-context';
 import { useRouter } from 'next/router';
 import urls from '../utils/urls';
 
-const resultPage = () => {
+const ResultPage = () => {
   const [loading, pdfs, categories, sortedPdfs] = useContext(PdfContext);
   const router = useRouter();
 
@@ -90,4 +90,4 @@ const resultPage = () => {
 //   clickUpdate: (data) => updateClicks(data.category, data.fileName),
 //   errorMessage: null,
 // };
-export default resultPage;
+export default ResultPage;

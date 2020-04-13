@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Loading from '../client/components/Loading/Loading';
 import { PdfContext } from './context/pdf-context';
 
-const helpPage = () => {
+const HelpPage = () => {
   const [loading] = useContext(PdfContext);
   return (
     <>
@@ -36,4 +36,4 @@ const helpPage = () => {
 );
 };
 
-export default helpPage;
+export default HelpPage;
