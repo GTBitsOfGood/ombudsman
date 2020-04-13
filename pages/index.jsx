@@ -93,14 +93,15 @@ const HomePage = ({ clickUpdate }) => {
                               <div className="card card-block">
                                 {sortedPdfs[i].fileName}
                                 <p>
-                                  <a
-                                    href={sortedPdfs[i].url}
-                                    onClick={() => clickUpdate(
-                                      { fileName: sortedPdfs[i].fileName, category: sortedPdfs[i].category })}
-                                  >
-                                    <br />
-                                    <button type="button" className="btn btn-primary">View</button>
-                                  </a>
+                                  <Link href={{ pathname: '/render', query: { url: sortedPdfs[i].url } }}>
+                                    <a
+                                      onClick={() => clickUpdate(
+                                        { fileName: sortedPdfs[i].fileName, category: sortedPdfs[i].category })}
+                                    >
+                                      <br />
+                                      <button type="button" className="btn btn-primary">View</button>
+                                    </a>
+                                  </Link>
                                 </p>
                               </div>
                             </Col>;

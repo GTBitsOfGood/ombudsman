@@ -1,11 +1,14 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import Loading from '../client/components/Loading/Loading';
-import { PdfContext } from './context/pdf-context'
+import { PdfContext } from './context/pdf-context';
+import { useRouter } from 'next/router';
 
-const RenderPage = ({ url }) => {
+const RenderPage = () => {
   const [loading] = useContext(PdfContext);
+  const router = useRouter();
   const pdfViewerUrl = 'https://mozilla.github.io/pdf.js/web/viewer.html?file=';
+  console.log(router.query.url);
 
   return (
     <>
@@ -18,7 +21,10 @@ const RenderPage = ({ url }) => {
               height: '99%',
               frameborder: 0
             }}
-            src={pdfViewerUrl + encodeURI(url)}
+            display="block"
+            height="100vh"
+            width="100vw"
+            src={pdfViewerUrl + encodeURIComponent(router.query.url)}
           />
         </>
       )}
