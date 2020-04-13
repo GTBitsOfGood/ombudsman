@@ -118,14 +118,16 @@ const SearchPage = ({ clickUpdate }) => {
                           onChange={() => { /* no-op, change handled by the parent component */ }}
                         />
                       </div>
-))}
+                    ))}
                   </Col>
                   <Col md={{ span: 9, offset: 0 }}>
                     {filteredPdfs.map((msg) => (
                       <Row>
                         <Col md={{ span: 9, offset: 0 }}>
                           <h2>
-                            <Link href={{ pathname: urls.pages.result, query: { fileName: msg.fileName, fileURL: msg.url, term: setSearchTerm, selected: checked } }}>{msg.fileName}</Link>
+                            <Link href={{ pathname: urls.pages.result, query: { fileName: msg.fileName, fileURL: msg.url, term: setSearchTerm, selected: checked } }}>
+                              {msg.fileName}
+                            </Link>
                           </h2>
                           <h3>Effective Date: 3/12/13</h3>
                           <h5>
@@ -144,14 +146,16 @@ const SearchPage = ({ clickUpdate }) => {
                               <br />
                             </div>
                             <br />
-                            <a href={msg.url} onClick={() => clickUpdate({ fileName: msg.fileName, category: msg.category })}>
-                              <button type="button" className="btn btn-primary">OPEN PDF</button>
-                            </a>
+                            <Link href={{ pathname: '/render', query: { url: msg.url } }}>
+                              <a onClick={() => clickUpdate({ fileName: msg.fileName, category: msg.category })}>
+                                <button type="button" className="btn btn-primary">OPEN PDF</button>
+                              </a>
+                            </Link>
                           </div>
                         </Col>
                         <hr />
                       </Row>
-              ))}
+                    ))}
                   </Col>
                 </Row>
               </div>

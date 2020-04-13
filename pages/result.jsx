@@ -55,9 +55,11 @@ const ResultPage = () => {
                 </div>
                 <br />
                 <div align="center">
-                  <a href={router.query.fileURL}>
-                    <button type="button" className="btn btn-primary">OPEN PDF</button>
-                  </a>
+                  <Link href={{ pathname: '/render', query: { url: router.query.fileURL } }}>
+                    <a href={router.query.fileURL}>
+                      <button type="button" className="btn btn-primary">OPEN PDF</button>
+                    </a>
+                  </Link>
                 </div>
               </Col>
             </Row>
