@@ -20,6 +20,7 @@ export default {
     authenticate: '/api/authenticate',
     signOut: '/api/signOut',
     uploadDocument: '/api/uploadDocument',
+    addInfo: '/api/addInfo',
     isSignedIn: '/api/isSignedIn'
   },
 };

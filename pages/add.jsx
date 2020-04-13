@@ -2,18 +2,28 @@ import React, { useState, useContext } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import FormControl from 'react-bootstrap/FormControl';
-import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import { PdfContext } from './context/pdf-context';
 import Loading from '../client/components/Loading/Loading';
 import withAuth from '../client/components/Admin/auth';
 import { uploadDocument } from '../server/actions/database';
+import { addInfo } from '../client/actions/api';
+import { Formik } from 'formik';
+import * as yup from 'yup';
+
+const schema = yup.object({
+  file: yup.object().required(),
+  title: yup.string().required(),
+  category: yup.string().required(),
+  tag: yup.string().required(),
+  keyWords: yup.array(),
+  description: yup.string(),
+});
 
 const AddPage = () => {
 	const [loading, pdfs, categories] = useContext(PdfContext);
-	const [file, setFile] = useState(null);
+  const [validated, setValidated] = useState(false);
 
 	return (
   <>
@@ -22,129 +32,120 @@ const AddPage = () => {
         <Row>
           <Col md={{ span: 8, offset: 2 }}>
             <h1 align="center">Add Document</h1>
-
-            <Row>
-              <Col className="mt-2" align=""><h5>Upload Document</h5></Col>
-            </Row>
-
-            <Row>
-              <Col className="mt-1">
-                <div className="custom-file">
-                  <input
-                    type="file"
-                    className="custom-file-input"
-                    onChange={(event) => {
-												setFile(event.target.files[0]);
-												uploadDocument('test', 'test.pdf', event.target.files[0]);
-											}}
-                  />
-                  <label className="custom-file-label">
-                    {file ? file.name : 'Choose file'}
-                  </label>
-                </div>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col className="mt-4"><h5>Category</h5></Col>
-              <Col className="mt-4"><h5>State/Federal</h5></Col>
-            </Row>
-		
-            <Row>
-              <Col className="mt-1">
-                <Form>
-                  <Typeahead
-                    labelKey="name"
-                    positionFixed
-									// onChange={setSelected}
-                    options={categories}
-                    placeholder="Choose a category..."
-                    newSelectionPrefix="Add a new category: "
-                    allowNew
-                  />
-                </Form>
-              </Col>
-              <Col className="mt-1">
-                <Form.Control as="select">
-                  <option
-                    value="State"
-                    label="State"
-                  />
-                  <option
-                    value="Federal"
-                    label="Federal"
-                  />
-                </Form.Control>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col className="mt-4"><h5>Keywords</h5></Col>
-            </Row>
-
-            <Row>
-              <Col className="mt-1">
-                <Typeahead
-                  allowNew
-                  multiple
-                  labelKey="name"
-                  onChange={(e) => console.log(e)}
-                  options={[]}
-                  newSelectionPrefix="Add a new keyword: "
-                  placeholder="Add custom keywords..."
-                />
-              </Col>
-            </Row>
-							
-            <Row>
-              <Col className="mt-4"><h5>Description</h5></Col>
-            </Row>
-							
-            <Row>
-              <Col className="mt-1">
-                <InputGroup>
-                  <FormControl as="textarea" />
-                </InputGroup>
-              </Col>
-            </Row>
-							
-            {/* <Row><Col className="mt-4"><h5>Add Table of Contents (Optional)</h5></Col></Row>
-							<Row><Col className="mt-1">
-								<div className="card card-block">
-									<Row>
-									<Col md={{ span: 1 }}></Col>
-									<Col className="mt-1"><h5>Section Title</h5></Col>
-									<Col className="mt-1"><h5>Page Number</h5></Col>
-									</Row>
-									<Row>
-									<Col md={{ span: 1 }}><h1 align="center">X</h1></Col>
-									<Col className="mt-2"><Form.Control type="text" /></Col>
-									<Col className="mt-2"><Form.Control type="text" /></Col>
-									</Row>
-									<Row><Col></Col><Col></Col>
-									<Col md={{ offset: 4 }} className="mt-2">
-										<a href="/add">
-											<Button variant="primary">Add Section</Button>
-										</a>
-									</Col>
-									</Row>
-								</div>
-							</Col></Row> */}
-            <Row align="right">
-              <Col className="mt-5">
-                <Button variant="light">Cancel</Button>
-                <Button variant="primary">Submit</Button>
-              </Col>
-            </Row>
+            <Formik
+              validationSchema={schema}
+              onSubmit={async ({ title, tag, file, category, keywords, description }) => {
+                await uploadDocument(category, title, file.file);
+                await addInfo(category, title, tag, description, keywords);
+                alert('Successfully added the document');
+              }}
+              initialValues={{ title: 'Choose a file...', tag: 'State', description: '', keywords: [] }}
+            >
+              {({ handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, setValues }) =>
+                (<Form noValidate validated={validated} onSubmit={handleSubmit}>
+                  <Form.Row>
+                    <Form.Group as={Col}>
+                      <Form.Label>Upload Document</Form.Label>
+                      <Form.File
+                        id="custom-file"
+                        name="file"
+                        label={values.title}
+                        custom
+                        onChange={(event) => {
+                          const newValues = { ...values };
+                          newValues['file'] = {file: event.target.files[0]};
+                          newValues['title'] = event.target.files[0].name;
+                          setValues(newValues, false);
+                        }}
+                        isInvalid={errors.file}
+                      />
+                      <Form.Control.Feedback type="invalid">{errors.file}</Form.Control.Feedback>
+                    </Form.Group>
+                  </Form.Row>
+                  <Form.Row>
+                    <Form.Group as={Col}>
+                      <Form.Label>Category</Form.Label>
+                      <Typeahead
+                        name="category"
+                        labelKey="name"
+                        positionFixed
+                        onChange={(selected) => {
+                          const newValues = { ...values };
+                          newValues['category'] = selected[0] ? (selected[0].name ? (selected[0].name) : selected[0]) : (selected);
+                          setValues(newValues, false);
+                        }}
+                        options={categories}
+                        placeholder="Choose a category..."
+                        newSelectionPrefix="Add a new category: "
+                        allowNew
+                        selectHintOnEnter
+                        isInvalid={errors.category}
+                      />
+                    </Form.Group>
+                    <Form.Group as={Col}>
+                      <Form.Label>State/Federal</Form.Label>
+                      <Form.Control
+                        name="tag"
+                        as="select"
+                        onChange={handleChange}
+                      >
+                        <option
+                          value="State"
+                          label="State"
+                        />
+                        <option
+                          value="Federal"
+                          label="Federal"
+                        />
+                      </Form.Control>
+                    </Form.Group>
+                  </Form.Row>
+                  <Form.Row>
+                    <Form.Group as={Col}>
+                      <Form.Label>Keywords</Form.Label>
+                      <Typeahead
+                        name="keywords"
+                        allowNew
+                        multiple
+                        labelKey="name"
+                        onChange={(selected) => {
+                          const newValues = { ...values };
+                          const keyWordList = selected.map(select => select.name);
+                          newValues['keywords'] = keyWordList;
+                          setValues(newValues);
+                        }}
+                        options={[]}
+                        newSelectionPrefix="Add a new keyword: "
+                        placeholder="Add custom keywords..."
+                        selectHintOnEnter
+                      />
+                    </Form.Group>
+                  </Form.Row>
+                  <Form.Row>
+                    <Form.Group as={Col}>
+                      <Form.Label>Description</Form.Label>
+                      <Form.Control
+                        name="description"
+                        as="textarea"
+                        onChange={handleChange}
+                        isInvalid={errors.description}/>
+                      <Form.Control.Feedback type="invalid">{errors.description}</Form.Control.Feedback>
+                    </Form.Group>
+                  </Form.Row>
+                  <div align="right">
+                    <Button variant="light">Cancel</Button>
+                    <Button align="right" type="submit" variant="primary">Submit</Button>
+                  </div>
+                </Form>)}
+            </Formik>
           </Col>
           {/* <Col md={{ span: 3 }}>
 							<div className="card card-block" align="center">insert pdf <br />preview here<br /><br /><br /></div>
 							</Col> */}
         </Row>
       </div>
-      )}
-  </>
-);
+    )}
+  </>);
 };
 
 export default withAuth(AddPage);
