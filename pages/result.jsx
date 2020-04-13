@@ -1,14 +1,14 @@
 import React, { useContext, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import Link from 'next/link';
-import { getPDF, updateClicks } from '../client/actions/api';
 import Loading from '../client/components/Loading/Loading';
 import { PdfContext } from './context/pdf-context';
 import { useRouter } from 'next/router';
 import urls from '../utils/urls';
+import { pdfjs, Document, Page } from 'react-pdf';
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const ResultPage = () => {
   const [loading, pdfs, categories, sortedPdfs] = useContext(PdfContext);
@@ -45,13 +45,11 @@ const ResultPage = () => {
                 </h2>
               </Col>
               <Col md={{ span: 3, offset: 0 }}>
-                <div className="card card-block">
-                  insert pdf
-                  <br />
-                  preview here
-                  <br />
-                  <br />
-                  <br />
+                <div className="card card-block" style={{ height: '450px' }}>
+                  {/* See https://github.com/wojtekmaj/react-pdf/issues/512 or https://github.com/wojtekmaj/react-pdf/issues/236 for tips on how to not hardcode the height */}
+                  <Document file={router.query.fileURL}>
+                    <Page pageNumber={1} scale={0.5} />
+                  </Document>
                 </div>
                 <br />
                 <div align="center">
