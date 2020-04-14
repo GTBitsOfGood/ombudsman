@@ -7,10 +7,11 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 
 const Footer = ({ path }) => (
-  <Navbar sticky="bottom" bg="light">
-    <Navbar.Text>
+  <Navbar sticky="bottom" bg="light" expand="md">
+    <Navbar.Brand>Ombudsman</Navbar.Brand>
+    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+    <Navbar.Collapse id="basic-navbar-nav">
       <Nav activeKey={path}>
-        <Navbar.Brand>Ombudsman Toolbox</Navbar.Brand>
         <Nav.Item>
           <Nav.Link href={urls.pages.index}>Home</Nav.Link>
         </Nav.Item>
@@ -18,12 +19,9 @@ const Footer = ({ path }) => (
           <Nav.Link href="/help">Help</Nav.Link>
         </Nav.Item>
       </Nav>
-    </Navbar.Text>
-    <Navbar.Toggle />
-    <Navbar.Collapse className="justify-content-end">
-      <Navbar.Text>
+      <Nav className="ml-auto">
         <Link href="/login"><Button variant="outline-dark">ADD DOCUMENTS</Button></Link>
-      </Navbar.Text>
+      </Nav>
     </Navbar.Collapse>
   </Navbar>
 );
