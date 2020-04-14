@@ -11,7 +11,8 @@ if (!firebase.apps.length) {
     apiKey: 'AIzaSyDu2fblA5PCmdknt6reohIMeOlqgf-B1No',
     authDomain: 'ombudsman-a8077.firebaseapp.com',
     projectId: 'ombudsman-a8077',
-    storageBucket: 'gs://ombudsman-a8077.appspot.com'
+    storageBucket: 'gs://ombudsman-a8077.appspot.com',
+    databaseURL: 'https://ombudsman-a8077.firebaseio.com',
   };
   firebase.initializeApp(firebaseConfig);
 }
@@ -48,8 +49,55 @@ export const getCategories = async () => {
  */
 export const updateClicks = async (category, fileName) => {
   const firestoreRef = firestore.collection('categories').doc('categories');
-  const updateKey = `catArray.${[category]}.${[fileName]}.views`;
-  firestoreRef.update(updateKey, firebase.firestore.FieldValue.increment(1));
+  const updateKey = `catArray.${category}.${fileName}.views`;
+  await firestoreRef.update(updateKey, firebase.firestore.FieldValue.increment(1));
+};
+
+/**
+ * Adds keyword to metadata.
+ *
+ * @param {string} category category name
+ * @param {string} fileName file name
+ * @param {string} keyWord new keyword to be added
+ */
+export const addKeyword = async (category, fileName, keyWord) => {
+  const firestoreRef = firestore.collection('categories').doc('categories');
+  const updateKey = `catArray.${category}.${fileName}.metadata`;
+  await firestoreRef.update(updateKey, firebase.firestore.FieldValue.arrayUnion(keyWord));
+};
+
+/**
+ * Adds a file object (pdf) to storage.
+ *
+ * @param {string} category category name
+ * @param {string} fileName file name
+ * @param {File} file file to be uploaded
+ */
+export const uploadDocument = async (category, fileName, file) => {
+  const firebaseRef = firebase.storage().ref();
+  const fileRef = firebaseRef.child(`${category}/${fileName}`);
+  await fileRef.put(file);
+};
+
+/**
+ * Adds document information to firestore
+ *
+ * @param {string} category category name
+ * @param {string} fileName file name
+ * @param {string} tag federal or state tag
+ * @param {string} description federal or state tag
+ * @param {Array} keyWords keyword to add to the metadata
+ * 
+ */
+
+ // TODO: Update function calls to batch call
+export const addInfo = async (category, fileName, tag, description, keyWords) => {
+  const firestoreRef = firestore.collection('categories').doc('categories');
+  const updateKey = `catArray.${category}.${fileName}`;
+  await firestoreRef.update(updateKey + '.tag', tag);
+  await firestoreRef.update(updateKey + '.description', description);
+  if (keyWords.length > 0) await firestoreRef.update(updateKey + '.metadata', firebase.firestore.FieldValue.arrayUnion(...keyWords));
+  return 'Success';
 };
 
 /**
@@ -79,6 +127,8 @@ export const getPDF = async () => {
     promises = foldItems.map(async file => {
       let views = 0;
       let metadata = [];
+      let tag = '';
+      let description = '';
       const slicedFileName = file.name.slice(0, -4);
 
       if (slicedFileName in categoryMap[category]) {
@@ -86,6 +136,10 @@ export const getPDF = async () => {
           views = categoryMap[category][slicedFileName].views;
         if ('metadata' in categoryMap[category][slicedFileName])
           metadata = categoryMap[category][slicedFileName].metadata;
+        if ('tag' in categoryMap[category][slicedFileName])
+          tag = categoryMap[category][slicedFileName].tag;
+        if ('description' in categoryMap[category][slicedFileName])
+          description = categoryMap[category][slicedFileName].description;
       }
 
       return file.getDownloadURL().then(imgURL => {
@@ -93,6 +147,8 @@ export const getPDF = async () => {
           url: imgURL,
           fileName: file.name,
           views,
+          tag,
+          description,
           metadata,
           category
         };
@@ -121,6 +177,11 @@ export const authenticate = async (email, password) => {
   return result;
 };
 
+/**
+ * Signs the current user out.
+ *
+ */
+
 export const signOut = async () => {
   let result = 'Sign out successful';
   try {
@@ -130,3 +191,8 @@ export const signOut = async () => {
   }
   return result;
 };
+
+
+
+
+

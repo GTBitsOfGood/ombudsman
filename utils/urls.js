@@ -11,11 +11,16 @@ export default {
     result: '/result',
     help: '/help',
     login: '/login',
+    manage: '/manage',
+    add: '/add',
   },
   api: {
     getPDF: '/api/getPDF',
     updateClicks: '/api/updateClicks',
     authenticate: '/api/authenticate',
     signOut: '/api/signOut',
+    uploadDocument: '/api/uploadDocument',
+    addInfo: '/api/addInfo',
+    isSignedIn: '/api/isSignedIn'
   },
 };

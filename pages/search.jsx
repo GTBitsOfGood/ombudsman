@@ -9,6 +9,17 @@ import Link from 'next/link';
 import PropTypes from 'prop-types';
 import Loading from '../client/components/Loading/Loading';
 import urls from '../utils/urls';
+import * as levenshtein from 'damerau-levenshtein';
+import { Document, Page, pdfjs } from 'react-pdf';
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+
+/**
+ * Split by punctuation, notably not including apostrophes.
+ * @param {string} str 
+ */
+function splitByPunctuation(str) {
+  return str.split(/([ .,–—:();:"?/\-&_“”^*#@!<>])/);
+}
 
 const SearchPage = ({ clickUpdate }) => {
   const [loading, pdfs, categories] = useContext(PdfContext);
@@ -23,40 +34,32 @@ const SearchPage = ({ clickUpdate }) => {
       let filtered = [];
       if (checked.length === 0 || searchTerm !== router.query.term) {
         setSearchTerm(router.query.term);
-        setSearchArr(router.query.term.split(' '));
-        router.query.selected.map((item, index) => {
+        setSearchArr(splitByPunctuation(router.query.term));
+        router.query.selected.forEach((item, index) => {
           if (item === '1') filtered = filtered.concat(pdfs[categories[index]]);
         });
         setCheck(router.query.selected.map(item => (parseInt(item))));
       } else {
-        checked.map((item, index) => {
+        checked.forEach((item, index) => {
           if (item === 1) filtered = filtered.concat(pdfs[categories[index]]);
         });
       }
 
       let searchFiltered = new Set();
 
-      // Search Based on exact matches
-      // searchArr.map(term => {
-      //   filtered.map((pdf) => {
-      //     if (pdf.metadata.includes(term.toLowerCase())) searchFiltered.add(pdf);
-      //   })
-      // });
-
-      // Search based on match of first 5 characters
       if (searchArr.length !== 0 && searchArr[0] !== '') {
-        searchArr.map(term => {
-          const subTerm = term.substring(0, 5).toLowerCase();
-          filtered.map(pdf => {
-            pdf.metadata.map(data => {
-              if (data.substring(0, 5).toLowerCase() === subTerm) searchFiltered.add(pdf);
+        searchArr.forEach(term => {
+          filtered.forEach(pdf => {
+            pdf.metadata.concat(splitByPunctuation(pdf.fileName)).forEach(data => {
+              if (levenshtein(data.toLowerCase(), term.toLowerCase()).similarity > 0.8)
+                searchFiltered.add(pdf);
             });
           });
         });
 
         filtered = Array.from(searchFiltered);
       }
-      filtered.sort((a, b) => (a.views < b.views ? 1 : -1));
+      filtered.sort((a, b) => b.views - a.views);
       setFilteredPdfs(filtered);
     }
   }, [loading, router.query.selected, checked]);
@@ -106,14 +109,18 @@ const SearchPage = ({ clickUpdate }) => {
                           onChange={() => { /* no-op, change handled by the parent component */ }}
                         />
                       </div>
-))}
+                    ))}
                   </Col>
                   <Col md={{ span: 9, offset: 0 }}>
-                    {filteredPdfs.map((msg) => (
+                    {filteredPdfs.length === 0
+                    ? <p style={{ fontSize: '1.5rem' }}>No results found.</p>
+                    : filteredPdfs.map((msg) => (
                       <Row>
                         <Col md={{ span: 9, offset: 0 }}>
                           <h2>
-                            <Link href={{ pathname: urls.pages.result, query: { fileName: msg.fileName, fileURL: msg.url, term: setSearchTerm, selected: checked } }}>{msg.fileName}</Link>
+                            <Link href={{ pathname: urls.pages.result, query: { fileName: msg.fileName, fileURL: msg.url, term: setSearchTerm, selected: checked } }}>
+                              {msg.fileName}
+                            </Link>
                           </h2>
                           <h3>Effective Date: 3/12/13</h3>
                           <h5>
@@ -123,23 +130,23 @@ const SearchPage = ({ clickUpdate }) => {
                         </Col>
                         <Col md={{ span: 3, offset: 0 }}>
                           <div align="center">
-                            <div className="card card-block">
-                              insert pdf
-                              <br />
-                              preview here
-                              <br />
-                              <br />
-                              <br />
+                            <div className="card card-block" style={{ height: '280px' }}>
+                              {/* See https://github.com/wojtekmaj/react-pdf/issues/512 or https://github.com/wojtekmaj/react-pdf/issues/236 for tips on how to not hardcode the height */}
+                              <Document file={msg.url}>
+                                <Page pageNumber={1} scale={0.3} />
+                              </Document>
                             </div>
-                            <br />
-                            <a href={msg.url} onClick={() => clickUpdate({ fileName: msg.fileName, category: msg.category })}>
-                              <button type="button" className="btn btn-primary">OPEN PDF</button>
-                            </a>
+                            <Link href={{ pathname: '/render', query: { url: msg.url } }}>
+                              <a onClick={() => clickUpdate({ fileName: msg.fileName, category: msg.category })}>
+                                <button type="button" className="btn btn-primary">OPEN PDF</button>
+                              </a>
+                            </Link>
+                            <br /><br />
                           </div>
                         </Col>
                         <hr />
                       </Row>
-              ))}
+                    ))}
                   </Col>
                 </Row>
               </div>
