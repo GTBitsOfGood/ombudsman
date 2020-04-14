@@ -11,6 +11,7 @@ import { FaRegEdit, FaRegTrashAlt } from 'react-icons/fa';
 import { PdfContext } from './context/pdf-context';
 import urls from '../utils/urls';
 import pdfObject from '../utils/objects';
+import withAuth from '../client/components/Admin/auth';
 
 const ManagePage = () => {
   const [loading, pdfs, categories, sortedPdfs] = useContext(PdfContext);
@@ -110,4 +111,4 @@ const ManagePage = () => {
   </>);
 };
 
-export default ManagePage;
+export default withAuth(ManagePage);
