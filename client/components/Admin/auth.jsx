@@ -9,7 +9,7 @@ export const withAuth = (WrappedComponent) => (props) => {
   const [cookies] = useCookies(['admin']);
 
   const signedIn = async () => {
-    if (cookies.admin == 'true') router.push(urls.pages.add);
+    if (cookies.admin == 'true') router.push(urls.pages.manage);
     else router.push(urls.pages.login);
   };
 

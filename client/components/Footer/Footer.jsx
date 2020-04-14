@@ -20,7 +20,7 @@ const Footer = ({ path }) => (
         </Nav.Item>
       </Nav>
       <Nav className="ml-auto">
-        <Link href="/login"><Button variant="outline-dark">ADD DOCUMENTS</Button></Link>
+        <Link href={urls.pages.login}><Button variant="outline-dark">ADD DOCUMENTS</Button></Link>
       </Nav>
     </Navbar.Collapse>
   </Navbar>
