@@ -6,14 +6,18 @@ import Form from 'react-bootstrap/Form';
 import Loading from '../client/components/Loading/Loading';
 import Table from 'react-bootstrap/Table';
 import Link from 'next/link';
-
+import EditModal from '../client/components/Modal/EditModal';
+import { FaRegEdit, FaRegTrashAlt } from 'react-icons/fa';
 import { PdfContext } from './context/pdf-context';
 import urls from '../utils/urls';
+import pdfObject from '../utils/objects';
 
 const ManagePage = () => {
   const [loading, pdfs, categories, sortedPdfs] = useContext(PdfContext);
   const [checked, setCheck] = useState([]);
   const [filteredPdfs, setFilteredPdfs] = useState(sortedPdfs);
+  const [modalShow, setModalShow] = useState(false);
+  const [selectedPdf, setSelectedPdf] = useState(pdfObject);
 
   useEffect(() => {
   if (!loading) setCheck(new Array(categories.length).fill(1));
@@ -25,7 +29,7 @@ const ManagePage = () => {
       if (item === 1) filtered = filtered.concat(pdfs[categories[index]]);
     });
     setFilteredPdfs(filtered);
-  }, [checked])
+  }, [checked]);
 
   return (<>
     {loading ? (<Loading />) : (
@@ -49,7 +53,8 @@ const ManagePage = () => {
                         const currCheck = checked;
                         currCheck[index] = (checked[index]) ? 0 : 1;
                         setCheck([...currCheck]);
-                      }}>
+                      }}
+                      >
                         <Form.Check
                           className="dropdown-item"
                           checked={checked[index]}
@@ -60,7 +65,7 @@ const ManagePage = () => {
                       </div>
                     ))
                   }
-                  </Dropdown.Menu>
+                </Dropdown.Menu>
               </Dropdown>
             </div>
             <Table responsive striped bordered hover>
@@ -75,17 +80,31 @@ const ManagePage = () => {
               </thead>
               <tbody>
                 {filteredPdfs.map((msg) => (
-                <tr>
-                  <td>{msg.fileName}</td>
-                  <td>{msg.category}</td>
-                  <td>State</td>
-                  <td>XX/YY/ZZZZ</td>
-                  <td>edit</td>
-                </tr>))}
+                  <tr>
+                    <td>{msg.fileName}</td>
+                    <td>{msg.category}</td>
+                    <td>{msg.tag}</td>
+                    <td>
+                      <div align="center">
+                        XX/YY/ZZZZ
+                      </div>
+                    </td>
+                    <td>
+                      <div align="center">
+                        <FaRegEdit onClick={() => {
+                        setSelectedPdf(msg);
+                        setModalShow(true);
+                      }}
+                        />
+                        <FaRegTrashAlt className="ml-4" />
+                      </div>
+                    </td>
+                  </tr>))}
               </tbody>
             </Table>
           </Col>
         </Row>
+        <EditModal show={modalShow} pdf={selectedPdf} categories={categories} onHide={() => setModalShow(false)} />
       </div>
     )}
   </>);

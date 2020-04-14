@@ -11,17 +11,17 @@ const Footer = ({ path }) => (
     <Navbar.Brand>Ombudsman</Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
-    <Nav activeKey={path}>
-      <Nav.Item>
-        <Nav.Link href={urls.pages.index}>Home</Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link href="/help">Help</Nav.Link>
-      </Nav.Item>
-    </Nav>
-    <Nav className="ml-auto">
-      <Link href="/login"><Button variant="outline-dark">ADD DOCUMENTS</Button></Link>
-    </Nav>
+      <Nav activeKey={path}>
+        <Nav.Item>
+          <Nav.Link href={urls.pages.index}>Home</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href="/help">Help</Nav.Link>
+        </Nav.Item>
+      </Nav>
+      <Nav className="ml-auto">
+        <Link href="/login"><Button variant="outline-dark">ADD DOCUMENTS</Button></Link>
+      </Nav>
     </Navbar.Collapse>
   </Navbar>
 );
