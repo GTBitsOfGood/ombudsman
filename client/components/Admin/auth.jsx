@@ -12,9 +12,9 @@ export const withAuth = (WrappedComponent) => (props) => {
 
   const signedIn = async () => {
     if (cookies.admin == 'true') {
-      if (router.pathname == urls.pages.login) router.push(urls.pages.manage);
+      if (router.pathname == urls.pages.login) router.replace(urls.pages.manage);
     }
-    else router.push(urls.pages.login);
+    else router.replace(urls.pages.login);
   };
 
   useEffect(() => {

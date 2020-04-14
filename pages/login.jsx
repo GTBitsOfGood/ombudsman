@@ -31,7 +31,7 @@ const LoginPage = ({ signIn }) => {
                 let response = await signIn(email, password);
                 if (response === 'Login successful') {
                   setCookie('admin', 'true', { 'path': '/' });
-                  router.push(urls.pages.add);
+                  router.push(urls.pages.manage);
                 } else setStatus({ status: response });
               }}
             initialValues={{ email: '', password: '' }}

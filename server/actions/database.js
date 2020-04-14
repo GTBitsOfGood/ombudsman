@@ -96,7 +96,7 @@ export const addInfo = async (category, fileName, tag, description, keyWords) =>
   const updateKey = `catArray.${category}.${fileName}`;
   await firestoreRef.update(updateKey + '.tag', tag);
   await firestoreRef.update(updateKey + '.description', description);
-  if (keyWords.length > 0) await firestoreRef.update(updateKey + '.metadata', firebase.firestore.FieldValue.arrayUnion(...keyWords));
+  if (keyWords.length > 0) await firestoreRef.update(updateKey + '.metadata', keyWords);
   return 'Success';
 };
 

@@ -23,14 +23,13 @@ const AddForm = ({ add, categories, pdf, onHide }) => {
           validationSchema={add ? addFormSchema : editFormSchema}
           onSubmit={async ({ title, tag, file, category, keywords, description }) => {
             setLoading(true);
+            let addInfoStatus = await addInfo(category, title, tag, description, keywords);
             if (add) {
               let uploadStatus = await uploadDocument(category, title, file.file);
-              let addInfoStatus = await addInfo(category, title, tag, description, keywords);
             } else {
               if (file) {
                 let uploadStatus = await uploadDocument(category, title, file.file);
               }
-              let addInfoStatus = await addInfo(category, title, tag, description, keywords);
             }
             setSuccess(true);
             setLoading(false);
