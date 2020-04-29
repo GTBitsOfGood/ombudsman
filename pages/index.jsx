@@ -123,8 +123,7 @@ const HomePage = ({ clickUpdate }) => {
                           </Link>
                         </p>
                       </div>
-                    )
-                  }
+                    )}
                   <hr />
                 </div>
                 <div className="find-category">

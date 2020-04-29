@@ -13,7 +13,7 @@ const Header = ({ path, admin }) => {
   const [query, setQuery] = useState('');
 
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="light" expand="md">
       <Link href={urls.pages.index}>
         <Navbar.Brand style={{ cursor: 'pointer' }}>{admin ? 'Ombudsman Toolbox' : 'Ombudsman'}</Navbar.Brand>
       </Link>
