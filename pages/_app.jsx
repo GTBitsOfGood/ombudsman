@@ -3,6 +3,7 @@ import React from 'react';
 import Head from 'next/head';
 import { withRouter } from 'next/router';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import '../public/static/App.css';
 import '../public/static/components.css';
 import { PdfContextProvider } from './context/pdf-context';

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import urls from '../../../utils/urls';
@@ -13,8 +13,7 @@ export const withAuth = (WrappedComponent) => (props) => {
   const signedIn = async () => {
     if (cookies.admin == 'true') {
       if (router.pathname == urls.pages.login) router.push(urls.pages.manage);
-    }
-    else router.push(urls.pages.login);
+    } else router.push(urls.pages.login);
   };
 
   useEffect(() => {
@@ -23,8 +22,7 @@ export const withAuth = (WrappedComponent) => (props) => {
     setLoading(false);
   }, []);
 
-  return ( loading ? (<Loading/>) : (<WrappedComponent {...props} />))
-  ;
+  return (loading ? (<Loading />) : (<WrappedComponent {...props} />));
 };
 
 export default withAuth;

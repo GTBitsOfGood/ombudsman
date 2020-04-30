@@ -122,3 +122,10 @@ THE SOFTWARE.
     pointer-events: none;
     background-color: transparent;
 }
+.public-DraftEditor-content {
+    min-height: 250px;
+    padding-left: 1%;
+    padding-right: 1%;
+    overflow: visible;
+    border: 1px solid #F1F1F1;
+  }
