@@ -122,7 +122,7 @@ const SearchPage = ({ clickUpdate }) => {
                               {msg.fileName}
                             </Link>
                           </h2>
-                          <h3>Effective Date: 3/12/13</h3>
+                          <h3>Effective Date: {msg.timestamp}</h3>
                           <h5>
                             Views: {msg.views}
                           </h5>
