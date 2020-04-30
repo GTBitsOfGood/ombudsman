@@ -54,7 +54,7 @@ export const updateClicks = async (category, fileName) => {
 };
 
 /**
- * Adds keyword to metadata.
+ * Adds a single keyword to metadata.
  *
  * @param {string} category category name
  * @param {string} fileName file name
@@ -64,6 +64,7 @@ export const addKeyword = async (category, fileName, keyWord) => {
   const firestoreRef = firestore.collection('categories').doc('categories');
   const updateKey = `catArray.${category}.${fileName}.metadata`;
   await firestoreRef.update(updateKey, firebase.firestore.FieldValue.arrayUnion(keyWord));
+  await firestoreRef.update(updateKey + '.timestamp', firebase.firestore.Timestamp.now());
 };
 
 /**
@@ -96,6 +97,7 @@ export const addInfo = async (category, fileName, tag, description, keyWords) =>
   const updateKey = `catArray.${category}.${fileName}`;
   await firestoreRef.update(updateKey + '.tag', tag);
   await firestoreRef.update(updateKey + '.description', description);
+  await firestoreRef.update(updateKey + '.timestamp', firebase.firestore.Timestamp.now());
   if (keyWords.length > 0) await firestoreRef.update(updateKey + '.metadata', firebase.firestore.FieldValue.arrayUnion(...keyWords));
   return 'Success';
 };
@@ -129,6 +131,7 @@ export const getPDF = async () => {
       let metadata = [];
       let tag = '';
       let description = '';
+      let timestamp = 'N/A'
       const slicedFileName = file.name.slice(0, -4);
 
       if (slicedFileName in categoryMap[category]) {
@@ -140,6 +143,8 @@ export const getPDF = async () => {
           tag = categoryMap[category][slicedFileName].tag;
         if ('description' in categoryMap[category][slicedFileName])
           description = categoryMap[category][slicedFileName].description;
+        if ('timestamp' in categoryMap[category][slicedFileName])
+           timestamp =categoryMap[category][slicedFileName].timestamp.toDate().toString().substring(0,15);
       }
 
       return file.getDownloadURL().then(imgURL => {
@@ -150,6 +155,7 @@ export const getPDF = async () => {
           tag,
           description,
           metadata,
+          timestamp,
           category
         };
         pdfMap[category].push(pdfData);
