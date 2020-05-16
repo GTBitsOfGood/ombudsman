@@ -16,7 +16,9 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint --fix --ext .jsx --ext .js ."
+    "lint": "eslint --fix --ext .jsx --ext .js .",
+    "secrets-setup": "npm install -g @bitwarden/cli && bw login product@bitsofgood.org --raw",
+    "secrets-sync": "bw sync && echo `bw get item 982b15cd-27be-4246-b2d8-abbd005be425 | jq -r \".notes\"` > ./.env"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
