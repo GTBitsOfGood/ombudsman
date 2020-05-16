@@ -8,11 +8,11 @@ global.XMLHttpRequest = require('xhr2');
 
 if (!firebase.apps.length) {
   const firebaseConfig = {
-    apiKey: 'AIzaSyDu2fblA5PCmdknt6reohIMeOlqgf-B1No',
-    authDomain: 'ombudsman-a8077.firebaseapp.com',
-    projectId: 'ombudsman-a8077',
-    storageBucket: 'gs://ombudsman-a8077.appspot.com',
-    databaseURL: 'https://ombudsman-a8077.firebaseio.com',
+    apiKey: process.env.FIREBASE_API_KEY,
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+    databaseURL: process.env.FIREBASE_DB_URL
   };
   firebase.initializeApp(firebaseConfig);
 }
